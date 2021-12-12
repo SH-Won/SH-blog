@@ -1,0 +1,36 @@
+#root{
+    width: 100%;
+    height:100vh;
+    
+}
+.landingPage{
+    width:100%;
+    display:flex;
+    flex-direction: column;
+}
+
+.postContainer{
+    width:100%;
+    height:100%;
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+.post{
+    margin:.5rem;
+    flex:0 0 calc( ( 100% - (0.5rem * 8) ) / 4);
+    display:flex;
+    flex-direction: column;
+}
+.post_image{
+    position:relative;
+    width:100%;
+    padding-top: 80%;
+}
+.post_image > img {
+    position: absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+}
