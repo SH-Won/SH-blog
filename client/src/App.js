@@ -1,4 +1,6 @@
 import LandingPage from './components/LandingPage.js';
+import PostDetailPage from './components/PostDetailPage.js';
+import { init } from './utills/router.js';
 
 export default function App($target){
 
@@ -9,11 +11,13 @@ export default function App($target){
         if(pathname === '/'){
             new LandingPage({$target}).render();
         }
-        else if(pathname.split('/')[1] === 'posts'){
+        else if(pathname.split('/')[1] === 'post'){
             const [ , ,postId] = pathname.split('/');
-            console.log(postId);
+            new PostDetailPage({$target,postId});
         }
         
     }
+    init(this.route);
     this.route();
+    window.addEventListener('popstate',this.route);
 }

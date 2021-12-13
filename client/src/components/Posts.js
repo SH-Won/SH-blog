@@ -1,3 +1,5 @@
+import { changeRoute } from '../utills/router.js';
+
 export default function Posts({$target,initialState}){
     this.state = initialState;
     const $postContainer = document.createElement('div');
@@ -12,7 +14,7 @@ export default function Posts({$target,initialState}){
         const {posts} = this.state;
         if(posts === null) return;
         const templete = posts.map(post => `
-        <div class="post">
+        <div class="post" data-post-id="${post._id}">
         <div class="post_image">
         <img src="${post.imageUrl}" />
         </div>
@@ -24,4 +26,13 @@ export default function Posts({$target,initialState}){
         $postContainer.innerHTML = templete;
     }
     this.render();
+    $postContainer.addEventListener('click',e=>{
+        const $post = e.target.closest('.post');
+        console.log($post);
+        const {postId} = $post.dataset;
+        console.log(postId);
+        if(postId){
+        changeRoute(`/post/${postId}`);
+        }
+    })
 }
