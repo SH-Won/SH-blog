@@ -1,4 +1,4 @@
-export default function PostDetail({$target,initialState}){
+export default function PostDetail_Image({$target,initialState}){
     this.state = initialState;
     const $postDetail = document.createElement('div');
     $postDetail.className = 'postDetail';

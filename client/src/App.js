@@ -1,15 +1,26 @@
 import LandingPage from './components/LandingPage.js';
+import NavBar from './components/NavBar.js';
 import PostDetailPage from './components/PostDetailPage.js';
 import { init } from './utills/router.js';
 
-export default function App($target){
 
+export default function App($target){
+    const cache = {
+
+    }
     this.route = () =>{
         const {pathname} = location;
 
         $target.innerHTML = '';
+        new NavBar({$target}).render();
         if(pathname === '/'){
-            new LandingPage({$target}).render();
+            new LandingPage({
+                $target,
+                initialState : {
+                    posts:cache.root ? cache.root : null,
+                },
+                cache,
+            }).render();
         }
         else if(pathname.split('/')[1] === 'post'){
             const [ , ,postId] = pathname.split('/');
@@ -20,4 +31,5 @@ export default function App($target){
     init(this.route);
     this.route();
     window.addEventListener('popstate',this.route);
+    
 }

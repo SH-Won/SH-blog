@@ -1,14 +1,13 @@
 import {request} from '../utills/api.js';
 import Posts from './Posts.js';
-export default function LandingPage({$target}){
+
+export default function LandingPage({$target,initialState,cache}){
     
     const $page = document.createElement('div');
     $page.className = 'landingPage';
     $target.appendChild($page);
 
-    this.state = {
-        posts:null,
-    }
+    this.state = initialState;
     this.setState = (nextState) =>{
         this.state = nextState;
         posts.setState({
@@ -32,6 +31,10 @@ export default function LandingPage({$target}){
         this.setState({
             posts,
         })
+        cache.root = posts;
     }
-    fetchPosts();
+    if(!cache.root){
+        console.log(cache);
+        fetchPosts();
+    }
 }

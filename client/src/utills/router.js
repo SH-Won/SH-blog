@@ -5,6 +5,6 @@ export const init = (onRouteChange) =>{
 }
 export const changeRoute = (url,params) =>{
     window.history.pushState(null,null,url);
-    console.log(url);
+    // window.history.pushState()
     window.dispatchEvent(new CustomEvent(ROUTE_EVENT,params));
 }

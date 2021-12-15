@@ -1,5 +1,5 @@
 import { request } from '../utills/api';
-import PostDetail from './PostDetail';
+import PostDetail_Image from './PostDetail_Image';
 
 export default function PostDetailPage({$target,postId}){
     this.state = {
@@ -17,7 +17,7 @@ export default function PostDetailPage({$target,postId}){
         const {post} = this.state;
         if(!post) return;
         $target.appendChild($page);
-        new PostDetail({
+        new PostDetail_Image({
             $target:$page,
             initialState:{
                 post:this.state.post[0],
