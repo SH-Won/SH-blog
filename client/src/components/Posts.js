@@ -1,9 +1,9 @@
 import { changeRoute } from '../utills/router.js';
-
+import style from '../styles/Posts.module.css'
 export default function Posts({$target,initialState}){
     this.state = initialState;
     const $postContainer = document.createElement('div');
-    $postContainer.className = 'postContainer';
+    $postContainer.className = `${style.postContainer}`;
     $target.appendChild($postContainer);
 
     this.setState = (nextState) =>{
@@ -14,11 +14,11 @@ export default function Posts({$target,initialState}){
         const {posts} = this.state;
         if(posts === null) return;
         const templete = posts.map(post => `
-        <div class="post" data-post-id="${post._id}">
-        <div class="post_image">
+        <div class="${style.post}" data-post-id="${post._id}">
+        <div class="${style.imageContainer}">
         <img src="${post.imageUrl}" />
         </div>
-        <ul>
+        <ul class="${style.info}">
         <li>${post.title}</li>
         </ul>
         </div>
@@ -28,6 +28,7 @@ export default function Posts({$target,initialState}){
     this.render();
     $postContainer.addEventListener('click',e=>{
         const $post = e.target.closest('.post');
+        if(!$post) return;
         console.log($post);
         const {postId} = $post.dataset;
         console.log(postId);
