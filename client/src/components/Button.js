@@ -1,18 +1,28 @@
 
 export default function Button({$target,initialState,onClick}){
-    this.state = initialState;
+    this.state = {
+        ...initialState,
+    }
     this.onClick = onClick;
     const $button = document.createElement('button');
-    $button.style ={
-        ...this.state.style,
+    for(let key of Object.keys(this.state.style)){
+        const value = this.state.style[key];
+        $button.style[key] = value;
     }
+    console.log($button.style);
+    console.log(this.state.style)
     $button.innerHTML = `${this.state.name}`
+    $button.className = `${this.state.className}`
+    $target.appendChild($button);
     this.setState = (nextState) =>{
         this.state = nextState;
         this.render();
     }
     this.render = () =>{
-        $target.appendChild($button);
+        console.log(this.state);
+        if(this.state.visible !==undefined){
+        $button.style.display = this.state.visible ? 'block' : 'none'
+        }
     }
     this.render();
 

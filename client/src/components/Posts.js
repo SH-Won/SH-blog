@@ -1,7 +1,6 @@
 import { changeRoute } from '../utills/router.js';
 import style from '../styles/Posts.module.css'
-import Button from '../components/Button.js';
-export default function Posts({$target,initialState,loadMore}){
+export default function Posts({$target,initialState}){
     this.state = initialState;
     const $postContainer = document.createElement('article');
     $postContainer.className = `${style.postContainer}`;
@@ -26,12 +25,6 @@ export default function Posts({$target,initialState,loadMore}){
         </div>
         `).join('');
         $postContainer.innerHTML = templete;
-        new Button({
-            $target : $postContainer,
-            initialState:{
-               name:"더 보기",
-            },
-        })
     }
     this.render();
     $postContainer.addEventListener('click',e=>{
@@ -42,10 +35,5 @@ export default function Posts({$target,initialState,loadMore}){
             changeRoute(`/post/${postId}`);
             }
         }
-        const $button = e.target.closest('button');
-        if($button){
-            loadMore()
-        }
-        
     })
 }
