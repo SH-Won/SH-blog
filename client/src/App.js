@@ -17,7 +17,9 @@ export default function App($target){
             new LandingPage({
                 $target,
                 initialState : {
-                    posts:cache.root ? cache.root : null,
+                    posts:cache.root ? cache.root : [],
+                    skip:0,
+                    limit:4,
                 },
                 cache,
             }).render();

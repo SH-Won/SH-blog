@@ -5,12 +5,14 @@ const config = require('../config/key');
 const {Post}  = require('../models/Post');
 
 router.get('/', (req,res) =>{
-    
+    let skip = req.query.skip ? parseInt(req.query.skip) : Number(0);
+    let limit = req.query.limit ? parseInt(req.query.limit) : 100;
     Post.find()
+    .skip(skip)
+    .limit(limit)
     .exec((err,posts) =>{
         if(err) res.json({success:false,err});
-        console.log(posts);
-        res.json(posts);
+        res.json({posts,postSize:posts.length});
     })
 })
 router.get('/detail',(req,res)=>{

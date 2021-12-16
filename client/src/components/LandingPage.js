@@ -11,6 +11,7 @@ export default function LandingPage({$target,initialState,cache}){
     this.setState = (nextState) =>{
         this.state = nextState;
         posts.setState({
+            ...this.state,
             posts: this.state.posts,
         })
         this.render();
@@ -19,20 +20,26 @@ export default function LandingPage({$target,initialState,cache}){
         const {posts} = this.state;
 
     }
+    
+    const fetchPosts = async () =>{
+        const params = {
+            skip:this.state.skip,
+            limit:this.state.limit,
+        }
+        const {posts,postSize} = await request("",params);
+        this.setState({
+            ...this.state,
+            posts : [...this.state.posts,...posts],
+            skip : this.state.skip + this.state.limit,
+            postSize,
+        })
+        cache.root = this.state.posts;
+    }
     const posts = new Posts({
         $target : $page,
-        initialState:{
-            posts: this.state.posts,
-        }
+        initialState:this.state,
+        loadMore : fetchPosts,
     })
-
-    const fetchPosts = async () =>{
-        const posts = await request();
-        this.setState({
-            posts,
-        })
-        cache.root = posts;
-    }
     if(!cache.root){
         console.log(cache);
         fetchPosts();
