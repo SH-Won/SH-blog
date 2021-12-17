@@ -1,6 +1,7 @@
 import {request} from '../utills/api.js';
 import Posts from './Posts.js';
 import Button from './Button.js';
+import Loading from './Loading.js';
 
 export default function LandingPage({$target,initialState,cache}){
     
@@ -8,13 +9,19 @@ export default function LandingPage({$target,initialState,cache}){
     $page.className = 'landingPage';
     $target.appendChild($page);
 
-    this.state = initialState;
+    this.state = {
+        ...initialState,
+        isLoading:true,
+    };
     this.setState = (nextState) =>{
         this.state = nextState;
+        
+        
         posts.setState({
             ...this.state,
             posts: this.state.posts,
         })
+        loading.setState(this.state.isLoading)
         loadMoreBtn.setState({
             ...loadMoreBtn.state,
             visible: this.state.postSize < this.state.limit ? false : true,
@@ -22,27 +29,42 @@ export default function LandingPage({$target,initialState,cache}){
         this.render();
     }
     this.render = () =>{
-        const {posts} = this.state;
-
+    
     }
     
     const fetchPosts = async () =>{
+        try{
         const params = {
             skip:this.state.skip,
             limit:this.state.limit,
         }
+        this.setState({
+            ...this.state,
+            isLoading:true,
+        })
         const {posts,postSize} = await request("",params);
         this.setState({
             ...this.state,
             posts : [...this.state.posts,...posts],
             skip : this.state.skip + this.state.limit,
             postSize,
+            isLoading:false,
         })
-        cache.root = this.state;
+        }catch(e){
+
+        }finally{
+            cache.root = this.state;
+        }
+        
     }
+    
     const posts = new Posts({
         $target : $page,
         initialState:this.state,
+    })
+    const loading = new Loading({
+        $target:$page,
+        initialState: true,
     })
     const loadMoreBtn = new Button({
         $target : $page,
@@ -63,7 +85,6 @@ export default function LandingPage({$target,initialState,cache}){
             }
         },
     })
-    console.log(this.state.postSize,this.state.limit)
     if(!cache.root){
         console.log(cache);
         fetchPosts();

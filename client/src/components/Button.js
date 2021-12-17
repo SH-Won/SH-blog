@@ -13,7 +13,7 @@ export default function Button({$target,initialState,onClick}){
     console.log(this.state.style)
     $button.innerHTML = `${this.state.name}`
     $button.className = `${this.state.className}`
-    $target.appendChild($button);
+    
     this.setState = (nextState) =>{
         this.state = nextState;
         this.render();
@@ -23,6 +23,7 @@ export default function Button({$target,initialState,onClick}){
         if(this.state.visible !==undefined){
         $button.style.display = this.state.visible ? 'block' : 'none'
         }
+        $target.appendChild($button);
     }
     this.render();
 
