@@ -1,5 +1,6 @@
 import { request } from '../utills/api';
 import PostDetail_Image from './PostDetail_Image';
+import PostDetail_Info from './PostDetail_Info';
 
 export default function PostDetailPage({$target,postId}){
     this.state = {
@@ -22,7 +23,10 @@ export default function PostDetailPage({$target,postId}){
             initialState:{
                 post:this.state.post[0],
             }
-        }) 
+        })
+        new PostDetail_Info({
+            $target:$page,
+        })
     }
     this.fetchPost = async () =>{
         const post = await request(`/detail?postId=${postId}`);

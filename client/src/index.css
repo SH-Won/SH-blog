@@ -25,9 +25,10 @@ body{
 
 /* postDetail */
 .postDetail{
-    width:45%;
-    display:flex;
-    flex-direction: column;
+    flex:1 1 45%;
+}
+.postDetail_info{
+    flex: 1 1 45%;
 }
 .postDetail_image{
     position:relative;

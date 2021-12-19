@@ -5,12 +5,13 @@ export default function Carousel({$target,initialState}){
     this.state ={
         images:initialState,
         direction:null,
+        changeDirection:null,
     }
-    console.log(this.state);
+    let init = false;
     const $wrap = document.createElement('div');
     const $container = document.createElement('div');
     const $carousel = document.createElement('div');
-    const $slider = document.createElement('div');
+    let $slider = document.createElement('div');
     $wrap.className = `${style.wrap}`
     $container.className = `${style.container}`;
     $carousel.className = `${style.carousel}`;
@@ -36,6 +37,12 @@ export default function Carousel({$target,initialState}){
         </div>
         `).join('')}
         `
+        if(!init){
+        for(let i=0; i<this.state.images.length; i++){
+        $slider.children[i].style.paddingTop = `${68 / this.state.images.length}%`;
+        }
+        init = true;
+      }
 
     }
 
@@ -52,19 +59,14 @@ export default function Carousel({$target,initialState}){
         },
         onClick:() =>{
             const {direction} = this.state;
-            console.log(direction);
-            
+            $slider.parentNode.style.justifyContent='flex-end';
             if(direction === null || direction===1){
-                
-                console.log($slider.firstElementChild);
-                 $slider.appendChild($slider.firstElementChild);
-                
-            }
-            this.state.direction = 0;
-            console.log(this.state.images);
-            $slider.parentElement.style.justifyContent='flex-end';
+                $slider.appendChild($slider.children[0]);
+                this.state.changeDirection = true;
+           }
             $slider.style.transform =`translateX(${100 /this.state.images.length}%)`
             $slider.style.transition ='transform 1s cubic-bezier(0.6, 0.35, 0, 1.04)'
+            this.state.direction = 0;
         }
     })
     const next = new Button({
@@ -74,43 +76,50 @@ export default function Carousel({$target,initialState}){
         },
         onClick: () =>{
            const {direction} =this.state;
-           console.log(direction)
+           $slider.parentNode.style.justifyContent='flex-start';
            if(direction === 0){
-             $slider.prepend($slider.lastElementChild);
-            
+            $slider.prepend($slider.children[$slider.children.length-1]);
+             this.state.changeDirection = true;
            }
-           this.state.direction = 1;
-        
-           $slider.parentElement.style.justifyContent='flex-start';
            $slider.style.transform =`translateX(-${100 /this.state.images.length}%)`
-           $slider.style.transition ='transform 1s cubic-bezier(0.6, 0.35, 0, 1.04)'
+           $slider.style.transition ='transform 1s cubic-bezier(0.6, 0.35, 0, 1.04)';
+
+        this.state.direction = 1;
         }
+        
     })
     this.render();
-    console.dir($slider);
+
+
     $slider.addEventListener('transitionend',()=>{
-        const {direction} = this.state;
-        console.log(direction);
+        const {direction,changeDirection} = this.state;
         $slider.style.transition='none';
         $slider.style.transform=''
+        if(changeDirection){
+            console.log(changeDirection);
+            this.setState({
+                ...this.state,
+                changeDirection:false,
+            })
+            return;
+        }
         let images = [...this.state.images];
         if(direction === 1){
+            // 2 3 4 5 1 => 1 2 3 4 5
             images = images.slice(1,images.length).concat([images[0]]);
             this.setState({
                 ...this.state,
                 images,
+                
             })
-            
         }
         else{
             // 2 3 4 5 1 =>  3 4 5 1 2
             images = [images[images.length-1]].concat(images.slice(0,images.length-1));
-            console.log(images);
             this.setState({
                 ...this.state,
                 images,
             })
-
         }
 
     })
