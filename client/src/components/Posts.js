@@ -17,7 +17,7 @@ export default function Posts({$target,initialState}){
         const templete = posts.map(post => `
         <div class="${style.post}" data-post-id="${post._id}">
         <div class="${style.imageContainer}">
-        <img src="${post.imageUrl}" />
+        <img src="${post.imageUrls[0]}" />
         </div>
         <ul class="${style.info}">
         <li>${post.title}</li>

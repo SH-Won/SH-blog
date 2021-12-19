@@ -64,7 +64,6 @@ export default function LandingPage({$target,initialState,cache}){
         $target:$page,
         initialState: true,
     })
-    console.log(loading);
     const loadMoreBtn = new Button({ 
         $target : $page,
         initialState:{
