@@ -15,8 +15,6 @@ export default function LandingPage({$target,initialState,cache}){
     };
     this.setState = (nextState) =>{
         this.state = nextState;
-        
-        
         posts.setState({
             ...this.state,
             posts: this.state.posts,
@@ -29,7 +27,7 @@ export default function LandingPage({$target,initialState,cache}){
         this.render();
     }
     this.render = () =>{
-    
+       
     }
     
     const fetchPosts = async () =>{
@@ -66,7 +64,8 @@ export default function LandingPage({$target,initialState,cache}){
         $target:$page,
         initialState: true,
     })
-    const loadMoreBtn = new Button({
+    console.log(loading);
+    const loadMoreBtn = new Button({ 
         $target : $page,
         initialState:{
             name:"더 보기",
