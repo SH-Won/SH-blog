@@ -11,7 +11,7 @@ export default function Carousel({$target,initialState}){
     const $wrap = document.createElement('div');
     const $container = document.createElement('div');
     const $carousel = document.createElement('div');
-    let $slider = document.createElement('div');
+    const $slider = document.createElement('div');
     $wrap.className = `${style.wrap}`
     $container.className = `${style.container}`;
     $carousel.className = `${style.carousel}`;
@@ -37,12 +37,12 @@ export default function Carousel({$target,initialState}){
         </div>
         `).join('')}
         `
-        if(!init){
+       
         for(let i=0; i<this.state.images.length; i++){
         $slider.children[i].style.paddingTop = `${68 / this.state.images.length}%`;
         }
-        init = true;
-      }
+        
+      
 
     }
 
