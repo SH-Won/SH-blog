@@ -10,7 +10,7 @@ export default function Loading ({$target,initialState}){
         this.state = nextState;
         this.render();
     }
-    console.log('isLoading',this.state);
+
     this.render = () =>{
         if(!this.state){
             $target.removeChild($loading);

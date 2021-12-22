@@ -50,6 +50,7 @@ export default function Carousel({$target,initialState}){
         $target:$carousel,
         initialState:{
             className:style.prev,
+            name:"prev",
             // style:{
             //     "position":"absolute",
             //     "left":"0",
@@ -73,6 +74,7 @@ export default function Carousel({$target,initialState}){
         $target:$carousel,
         initialState:{
             className:style.next,
+            name:"next",
         },
         onClick: () =>{
            const {direction} =this.state;

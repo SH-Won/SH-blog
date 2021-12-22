@@ -16,10 +16,20 @@ export default function PostDetailPage({$target,postId}){
         this.state = nextState;
         this.render();
     }
+    const loading = new Loading({
+        $target: $page,
+        initialState:true,
+    })
     this.render = () =>{
         const {post} = this.state;
-        if(!post) return;
         $target.appendChild($page);
+        if(!post) {
+            console.log('1');
+            loading.render();
+            return;
+        }
+        
+        loading.setState(this.state.isLoading);
         new PostDetail_Image({
             $target:$page,
             initialState:{
@@ -30,10 +40,7 @@ export default function PostDetailPage({$target,postId}){
             $target:$page,
         })
     }
-    const loading = new Loading({
-        $target: $page,
-        initialState:true,
-    })
+    
     this.fetchPost = async () =>{
         try{
             this.setState({
@@ -48,12 +55,6 @@ export default function PostDetailPage({$target,postId}){
         })
         }catch(e){
 
-        }finally{
-            this.setState({
-            ...this.state,
-            post,
-            isLoading:false,
-            })
         }
     }
     this.fetchPost();
