@@ -1,4 +1,5 @@
 import { request } from '../utills/api';
+import Loading from './Loading';
 import PostDetail_Image from './PostDetail_Image';
 import PostDetail_Info from './PostDetail_Info';
 
@@ -8,6 +9,7 @@ export default function PostDetailPage({$target,postId}){
         post:null,
     }
     const $page = document.createElement('div');
+    const $info = document.createElement('div');
     $page.className = 'postDetailPage';
 
     this.setState = (nextState) =>{
@@ -28,12 +30,31 @@ export default function PostDetailPage({$target,postId}){
             $target:$page,
         })
     }
+    const loading = new Loading({
+        $target: $page,
+        initialState:true,
+    })
     this.fetchPost = async () =>{
-        const post = await request(`/detail?postId=${postId}`);
-        this.setState({
+        try{
+            this.setState({
+                ...this.state,
+                isLoading:true,
+            })
+            const post = await request(`/detail?postId=${postId}`);
+            this.setState({
             ...this.state,
             post,
+            isLoading:false,
         })
+        }catch(e){
+
+        }finally{
+            this.setState({
+            ...this.state,
+            post,
+            isLoading:false,
+            })
+        }
     }
     this.fetchPost();
 }
