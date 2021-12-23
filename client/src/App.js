@@ -28,6 +28,9 @@ export default function App($target){
             const [ , ,postId] = pathname.split('/');
             new PostDetailPage({$target,postId});
         }
+        else if(pathname ==='/best'){
+            
+        }
         
     }
     init(this.route);

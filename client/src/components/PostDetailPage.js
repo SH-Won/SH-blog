@@ -24,7 +24,6 @@ export default function PostDetailPage({$target,postId}){
         const {post} = this.state;
         $target.appendChild($page);
         if(!post) {
-            console.log('1');
             loading.render();
             return;
         }
