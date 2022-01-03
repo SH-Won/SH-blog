@@ -1,6 +1,7 @@
 import LandingPage from './components/LandingPage.js';
 import NavBar from './components/NavBar.js';
 import PostDetailPage from './components/PostDetailPage.js';
+import BestPage  from './components/BestPage.js'
 import { init } from './utills/router.js';
 
 
@@ -29,7 +30,10 @@ export default function App($target){
             new PostDetailPage({$target,postId});
         }
         else if(pathname ==='/best'){
-            
+            new BestPage({
+                $target,
+                cache
+            }).render();
         }
         
     }

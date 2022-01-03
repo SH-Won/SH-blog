@@ -12,7 +12,6 @@ export default function Posts({$target,initialState}){
     }
     this.render = () =>{
         const {posts} = this.state;
-        console.log(this.state);
         if(!posts.length) return;
         const templete = posts.map(post => `
         <div class="${style.post}" data-post-id="${post._id}">
