@@ -1,4 +1,5 @@
 import { changeRoute } from '../utills/router.js';
+import InfinityScroll from '../utills/InfinityScroll'
 import style from '../styles/Posts.module.css'
 export default function Posts({$target,initialState}){
     this.state = initialState;
@@ -6,14 +7,16 @@ export default function Posts({$target,initialState}){
     $postContainer.className = `${style.postContainer}`;
     $target.appendChild($postContainer);
 
+    let infinityScroll ;
     this.setState = (nextState) =>{
         this.state = nextState;
+        infinityScroll = new InfinityScroll($postContainer.lastElementChild)
         this.render();
     }
     this.render = () =>{
         const {posts} = this.state;
         if(!posts.length) return;
-        const templete = posts.map(post => `
+        const templete = posts.map((post,index) => `
         <div class="${style.post}" data-post-id="${post._id}">
         <div class="${style.imageContainer}">
         <img src="${post.imageUrls[0]}" />
@@ -26,6 +29,7 @@ export default function Posts({$target,initialState}){
         $postContainer.innerHTML = templete;
     }
     this.render();
+    
     $postContainer.addEventListener('click',e=>{
         const $post = e.target.closest('article > div'); 
         if($post){

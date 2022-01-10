@@ -2,6 +2,7 @@ import {request} from '../utills/api.js';
 import Posts from './Posts.js';
 import Button from './Button.js';
 import Loading from './Loading.js';
+import { InfinityScroll } from '../utills/infinityScroll.js';
 
 export default function LandingPage({$target,initialState,cache}){
     
@@ -19,7 +20,13 @@ export default function LandingPage({$target,initialState,cache}){
             ...this.state,
             posts: this.state.posts,
         })
-        loading.setState(this.state.isLoading)
+        loading.setState(this.state.isLoading);
+        infinityScroll.setState({
+            ...infinityScroll.state,
+            element:$page.firstElementChild.lastElementChild,
+            loading : this.state.isLoading,
+            hasMore : this.state.postSize < this.state.limit,
+        })
         loadMoreBtn.setState({
             ...loadMoreBtn.state,
             visible: this.state.postSize < this.state.limit ? false : true,
@@ -30,7 +37,7 @@ export default function LandingPage({$target,initialState,cache}){
        
     }
     
-    const fetchPosts = async () =>{
+    this.fetchPosts = async () =>{
         try{
         const params = {
             skip:this.state.skip,
@@ -55,7 +62,14 @@ export default function LandingPage({$target,initialState,cache}){
         }
         
     }
-    
+    const infinityScroll = new InfinityScroll({
+        initialState:{
+            element:null,
+            hasMore:true,
+            loading:true,
+        },
+        loadMore: this.fetchPosts,
+    })
     const posts = new Posts({
         $target : $page,
         initialState:this.state,
@@ -84,11 +98,11 @@ export default function LandingPage({$target,initialState,cache}){
         },
     })
     if(!cache.root){
-        console.log(cache);
-        fetchPosts();
+        this.fetchPosts();
     }
+
     $page.addEventListener('click',e=>{
         if(e.target.className !=='loadMore-btn') return;
-        fetchPosts();
+        this.fetchPosts();
     })
 }
