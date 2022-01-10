@@ -11,8 +11,6 @@ export default function Button({$target,initialState,onClick = null}){
         $button.style[key] = value;
     }
 }
-    console.log($button.style);
-    console.log(this.state.style)
     $button.innerHTML = `${this.state.name}`
     $button.className = `${this.state.className}`
     
@@ -21,7 +19,6 @@ export default function Button({$target,initialState,onClick = null}){
         this.render();
     }
     this.render = () =>{
-        console.log(this.state);
         if(this.state.visible !==undefined){
         $button.style.display = this.state.visible ? 'block' : 'none'
         }

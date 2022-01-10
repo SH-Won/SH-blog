@@ -2,14 +2,14 @@ import {request} from '../utills/api.js';
 import Posts from './Posts.js';
 import Button from './Button.js';
 import Loading from './Loading.js';
-import { InfinityScroll } from '../utills/infinityScroll.js';
+import  {InfinityScroll}  from '../utills/InfinityScroll.js';
 
 export default function LandingPage({$target,initialState,cache}){
-    
+
     const $page = document.createElement('div');
     $page.className = 'landingPage';
     $target.appendChild($page);
-
+    
     this.state = {
         ...initialState,
         isLoading:true,
@@ -21,20 +21,19 @@ export default function LandingPage({$target,initialState,cache}){
             posts: this.state.posts,
         })
         loading.setState(this.state.isLoading);
-        infinityScroll.setState({
-            ...infinityScroll.state,
-            element:$page.firstElementChild.lastElementChild,
-            loading : this.state.isLoading,
-            hasMore : this.state.postSize < this.state.limit,
-        })
         loadMoreBtn.setState({
             ...loadMoreBtn.state,
             visible: this.state.postSize < this.state.limit ? false : true,
         })
-        this.render();
+        this.init();
     }
-    this.render = () =>{
-       
+    this.init = () =>{
+        console.log(this.state);
+       const hasMore = this.state.postSize >= this.state.limit;
+       const loading = this.state.isLoading;
+       const element = $page.firstElementChild.lastElementChild;
+       const loadMore = InfinityScroll(this.fetchPosts,hasMore,loading);
+       loadMore(element);
     }
     
     this.fetchPosts = async () =>{
@@ -62,14 +61,6 @@ export default function LandingPage({$target,initialState,cache}){
         }
         
     }
-    const infinityScroll = new InfinityScroll({
-        initialState:{
-            element:null,
-            hasMore:true,
-            loading:true,
-        },
-        loadMore: this.fetchPosts,
-    })
     const posts = new Posts({
         $target : $page,
         initialState:this.state,

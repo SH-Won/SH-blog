@@ -1,5 +1,4 @@
 import { changeRoute } from '../utills/router.js';
-import InfinityScroll from '../utills/InfinityScroll'
 import style from '../styles/Posts.module.css'
 export default function Posts({$target,initialState}){
     this.state = initialState;
@@ -7,10 +6,8 @@ export default function Posts({$target,initialState}){
     $postContainer.className = `${style.postContainer}`;
     $target.appendChild($postContainer);
 
-    let infinityScroll ;
     this.setState = (nextState) =>{
         this.state = nextState;
-        infinityScroll = new InfinityScroll($postContainer.lastElementChild)
         this.render();
     }
     this.render = () =>{

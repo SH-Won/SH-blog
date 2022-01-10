@@ -23,7 +23,7 @@ export default function App($target){
                     limit:4,
                 },
                 cache,
-            }).render();
+            })
         }
         else if(pathname.split('/')[1] === 'post'){
             const [ , ,postId] = pathname.split('/');
