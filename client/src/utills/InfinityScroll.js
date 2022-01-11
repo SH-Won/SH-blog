@@ -22,7 +22,7 @@
 //     this.init();
 
 // }
-export const InfinityScroll = (callback,hasMore,loading) =>{
+export const InfinityScroll = (element,callback,hasMore,loading) =>{
     let observer = null;
     const handleScroll = (([entry],ob) =>{
         if(entry.isIntersecting && hasMore){
@@ -30,11 +30,15 @@ export const InfinityScroll = (callback,hasMore,loading) =>{
             ob.unobserve(entry.target);
         }
     })
-    const loadMore = (element) =>{
-        if(loading) return;
-        if(observer) observer.disconnect();
-        observer = new IntersectionObserver(handleScroll,{threshold:0.8});
-        if(element) observer.observe(element);
-    }
-    return loadMore;
+    // const loadMore = (element) =>{
+    //     if(loading) return;
+    //     console.log(observer);
+    //     // if(observer) observer.disconnect();
+    //     observer = new IntersectionObserver(handleScroll,{threshold:0.8});
+    //     if(element) observer.observe(element);
+    // }
+    // return loadMore;
+    if(loading) return;
+    observer = new IntersectionObserver(handleScroll,{threshold:0.8});
+    if(element) observer.observe(element);
 }

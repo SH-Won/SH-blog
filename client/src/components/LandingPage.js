@@ -28,12 +28,13 @@ export default function LandingPage({$target,initialState,cache}){
         this.init();
     }
     this.init = () =>{
-        console.log(this.state);
+        console.log('init')
        const hasMore = this.state.postSize >= this.state.limit;
        const loading = this.state.isLoading;
        const element = $page.firstElementChild.lastElementChild;
-       const loadMore = InfinityScroll(this.fetchPosts,hasMore,loading);
-       loadMore(element);
+    //    const loadMore = InfinityScroll(this.fetchPosts,hasMore,loading);
+    //    loadMore(element);
+    InfinityScroll(element,this.fetchPosts,hasMore,loading);
     }
     
     this.fetchPosts = async () =>{
@@ -55,6 +56,7 @@ export default function LandingPage({$target,initialState,cache}){
             isLoading:false,
         })
         }catch(e){
+            throw new Error("서버가 이상합니다");
 
         }finally{
             cache.root = this.state;
