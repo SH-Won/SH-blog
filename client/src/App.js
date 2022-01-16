@@ -20,7 +20,7 @@ export default function App($target){
                 initialState : cache.root ? cache.root : {
                     posts:[],
                     skip:0,
-                    limit:4,
+                    limit:2,
                 },
                 cache,
             })

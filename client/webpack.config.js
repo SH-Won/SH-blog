@@ -33,6 +33,7 @@ module.exports={
         //publicPath:'/',
         //index:'index.html',
         host:'localhost',
+        // host:'0.0.0.0',
         port:3000,
         open:true,
         compress:true,
@@ -47,7 +48,7 @@ module.exports={
             '/api/':{
                 target:'http://localhost:5000',
                 changeOrigin:true,
-            }
+            },
         }
     },
     module:{
