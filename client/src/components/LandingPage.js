@@ -11,8 +11,8 @@ export default function LandingPage({$target,initialState,cache}){
     $target.appendChild($page);
     
     this.state = {
-        ...initialState,
         isLoading:true,
+        ...initialState,
     };
     this.setState = (nextState) =>{
         this.state = nextState;
@@ -28,12 +28,11 @@ export default function LandingPage({$target,initialState,cache}){
         this.init();
     }
     this.init = () =>{
-        console.log('init')
        const hasMore = this.state.postSize >= this.state.limit;
        const loading = this.state.isLoading;
        const element = $page.firstElementChild.lastElementChild;
     //    const loadMore = InfinityScroll(this.fetchPosts,hasMore,loading);
-    //    loadMore(element);
+    console.dir(element);
     InfinityScroll(element,this.fetchPosts,hasMore,loading);
     }
     
@@ -69,7 +68,7 @@ export default function LandingPage({$target,initialState,cache}){
     })
     const loading = new Loading({
         $target:$page,
-        initialState: true,
+        initialState: this.state.isLoading,
     })
     const loadMoreBtn = new Button({ 
         $target : $page,
@@ -93,6 +92,8 @@ export default function LandingPage({$target,initialState,cache}){
     if(!cache.root){
         this.fetchPosts();
     }
+
+    this.init();
 
     $page.addEventListener('click',e=>{
         if(e.target.className !=='loadMore-btn') return;
