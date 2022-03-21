@@ -31,9 +31,7 @@ export default function LandingPage({$target,initialState,cache}){
        const hasMore = this.state.postSize >= this.state.limit;
        const loading = this.state.isLoading;
        const element = $page.firstElementChild.lastElementChild;
-    //    const loadMore = InfinityScroll(this.fetchPosts,hasMore,loading);
-    console.dir(element);
-    InfinityScroll(element,this.fetchPosts,hasMore,loading);
+       InfinityScroll(element,this.fetchPosts,hasMore,loading);
     }
     
     this.fetchPosts = async () =>{
