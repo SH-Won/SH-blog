@@ -3,10 +3,12 @@ import Posts from './Posts.js';
 import Button from './Button.js';
 import Loading from './Loading.js';
 import  {InfinityScroll}  from '../utills/InfinityScroll.js';
+import ListView from './ListView.js';
 
 export default function LandingPage({$target,initialState,cache}){
 
     const $page = document.createElement('div');
+    
     $page.className = 'landingPage';
     $target.appendChild($page);
     
@@ -30,7 +32,7 @@ export default function LandingPage({$target,initialState,cache}){
     this.init = () =>{
        const hasMore = this.state.postSize >= this.state.limit;
        const loading = this.state.isLoading;
-       const element = $page.firstElementChild.lastElementChild;
+       const element = $page.children[1].lastElementChild;
        InfinityScroll(element,this.fetchPosts,hasMore,loading);
     }
     
@@ -60,6 +62,10 @@ export default function LandingPage({$target,initialState,cache}){
         }
         
     }
+    const listView = new ListView({
+        $target:$page,
+        maxSize:4,
+    })
     const posts = new Posts({
         $target : $page,
         initialState:this.state,
