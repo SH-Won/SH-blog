@@ -6,7 +6,7 @@ export default function ListView({$target,maxSize}){
     $target.appendChild($ListView);
     this.state = {
         maxSize,
-        current:null,
+        currentIndex:null,
     }
     this.setState = (nextState) =>{
         this.state = nextState;
@@ -16,7 +16,7 @@ export default function ListView({$target,maxSize}){
          <ul class="${style.list}">
          ${Array(maxSize).fill().map((_,i) =>
             `
-            <li data-index="${i+1}""><button class="${style.listBtn}">${i+1}x${i+1}</button></li>
+            <li data-index="${i}"><button class="${style.listBtn}">${i+1}EA</button></li>
             `).join('')}
          </ul>
          ` 
@@ -24,17 +24,28 @@ export default function ListView({$target,maxSize}){
     this.render();
     $ListView.addEventListener('click', e=>{
         if(e.target.tagName !== 'BUTTON') return;
-        const index = e.target.parentNode.dataset.index;
+        const selectedIndex = +e.target.parentNode.dataset.index;
+        const {currentIndex}  = this.state;
         const posts = $target.children[1];
-        posts.style.display = 'grid';
-        posts.style.gridTemplateColumns = `repeat(${index},1fr)`;
-        if(this.state.current){
-        $ListView.children[0].children[this.state.current-1].children[0].style = `0.5px gray solid`;
+         if(selectedIndex === currentIndex){
+            posts.style.display = 'flex';
+            $ListView.children[0].children[currentIndex].children[0].style.border = `0.5px gray solid`; 
+            this.setState({
+                ...this.state,
+                currentIndex:null,
+            })
         }
-        e.target.style.border = `1px black solid`;
-        this.setState({
-            ...this.state,
-            current:index,
-        })
+        else{
+         posts.style.display = 'grid';
+         posts.style.gridTemplateColumns = `repeat(${selectedIndex+1},1fr)`;
+         if(currentIndex !== null){
+         $ListView.children[0].children[currentIndex].children[0].style.border = `0.5px gray solid`;
+         }
+         e.target.style.border = `1px black solid`;
+         this.setState({
+             ...this.state,
+             currentIndex:selectedIndex,
+         })
+       }
     })
 }
