@@ -4,6 +4,7 @@ import Button from './Button.js';
 import Loading from './Loading.js';
 import  {InfinityScroll}  from '../utills/InfinityScroll.js';
 import ListView from './ListView.js';
+import CheckBox from './CheckBox.js';
 
 export default function LandingPage({$target,initialState,cache}){
 
@@ -14,6 +15,7 @@ export default function LandingPage({$target,initialState,cache}){
     
     this.state = {
         isLoading:true,
+        checked: [],
         ...initialState,
     };
     this.setState = (nextState) =>{
@@ -32,7 +34,7 @@ export default function LandingPage({$target,initialState,cache}){
     this.init = () =>{
        const hasMore = this.state.postSize >= this.state.limit;
        const loading = this.state.isLoading;
-       const element = $page.children[1].lastElementChild;
+       const element = $page.children[2].lastElementChild;
        InfinityScroll(element,this.fetchPosts,hasMore,loading);
     }
     
@@ -41,6 +43,7 @@ export default function LandingPage({$target,initialState,cache}){
         const params = {
             skip:this.state.skip,
             limit:this.state.limit,
+            category:this.state.checked,
         }
         this.setState({
             ...this.state,
@@ -65,6 +68,25 @@ export default function LandingPage({$target,initialState,cache}){
     const listView = new ListView({
         $target:$page,
         maxSize:4,
+    })
+    const checkBox = new CheckBox({
+        $target:$page,
+        callback : (id,selected) => {
+            const {checked} = this.state;
+            if(selected){
+                checked.push(id);
+            }else{
+                const idx = checked.indexOf(id);
+                checked.splice(idx,1);
+                
+            }
+            this.setState({
+                ...this.state,
+                checked,
+                skip:0,
+            });
+            this.fetchPosts();
+        }
     })
     const posts = new Posts({
         $target : $page,

@@ -10,9 +10,9 @@ export default function Loading ({$target,initialState}){
         this.state = nextState;
         this.render();
     }
-
+    
     this.render = () =>{
-        if(!this.state){
+        if(!this.state && [...$target.children].includes($loading)){
             $target.removeChild($loading);
             return;
         }

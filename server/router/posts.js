@@ -7,7 +7,14 @@ const {Post}  = require('../models/Post');
 router.get('/', (req,res) =>{
     let skip = req.query.skip ? parseInt(req.query.skip) : Number(0);
     let limit = req.query.limit ? parseInt(req.query.limit) : 100;
-    Post.find()
+    let category = req.query.category ? req.query.category : null;
+    let findArg = {};
+    if(category){
+        findArg['category'] = category.split(',').map(Number);
+    }
+    console.log(findArg);
+    
+    Post.find(findArg)
     .skip(skip)
     .limit(limit)
     .exec((err,posts) =>{
