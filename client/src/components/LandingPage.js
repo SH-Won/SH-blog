@@ -52,7 +52,7 @@ export default function LandingPage({$target,initialState,cache}){
         const {posts,postSize} = await request("",params);
         this.setState({
             ...this.state,
-            posts : [...this.state.posts,...posts],
+            posts : !this.state.skip ? posts : [...this.state.posts,...posts],
             skip : this.state.skip + this.state.limit,
             postSize,
             isLoading:false,
@@ -71,6 +71,7 @@ export default function LandingPage({$target,initialState,cache}){
     })
     const checkBox = new CheckBox({
         $target:$page,
+        checked: this.state.checked,
         callback : (id,selected) => {
             const {checked} = this.state;
             if(selected){
