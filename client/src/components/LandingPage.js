@@ -6,7 +6,7 @@ import  {InfinityScroll}  from '../utills/InfinityScroll.js';
 import ListView from './ListView.js';
 import CheckBox from './CheckBox.js';
 
-export default function LandingPage({$target,initialState,cache}){
+export default function LandingPage({$target,initialState,cache,testCache}){
 
     const $page = document.createElement('div');
     
@@ -62,6 +62,7 @@ export default function LandingPage({$target,initialState,cache}){
 
         }finally{
             cache.root = this.state;
+            testCache.set('category',{...this.state});
         }
         
     }
@@ -119,6 +120,9 @@ export default function LandingPage({$target,initialState,cache}){
     if(!cache.root){
         this.fetchPosts();
     }
+    // if(!testCache.has('root')){
+    //     this.fetchPosts;
+    // }
 
     this.init();
 

@@ -9,6 +9,7 @@ export default function App($target){
     const cache = {
 
     }
+    const testCache = new Map();
     this.route = () =>{
         const {pathname} = location;
 
@@ -23,6 +24,7 @@ export default function App($target){
                     limit:2,
                 },
                 cache,
+                testCache,
             })
         }
         else if(pathname.split('/')[1] === 'post'){
