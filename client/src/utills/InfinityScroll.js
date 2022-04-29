@@ -24,6 +24,7 @@
 // }
 export const InfinityScroll = (element,callback,hasMore,loading) =>{
     let observer = null;
+    console.log('hasmore',hasMore,'loading',loading);
     const handleScroll = (([entry],ob) =>{
         if(entry.isIntersecting && hasMore){
             callback();

@@ -18,7 +18,7 @@ export default function App($target){
         if(pathname === '/'){
             new LandingPage({
                 $target,
-                initialState : cache.root ? cache.root : {
+                initialState : testCache.has('root') ? testCache.get('root') : {
                     posts:[],
                     skip:0,
                     limit:2,
