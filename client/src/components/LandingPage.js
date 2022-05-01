@@ -32,13 +32,11 @@ export default function LandingPage({$target,initialState,cache,testCache}){
         this.init();
     }
     this.init = () =>{
-       testCache.set('root',this.state);
        const stateKey = this.state.checked.sort().join(',');
        testCache.set(stateKey,this.state);
        const hasMore = this.state.postSize >= this.state.limit;
        const loading = this.state.isLoading;
        const element = $page.children[2].lastElementChild;
-       console.log(element);
        InfinityScroll(element,this.fetchPosts,hasMore,loading);
     }
     
@@ -65,7 +63,7 @@ export default function LandingPage({$target,initialState,cache,testCache}){
             throw new Error("서버가 이상합니다");
 
         }finally{
-            
+            testCache.set('root',this.state);
         }
     }
     const listView = new ListView({
@@ -86,10 +84,8 @@ export default function LandingPage({$target,initialState,cache,testCache}){
             const stateKey = checked.sort().join(',');
             if(testCache.has(stateKey)){
                 this.setState(testCache.get(stateKey));
-                console.log(this.state);
                 return;
             }
-            console.log('not return')
             this.setState({
                 ...this.state,
                 checked,
@@ -125,15 +121,11 @@ export default function LandingPage({$target,initialState,cache,testCache}){
             }
         },
     })
-    // if(!cache.root){
-    //     this.fetchPosts();
-    // }
     if(!testCache.has('root')){
         this.fetchPosts();
     }
 
     this.init();
-    console.log(this.state);
     $page.addEventListener('click',e=>{
         if(e.target.className !=='loadMore-btn') return;
         this.fetchPosts();

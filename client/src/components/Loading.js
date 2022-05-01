@@ -12,8 +12,6 @@ export default function Loading ({$target,initialState}){
     }
     
     this.render = () =>{
-        console.log('loading',this.state);
-        console.log([...$target.children].includes($loading))
         if(!this.state){
             if([...$target.children].includes($loading))
             $target.removeChild($loading);
