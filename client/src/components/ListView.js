@@ -24,9 +24,10 @@ export default function ListView({$target,maxSize}){
     this.render();
     $ListView.addEventListener('click', e=>{
         if(e.target.tagName !== 'BUTTON') return;
+        const posts = document.querySelector('.landingPage > article');
         const selectedIndex = +e.target.parentNode.dataset.index;
         const {currentIndex}  = this.state;
-        const posts = $target.children[2];
+        // const posts = $target.children[2];
          if(selectedIndex === currentIndex){
             posts.style.display = 'flex';
             $ListView.children[0].children[currentIndex].children[0].style.border = `0.5px gray solid`; 

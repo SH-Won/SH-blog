@@ -24,7 +24,6 @@ export default function BestPage({$target,cache}){
              const regex = /최|백|이/g;
              const {posts,postSize} = await request();
              const bestPosts  = posts.filter(post => post.title.match(regex));
-             console.log(bestPosts);
              this.setState({
                  ...this.state,
                  posts:bestPosts,
