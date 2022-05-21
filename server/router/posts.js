@@ -1,8 +1,57 @@
 const express = require('express');
 const router = express.Router();
-
 const config = require('../config/key');
 const {Post}  = require('../models/Post');
+const multer = require('multer');
+const cloudinary = require('cloudinary').v2;
+const {CloudinaryStorage} =require('multer-storage-cloudinary');
+
+
+const cloud_name=process.env.cloud_name || config.cloud_name
+const api_key=process.env.api_key || config.api_key
+const api_secret=process.env.api_secret || config.api_secret
+
+cloudinary.config({
+    cloud_name:config.cloud_name,
+   api_key:config.api_key,
+   api_secret:config.api_secret
+})
+
+const Storage = new CloudinaryStorage({
+    cloudinary:cloudinary,
+    params:{
+        folder:'uploads',
+        format: async (req,file)=>{
+            'jpg','png','gif';
+        },
+        public_id:(req,file)=>{
+        }
+    }
+})
+const upload = multer({storage:Storage}).array('file');
+
+router.post('/uploadfiles',(req,res)=>{
+    upload(req,res,err=>{
+        console.log(req.body);
+        if(err) return res.json({success:false,err});
+
+        let urlData = [];
+        
+        req.files.forEach(file=>{
+            urlData.push(file.path);
+        })
+        console.log(urlData);
+        return res.json({success:true, url:urlData.length === 1? urlData[0] : urlData})
+    })
+})
+router.post('/uploadPost',(req,res)=>{
+    const post = new Post(req.body);
+    post.save((err,result)=>{
+        if(err) return res.json({success:false,err})
+        res.json({success:true});
+        console.log(result);
+    })
+})
 
 router.get('/', (req,res) =>{
     let skip = req.query.skip ? parseInt(req.query.skip) : Number(0);

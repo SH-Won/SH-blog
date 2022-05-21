@@ -39,7 +39,6 @@ export default function LandingPage({$target,initialState,cache,testCache}){
        const element = $page.children[2].lastElementChild;
        InfinityScroll(element,this.fetchPosts,hasMore,loading);
     }
-    
     this.fetchPosts = async () =>{
         try{
         const params = {

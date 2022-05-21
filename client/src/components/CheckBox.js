@@ -9,7 +9,6 @@ export default function CheckBox({$target,check,callback = null}){
         this.state = nextState;
         this.render();
     }
-    console.log(check);
     this.render = () => {
         checkBox.innerHTML = `
         ${category.map(el => `
