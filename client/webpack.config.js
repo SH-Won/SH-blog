@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin =require('mini-css-extract-plugin');
+// import CKEditorPlugin from '@ckeditor/ckeditor5-dev-webpack-plugin'
 // const {CleanWebpackPlugin} =require('clean-webpack-plugin');
 // const webpackConfig = {
 //     alias: {
@@ -96,7 +97,8 @@ module.exports={
            
             {
                 test : /\.(png|svg|jpg|gif)$/,
-                use:['file-loader']
+                use:['file-loader'],
+            
             },
             {
                 test: /\.less$/,
@@ -137,7 +139,14 @@ module.exports={
             test:/\.svg(\?v=\d+\.\d+\.\d+)?$/,
             use:[
                 {
-                    loader:'babel-loader'
+                    loader:'babel-loader',
+                    options:{
+                        presets:[
+                            '@babel/preset-env',
+                            
+                            '@babel/preset-react'
+                        ],
+                    }
                 },
                 {
                     loader:'@svgr/webpack',
@@ -158,7 +167,6 @@ module.exports={
         }),
         new MiniCssExtractPlugin({
             filename:'style.css'
-        }),
-        
+        })
     ]
 };
