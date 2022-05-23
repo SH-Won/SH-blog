@@ -1,6 +1,11 @@
 const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin =require('mini-css-extract-plugin');
+
+// CkEditor5 
+const {styles} = require('@ckeditor/ckeditor5-dev-utils');
+
+const CKEditorWebpackPlugin = require('@ckeditor/ckeditor5-dev-webpack-plugin');
 // import CKEditorPlugin from '@ckeditor/ckeditor5-dev-webpack-plugin'
 // const {CleanWebpackPlugin} =require('clean-webpack-plugin');
 // const webpackConfig = {
@@ -91,13 +96,53 @@ module.exports={
             },
             {
                 test:/\.css$/,
-                use:[MiniCssExtractPlugin.loader,'css-loader']
+                use:[MiniCssExtractPlugin.loader,'css-loader'],
+                exclude: [
+                    // cssModuleRegex,
+                    /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css$/,
+                ],
+            },
+            {
+                test: /ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/,
+                use: [ 'raw-loader' ]
+            },
+            {
+                test: /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css$/,
+                use: [
+                    {
+                        loader: 'style-loader',
+                        options: {
+                            injectType: 'singletonStyleTag',
+                            attributes: {
+                                'data-cke': true
+                            }
+                        }
+                    },
+                    'css-loader',
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            postcssOptions: styles.getPostCssConfig( {
+                                themeImporter: {
+                                    themePath: require.resolve( '@ckeditor/ckeditor5-theme-lark' )
+                                },
+                                minify: true
+                            } )
+                        }
+                    }
+                ]
             },
             
+         
            
             {
                 test : /\.(png|svg|jpg|gif)$/,
                 use:['file-loader'],
+                exclude: [
+                    /ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/,
+                    /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css$/
+                ],
+                // name: 'static/media/[name].[hash:8].[ext]',
             
             },
             {
@@ -135,28 +180,57 @@ module.exports={
         //     test:/\.json$/,
         //     loader:"json-loader"
         // },
-        {
-            test:/\.svg(\?v=\d+\.\d+\.\d+)?$/,
-            use:[
-                {
-                    loader:'babel-loader',
-                    options:{
-                        presets:[
-                            '@babel/preset-env',
+
+        // {
+        //     test:/\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        //     use:[
+        //         {
+        //             loader:'babel-loader',
+        //             options:{
+        //                 presets:[
+        //                     '@babel/preset-env',
                             
-                            '@babel/preset-react'
-                        ],
-                    }
-                },
-                {
-                    loader:'@svgr/webpack',
-                    options:{
-                        babel:false,
-                        icon:true,
-                    }
-                }
-            ]
-        }
+        //                     '@babel/preset-react'
+        //                 ],
+        //             }
+        //         },
+        //         {
+        //             loader:'@svgr/webpack',
+        //             options:{
+        //                 babel:false,
+        //                 icon:true,
+        //             }
+        //         }
+        //     ]
+        // },
+
+        // {
+        //     // Match files from the `ckeditor5` package but also `ckeditor5-*` packages.
+        //     test: /(ckeditor5(?:-[^\/\\]+)?)[\/\\].+\.js$/,
+        //     use: [
+        //         {
+        //             loader: 'babel-loader',
+        //             options: {
+        //                 presets: [ require( '@babel/preset-env' ) ]
+        //             }
+        //         }
+        //     ]
+        // },
+        // {
+        //     loader: require.resolve( 'file-loader' ),
+        //     options: {
+        //         // Exclude `js` files to keep the "css" loader working as it injects
+        //         // its runtime that would otherwise be processed through the "file" loader.
+        //         // Also exclude `html` and `json` extensions so they get processed
+        //         // by webpack's internal loaders.
+        //         exclude: [
+                    
+        //             /ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/,
+        //             /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css$/
+        //         ],
+        //         name: 'static/media/[name].[hash:8].[ext]',
+        //     }
+        // }
             
         ]
     },
@@ -167,6 +241,10 @@ module.exports={
         }),
         new MiniCssExtractPlugin({
             filename:'style.css'
-        })
+        }),
+        // new CKEditorWebpackPlugin({
+        //     language:'ko',
+        //     additionalLanguages:'all',
+        // })
     ]
 };
