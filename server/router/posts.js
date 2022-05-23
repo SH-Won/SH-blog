@@ -6,6 +6,7 @@ const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
 const {CloudinaryStorage} =require('multer-storage-cloudinary');
 
+const {Article} = require('../models/Article');
 
 const cloud_name=process.env.cloud_name || config.cloud_name
 const api_key=process.env.api_key || config.api_key
@@ -81,5 +82,19 @@ router.get('/detail',(req,res)=>{
     })
 
 })
+
+// article
+router.get('/article',(res,req) =>{
+    Article
+    .find()
+    .exec((err,articles)=>{
+        if(err) res.status(400).json({success:false,err});
+        res.status(200).json({articles,success:true});
+    })
+})
+router.post('/uploadArticle',(res,req)=>{
+    console.log(JSON.parse(req.body))
+})
+
 
 module.exports = router;

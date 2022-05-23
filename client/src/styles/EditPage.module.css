@@ -1,9 +1,7 @@
 .EditPage{
 
 }
-.ck.ck-editor{
-    margin:1.5rem;
-}
-.ck.ck-editor > figure > img{
-    max-width: 500px;
+.uploadBtn{
+    width:100px;
+    height:70px;
 }

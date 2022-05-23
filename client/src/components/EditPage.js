@@ -1,5 +1,8 @@
 // import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
 import ClassicEditor from '../utills/ckeditor';
+import CustomUploadAdapterPlugin from '../utills/UploadAdapter';
+// import Editor from '../utills/Editor';
+import {uploadArticle} from '../utills/api'
 // import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 // import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
 // import CodeBlock from '@ckeditor/ckeditor5-code-block/src/codeblock.js';
@@ -9,130 +12,91 @@ import ClassicEditor from '../utills/ckeditor';
 // import ImageResizeEditing from '@ckeditor/ckeditor5-image/src/imageresize/imageresizeediting';
 // import ImageResizeHandles from '@ckeditor/ckeditor5-image/src/imageresize/imageresizehandles';
 
-// import styles from '../styles/EditPage.module.css';
+import styles from '../styles/EditPage.module.css';
 
-const ENDPOINT = `${window.origin}/api/posts/uploadfiles`;
+// const ENDPOINT = `${window.origin}/api/posts/uploadfiles`;
 
-class UploadAdapter{
-    constructor(loader){
-        this.loader = loader;
-    }
-    upload = () =>{
-        return this.loader.file.then(async file => {
-           let formData = new FormData();
-           formData.append('file',file);
-           console.log(formData);
-            const res = await fetch(ENDPOINT,{
-                method:'POST',
-                headers:{
-                    // 'Content-Type':'multipart/form-data'
-                },
-                body:formData,
-            });
-            return await res.json();
-        }).then(response => Promise.resolve({default:response.url}))
+// class UploadAdapter{
+//     constructor(loader){
+//         this.loader = loader;
+//     }
+//     upload = () =>{
+//         return this.loader.file.then(async file => {
+//            let formData = new FormData();
+//            formData.append('file',file);
+//            console.log(formData);
+//             const res = await fetch(ENDPOINT,{
+//                 method:'POST',
+//                 headers:{
+//                     // 'Content-Type':'multipart/form-data'
+//                 },
+//                 body:formData,
+//             });
+//             return await res.json();
+//         }).then(response => Promise.resolve({default:response.url}))
 
-        // return this.loader.file.then(file =>  new Promise(async (resolve,reject) =>{
-        //     let formData = new FormData();
-        //     formData.append('file',file);
-        //     const res = await fetch(ENDPOINT,{
-        //         method:'POST',
-        //         header:{
+//         // return this.loader.file.then(file =>  new Promise(async (resolve,reject) =>{
+//         //     let formData = new FormData();
+//         //     formData.append('file',file);
+//         //     const res = await fetch(ENDPOINT,{
+//         //         method:'POST',
+//         //         header:{
 
-        //         },
-        //         body:formData
-        //     });
-        //     if(res.ok){
-        //         const response = await res.json();
-        //         resolve({default:response.url});
-        //     }
-        // }))
-    }
-}
-function CustomUploadAdapterPlugin(editor){
-    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => new UploadAdapter(loader);
-}
+//         //         },
+//         //         body:formData
+//         //     });
+//         //     if(res.ok){
+//         //         const response = await res.json();
+//         //         resolve({default:response.url});
+//         //     }
+//         // }))
+//     }
+// }
+// function CustomUploadAdapterPlugin(editor){
+//     editor.plugins.get('FileRepository').createUploadAdapter = (loader) => new UploadAdapter(loader);
+// }
 
 
-// ClassicEditor.builtinPlugins = [
-//     CustomUploadAdapterPlugin,
-// ]
 export default function EditPage({$target}){
     
     const $page = document.createElement('div');
     const btn = document.createElement('button');
-    $page.className = `EditPage`;
+    const uploadBtn = document.createElement('button');
+    uploadBtn.className = `${styles.uploadBtn}`;
+    $page.className = `${styles.EditPage}`;
     $target.appendChild($page);
+    
     this.editor = null;
     this.render = () =>{
-        
-        // ClassicEditor.builtinPlugins = [CodeBlock];
+        // new Editor({
+        //     $target:$page,
+        //     self: this.editor,
+        // })
         ClassicEditor.create($page,{
-        extraPlugins: [CustomUploadAdapterPlugin],
-            //   plugins : [CustomUploadAdapterPlugin],
-        //    plugins:[Image,ImageResizeEditing,ImageResizeHandles],
-        //    language:'en',
-        //    plugins:[CodeBlock],
-        //    toolbar:['codeBlock'],
-        //    plugins:[CodeBlock]
-        //    codeBlock:{
-        //     languages:[
-        //         {language:'html', label:'HTML'},
-        //         {language:'css',label:'CSS'},
-        //         {language:'javascript',label:'JAVASCRIPT'}
-        //     ],
-        // },
-        //    image:{
-        //     //    styles:{
-                   
-        //     //    },
-        //        resizeUnit:'%',
-        //        resizeOptions:[{
-        //            name:'resizeImage:original',
-        //            value:null,
-        //            icon:'original',
-        //        },
-        //        {
-        //            name:'resizeImage:25',
-        //            value:'25',
-        //            icon:'small',
-        //        },
-        //        {
-        //         name:'resizeImage:50',
-        //         value:'50',
-        //         icon:'medium',
-        //        },
-        //        {
-        //         name:'resizeImage:75',
-        //         value:'75',
-        //         icon:'large'
-        //       }
-        //     ],
-        //     toolbar :['resizeImage'],
-        //    }
-
-        })
-        .then(editor =>{
-        
+            extraPlugins:[CustomUploadAdapterPlugin],
+        }).then(editor =>{
             editor.editing.view.change(writer =>{
                 // writer.setStyle('margin','1rem',editor.editing.view.document.getRoot());
                 writer.setStyle('min-height','450px',editor.editing.view.document.getRoot());
 
             });
-            // editor.plugins.get('FileRepository');
-            // editor.plugins.get(CodeBlock);
             editor.ui.element.style.margin = '2rem';
-            
-            // console.log(editor.editing);
-            // editor.ui.view.width = '70%';
-            this.editor = editor;
+            this.editor = editor
         })
         .catch(err => console.log(err));
-        $target.appendChild(btn);
-
-        // this.editor.config
         
+        uploadBtn.innerText = '올리기';
+        $target.appendChild(btn);
+        $target.appendChild(uploadBtn);
     }
     this.render();
-    btn.addEventListener('click',()=> console.log(this.editor.getData()))
+    btn.addEventListener('click',()=> console.log(this.editor.getData()));
+    uploadBtn.addEventListener('click',()=>{
+        const formData = new FormData();
+        // console.log(this.editor.getData());
+        const data = this.editor.getData();
+        // console.log(typeof this.editor.getData());
+      
+        uploadArticle(data);
+    })
 }

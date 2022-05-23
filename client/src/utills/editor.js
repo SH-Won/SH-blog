@@ -1,71 +1,68 @@
-// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-// // import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
-// // import CodeBlock from '@ckeditor/ckeditor5-code-block/src/codeblock.js';
-// // import Highlight from '@ckeditor/ckeditor5-highlight/src/highlight'
-// import CustomUploadAdapterPlugin from './UploadAdapter';
+import ClassicEditor from './ckeditor';
+const ENDPOINT = `${window.origin}/api/posts/uploadfiles`;
 
+class UploadAdapter{
+    constructor(loader){
+        this.loader = loader;
+    }
+    upload = () =>{
+        return this.loader.file.then(async file => {
+           let formData = new FormData();
+           formData.append('file',file);
+           console.log(formData);
+            const res = await fetch(ENDPOINT,{
+                method:'POST',
+                headers:{
+                    // 'Content-Type':'multipart/form-data'
+                },
+                body:formData,
+            });
+            return await res.json();
+        }).then(response => Promise.resolve({default:response.url}))
 
-// export default function Editor({$target,self}){
-//     ClassicEditor.create($target,{
-//         extraPlugins: [CustomUploadAdapterPlugin],
-//         // plugins:[CodeBlock],
-//         //    plugins:[Image,ImageResizeEditing,ImageResizeHandles],
-//            language:'en',
-//         //    plugins:[CodeBlock],
-//         //    toolbar:['codeBlock'],
-//         //    plugins:[CodeBlock]
-//         //    codeBlock:{
-//         //     languages:[
-//         //         {language:'html', label:'HTML'},
-//         //         {language:'css',label:'CSS'},
-//         //         {language:'javascript',label:'JAVASCRIPT'}
-//         //     ],
-//         // },
-//         //    image:{
-//         //     //    styles:{
-                   
-//         //     //    },
-//         //        resizeUnit:'%',
-//         //        resizeOptions:[{
-//         //            name:'resizeImage:original',
-//         //            value:null,
-//         //            icon:'original',
-//         //        },
-//         //        {
-//         //            name:'resizeImage:25',
-//         //            value:'25',
-//         //            icon:'small',
-//         //        },
-//         //        {
-//         //         name:'resizeImage:50',
-//         //         value:'50',
-//         //         icon:'medium',
-//         //        },
-//         //        {
-//         //         name:'resizeImage:75',
-//         //         value:'75',
-//         //         icon:'large'
-//         //       }
-//         //     ],
-//         //     toolbar :['resizeImage'],
-//         //    }
+        // return this.loader.file.then(file =>  new Promise(async (resolve,reject) =>{
+        //     let formData = new FormData();
+        //     formData.append('file',file);
+        //     const res = await fetch(ENDPOINT,{
+        //         method:'POST',
+        //         header:{
 
-//         })
-//         .then(editor =>{
+        //         },
+        //         body:formData
+        //     });
+        //     if(res.ok){
+        //         const response = await res.json();
+        //         resolve({default:response.url});
+        //     }
+        // }))
+    }
+}
+function CustomUploadAdapterPlugin(editor){
+    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => new UploadAdapter(loader);
+}
+
+export default function Editor({$target,self}){
+
+    ClassicEditor.create($target,{
+        extraPlugins: [CustomUploadAdapterPlugin],
+        })
+        .then(editor =>{
         
-//             editor.editing.view.change(writer =>{
-//                 // writer.setStyle('margin','1rem',editor.editing.view.document.getRoot());
-//                 writer.setStyle('min-height','450px',editor.editing.view.document.getRoot());
+            editor.editing.view.change(writer =>{
+                // writer.setStyle('margin','1rem',editor.editing.view.document.getRoot());
+                writer.setStyle('min-height','450px',editor.editing.view.document.getRoot());
 
-//             });
-//             // editor.plugins.get('FileRepository');
-//             // editor.plugins.get(CodeBlock);
-//             editor.ui.element.style.margin = '2rem';
+            });
+            // editor.plugins.get('FileRepository');
+            // editor.plugins.get(CodeBlock);
+            editor.ui.element.style.margin = '2rem';
             
-//             // console.log(editor.editing);
-//             // editor.ui.view.width = '70%';
-//             self = editor;
-//         })
-//         .catch(err => console.log(err));
+            // console.log(editor.editing);
+            // editor.ui.view.width = '70%';
+            console.log(self);
+            self = editor;
+        })
+        .catch(err => console.log(err));
 
-// }
+        // this.editor.config
+}
