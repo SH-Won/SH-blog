@@ -12,19 +12,20 @@ export const request  = async (url ="",params = {}) =>{
          throw new Error("무언가 이상해~~");
     }
 }
-export const uploadArticle = async (data) =>{
-    try{
-        // console.log(JSON.stringify(formData));
-    
+export const uploadArticle = async (data = {}) =>{
+    try{    
         const fullUrl = `${ENDPOINT}/posts/uploadArticle`;
+        
         const res = await fetch(fullUrl,{
             method:'POST',
             headers:{
-
+                'Content-Type' : 'application/json',
+                // 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body:JSON.stringify({data})
+            body:JSON.stringify(data)
         })
-        return;
+        const {success} = await res.json();
+        if(success) return success;
 
     }catch(e){
         throw new Error("무언가 이상합니다");

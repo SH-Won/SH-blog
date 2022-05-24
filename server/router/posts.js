@@ -46,11 +46,12 @@ router.post('/uploadfiles',(req,res)=>{
     })
 })
 router.post('/uploadPost',(req,res)=>{
+    
     const post = new Post(req.body);
     post.save((err,result)=>{
         if(err) return res.json({success:false,err})
         res.json({success:true});
-        console.log(result);
+        // console.log(result);
     })
 })
 
@@ -84,7 +85,7 @@ router.get('/detail',(req,res)=>{
 })
 
 // article
-router.get('/article',(res,req) =>{
+router.get('/article',(req,res) =>{
     Article
     .find()
     .exec((err,articles)=>{
@@ -92,8 +93,17 @@ router.get('/article',(res,req) =>{
         res.status(200).json({articles,success:true});
     })
 })
-router.post('/uploadArticle',(res,req)=>{
-    console.log(JSON.parse(req.body))
+
+router.post('/uploadArticle', (req,res)=>{
+    // console.log(req.body);
+    // console.log(typeof req.body);
+    // console.log(JSON.parse(req.body));
+    // const {data} = JSON.parse(req.body);
+    new Article(req.body)
+    .save((err,result)=>{
+        if(err) res.status(400).json({success:false,err});
+        res.status(200).json({success:true});
+    })
 })
 
 

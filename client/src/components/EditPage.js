@@ -94,9 +94,13 @@ export default function EditPage({$target}){
     uploadBtn.addEventListener('click',()=>{
         const formData = new FormData();
         // console.log(this.editor.getData());
-        const data = this.editor.getData();
+        // console.log(this.editor);
+        const data = {
+            'title':'',
+            'data': this.editor.getData(),
+        }
         // console.log(typeof this.editor.getData());
-      
-        uploadArticle(data);
+        uploadArticle(data)
+        .then(response => console.log(response));
     })
 }

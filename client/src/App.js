@@ -4,6 +4,7 @@ import PostDetailPage from './components/PostDetailPage.js';
 import BestPage  from './components/BestPage.js'
 import { init } from './utills/router.js';
 import EditPage from './components/EditPage.js';
+import ArticlePage from './components/ArticlePage.js';
 
 
 export default function App($target){
@@ -41,6 +42,14 @@ export default function App($target){
         else if(pathname ==='/edit'){
             new EditPage({
                 $target,
+            })
+        }
+        else if(pathname === '/article'){
+            new ArticlePage({
+                $target,
+                initialState:{
+                    articles:[],
+                }
             })
         }
         

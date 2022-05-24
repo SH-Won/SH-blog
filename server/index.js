@@ -22,19 +22,23 @@ const connect = mongoose.connect(config.mongoURI,
   .then(() => console.log('MongoDB Connected...'))
   .catch(err => console.log(err));
 
-app.use(cors())
+app.use(cors());
+// app.use(express.json());
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(express.urlencoded({extended:true}));
+app.use(express.json());
+
+//to get json data
+// app.use(express.bodyParser());
+// app.use(bodyParser.json());
 app.use('/api/posts',require('./router/posts'))
 
 //to not get any deprecation warning or error
 //support parsing of application/x-www-form-urlencoded post data
-app.use(bodyParser.urlencoded({ extended: true }));
-//to get json data
-// support parsing of application/json type post data
-app.use(bodyParser.json());
 
-// app.use('/api/users', require('./routes/users'));
-// app.use('/api/posts',require('./routes/posts'));
-// app.use('/api/comment',require('./routes/comment'));
+
+// support parsing of application/json type post data
 
 
 //use this to show the image you have in node js server to client (react js)
