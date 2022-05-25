@@ -22,7 +22,6 @@ export default function ArticlePage({$target,initialState}){
             ...this.state,
             posts:this.state.posts,
         })
-        this.render();
     }
    
     const loading = new Loading({

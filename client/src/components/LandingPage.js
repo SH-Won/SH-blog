@@ -36,6 +36,7 @@ export default function LandingPage({$target,initialState,cache,testCache}){
     this.init = () =>{
        const stateKey = this.state.checked.sort().join(',');
        testCache.set(stateKey,this.state);
+       testCache.set('pre',this.state);
        const hasMore = this.state.postSize >= this.state.limit;
        const loading = this.state.isLoading;
        const element = $page.children[2].lastElementChild;
@@ -64,8 +65,7 @@ export default function LandingPage({$target,initialState,cache,testCache}){
             throw new Error("서버가 이상합니다");
 
         }finally{
-            // testCache.set('root',this.state);
-            // console.log(testCache);
+            
         }
     }
     const listView = new ListView({
@@ -130,7 +130,7 @@ export default function LandingPage({$target,initialState,cache,testCache}){
             }
         },
     })
-    if(!testCache.has('')){
+    if(!testCache.has('pre')){
         this.fetchPosts();
     }
 
