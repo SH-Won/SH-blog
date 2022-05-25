@@ -20,7 +20,7 @@ export default function App($target){
         if(pathname === '/'){
             new LandingPage({
                 $target,
-                initialState : testCache.has('root') ? testCache.get('root') : {
+                initialState : testCache.has('') ? testCache.get('') : {
                     posts:[],
                     skip:0,
                     limit:2,
@@ -44,14 +44,14 @@ export default function App($target){
                 $target,
             })
         }
-        else if(pathname === '/article'){
-            new ArticlePage({
-                $target,
-                initialState:{
-                    articles:[],
-                }
-            })
-        }
+        // else if(pathname === '/article'){
+        //     new ArticlePage({
+        //         $target,
+        //         initialState:{
+        //             posts:[],
+        //         }
+        //     })
+        // }
         
     }
     init(this.route);

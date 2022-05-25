@@ -12,7 +12,11 @@ const articleSchema = mongoose.Schema({
     },
     data:{
         type:String,
-    }
+    },
+    imageUrls :{
+        type:Array,
+        default:[],
+    },
     
 
     

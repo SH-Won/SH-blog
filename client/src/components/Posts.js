@@ -1,6 +1,6 @@
-import { changeRoute } from '../utills/router.js';
+
 import style from '../styles/Posts.module.css'
-export default function Posts({$target,initialState}){
+export default function Posts({$target,initialState,callback = null}){
     this.state = initialState;
     const $postContainer = document.createElement('article');
     $postContainer.className = `${style.postContainer}`;
@@ -32,7 +32,7 @@ export default function Posts({$target,initialState}){
         if($post){
             const {postId} = $post.dataset;
             if(postId){
-            changeRoute(`/post/${postId}`);
+                callback(postId);
             }
         }
     })

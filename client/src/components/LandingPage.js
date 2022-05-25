@@ -5,12 +5,14 @@ import Loading from './Loading.js';
 import  {InfinityScroll}  from '../utills/InfinityScroll.js';
 import ListView from './ListView.js';
 import CheckBox from './CheckBox.js';
+import { category } from '../utills/category.js';
+import { changeRoute } from '../utills/router.js';
 
 export default function LandingPage({$target,initialState,cache,testCache}){
 
     const $page = document.createElement('div');
     
-    $page.className = 'landingPage';
+    $page.className = 'page landing';
     $target.appendChild($page);
     
     this.state = {
@@ -62,7 +64,8 @@ export default function LandingPage({$target,initialState,cache,testCache}){
             throw new Error("서버가 이상합니다");
 
         }finally{
-            testCache.set('root',this.state);
+            // testCache.set('root',this.state);
+            // console.log(testCache);
         }
     }
     const listView = new ListView({
@@ -71,7 +74,10 @@ export default function LandingPage({$target,initialState,cache,testCache}){
     })
     const checkBox = new CheckBox({
         $target:$page,
-        check: this.state.checked,
+        initialState:{
+            items:category,
+            checked:this.state.checked,
+        },
         callback : (id,selected) => {
             const {checked} = this.state;
             if(selected){
@@ -81,6 +87,7 @@ export default function LandingPage({$target,initialState,cache,testCache}){
                 checked.splice(idx,1);
             }
             const stateKey = checked.sort().join(',');
+            // stateKey = stateKey === '' ? 'root' : stateKey;
             if(testCache.has(stateKey)){
                 this.setState(testCache.get(stateKey));
                 return;
@@ -96,6 +103,9 @@ export default function LandingPage({$target,initialState,cache,testCache}){
     const posts = new Posts({
         $target : $page,
         initialState:this.state,
+        callback : (id) => {
+            changeRoute(`/post/${id}`);
+        }
     })
     const loading = new Loading({
         $target:$page,
@@ -120,7 +130,7 @@ export default function LandingPage({$target,initialState,cache,testCache}){
             }
         },
     })
-    if(!testCache.has('root')){
+    if(!testCache.has('')){
         this.fetchPosts();
     }
 

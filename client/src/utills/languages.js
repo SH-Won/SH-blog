@@ -1,0 +1,22 @@
+export const languages = [
+    {
+        '_id':1,
+        'name':'Html',
+    },
+    {
+        '_id':2,
+        'name':'Css',
+    },
+    {
+        '_id':3,
+        'name':'JavaScript',
+    },
+    {
+        '_id':4,
+        'name':'React',
+    },
+    {
+        '_id':5,
+        'name':'node',
+    }
+]

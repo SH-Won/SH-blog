@@ -24,7 +24,7 @@ export default function ListView({$target,maxSize}){
     this.render();
     $ListView.addEventListener('click', e=>{
         if(e.target.tagName !== 'BUTTON') return;
-        const posts = document.querySelector('.landingPage > article');
+        const posts = document.querySelector('.page > article');
         const selectedIndex = +e.target.parentNode.dataset.index;
         const {currentIndex}  = this.state;
         // const posts = $target.children[2];

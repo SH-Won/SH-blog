@@ -1,7 +1,7 @@
-import {category} from './category.js';
+
 import style from '../styles/CheckBox.module.css';
-export default function CheckBox({$target,check,callback = null}){
-    this.state = check;
+export default function CheckBox({$target,initialState,callback = null}){
+    this.state = initialState;
     const checkBox = document.createElement('div');
     checkBox.className = `${style.checkBox}`;
     $target.appendChild(checkBox);
@@ -10,15 +10,16 @@ export default function CheckBox({$target,check,callback = null}){
         this.render();
     }
     this.render = () => {
+        const {items,checked} = this.state;
         checkBox.innerHTML = `
-        ${category.map(el => `
+        ${items.map(item => `
         <label>
-        <input type="checkbox" value="${el.id}"/>
-        ${el.name}
+        <input type="checkbox" value="${item.id}"/>
+        ${item.name}
         </label>
         `).join('')}
         `;
-        this.state.forEach(id => checkBox.children[+id-1].children[0].checked = true);
+        checked.forEach(id => checkBox.children[+id-1].children[0].checked = true);
     }
     this.render();
     checkBox.addEventListener('change',e =>{

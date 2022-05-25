@@ -11,6 +11,7 @@ export default function NavBar({$target}){
         <ul class="${style.list}">
         <li data-route="/favorite">좋아요</li>
         <li data-route="/best">베스트</li>
+        <li data-route="/article">게시글</li>
         </ul>
         `
     }

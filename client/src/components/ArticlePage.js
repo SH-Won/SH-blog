@@ -1,48 +1,63 @@
 import {request} from '../utills/api'
 import '../styles/style_ck.css';
+import Posts from './Posts';
+import Loading from './Loading';
+import { languages } from '../utills/languages';
+import ListView from './ListView';
+import { changeRoute } from '../utills/router';
 export default function ArticlePage({$target,initialState}){
     
     const $page = document.createElement('div');
     $page.className = 'ArticlePage';
     $target.appendChild($page);
-    this.state = initialState;
+    this.state = {
+        isLoading: true,
+        checked:[],
+        ...initialState,
+    }
     this.setState = (nextState) =>{
         this.state = nextState;
+        loading.setState(this.state.isLoading)
+        articles.setState({
+            ...this.state,
+            posts:this.state.posts,
+        })
         this.render();
     }
-    this.render = () =>{
-        const {articles} = this.state;
-        if(articles.length === 0){
-            return;
+   
+    const loading = new Loading({
+        $target:$page,
+        initialState:this.state.isLoading,
+    })
+    const listView = new ListView({
+        $target:$page,
+        maxSize:4,
+    })
+    const articles = new Posts({
+        $target:$page,
+        initialState:this.state,
+        callback: (id) =>{
+            changeRoute(`/article/${id}`);
         }
-        // console.log(this.state);
-        // console.log(articles);
-        // $page.innerHTML = '123';
-        $page.innerHTML = `
-        ${articles.map(article => `
-        <div class='ck-content'>
-        ${article.data}
-        </div>
-        `)}
-        `
-        // $page.innerHTML = `
-        // ${articles.map(article => `
-        // <div>
-        // ${article.data.slice(1,-1)}
-        // </div>
-        // `).join('')}
-        // `
-    }
+    })
     this.fetchArticle = async () =>{
         try{
+            this.setState({
+                ...this.state,
+                isLoading:true,
+            })
             const {articles} = await request('/article');
             this.setState({
                 ...this.state,
-                articles,
+                posts:articles,
             })
-
         }catch(e){
 
+        }finally{
+            this.setState({
+                ...this.state,
+                isLoading:false,
+            })
         }
     }
     this.fetchArticle();
