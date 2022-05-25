@@ -8,7 +8,7 @@ import { changeRoute } from '../utills/router';
 export default function ArticlePage({$target,initialState}){
     
     const $page = document.createElement('div');
-    $page.className = 'ArticlePage';
+    $page.className = 'page article';
     $target.appendChild($page);
     this.state = {
         isLoading: true,
