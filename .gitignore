@@ -1,8 +1,11 @@
+
 /node_modules
-/build
+/client/build
+/client/node_modules
 
 /dev.js
 /uploads
+/server/config/dev.js
 
 
 
@@ -13,3 +16,4 @@ yarn-debug.kog*
 yarn-error.log*
 
 .vscode
+
