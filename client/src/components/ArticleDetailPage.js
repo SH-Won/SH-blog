@@ -8,6 +8,7 @@ export default function ArticleDetailPage({$target,articleId}){
     $target.appendChild($page);
     this.state = {
         article:null,
+        createdAt:null,
         isLoading:true,
     }
     this.setState = (nextState) =>{
@@ -17,12 +18,18 @@ export default function ArticleDetailPage({$target,articleId}){
     }
     this.render = () =>{
         if(this.state.isLoading) return;
-        
         const {article} = this.state;
+        if(!this.state.createdAt){
+            const date = new Date(article.createdAt).toLocaleString('ko-KR').split('. ');
+            this.state.createdAt = `${date[0]}년 ${date[1]}월 ${date[2]}일 ${date[3]}`
+        }
         console.log(article);
         $page.innerHTML = `
         <div class="${styles.container}">
         <h2>${article.title}</h2>
+        <div class="${styles.writtenTime}">
+        <span>${this.state.createdAt}</span>
+        </div>
         <div class="ck-content">
         ${article.data}
         </div>

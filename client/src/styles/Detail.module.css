@@ -5,6 +5,13 @@
     width:100%;
     padding:1rem;
     margin:0 auto;
-    border: .2rem solid #6c63f5;
     box-sizing: border-box;
+}
+.writtenTime{
+    display:flex;
+    justify-content: flex-end;
+
+}
+.writtenTime > span{
+    font-size: .6rem;
 }
