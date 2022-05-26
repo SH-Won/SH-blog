@@ -15,3 +15,9 @@
     width:100px;
     height:70px;
 }
+/* 
+function diff(a,b){
+    return Math.abs(a-b);
+ }
+ 
+ 함수 diff 는 파라미터 a,b 의 차를 return 한다. */

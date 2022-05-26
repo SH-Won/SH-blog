@@ -16,6 +16,9 @@ const articleSchema = mongoose.Schema({
     thumbnail :{
         type:String,
     },
+    category:{
+        type:Number,
+    }
     
 
     

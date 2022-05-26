@@ -5,6 +5,7 @@ import BestPage  from './components/BestPage.js'
 import { init } from './utills/router.js';
 import EditPage from './components/EditPage.js';
 import ArticlePage from './components/ArticlePage.js';
+import ArticleDetailPage from './components/ArticleDetailPage.js';
 
 
 export default function App($target){
@@ -50,6 +51,13 @@ export default function App($target){
                 initialState:{
                     posts:[],
                 }
+            })
+        }
+        else if(pathname.split('/')[1] === 'article'){
+            const [ , ,articleId] = pathname.split('/');
+            new ArticleDetailPage({
+                $target,
+                articleId,
             })
         }
         
