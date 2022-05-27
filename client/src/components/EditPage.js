@@ -45,7 +45,7 @@ export default function EditPage({$target}){
         callback : (id) => {
             this.setState({
                 ...this.state,
-                selectedLanguage:id,
+                selectedLanguage:id === 0 ? null : id,
             })
         }
     })
@@ -68,8 +68,12 @@ export default function EditPage({$target}){
     }
     this.render();
     uploadBtn.addEventListener('click',()=>{
-        if(!this.state.selectedLanguage){
+        if(!this.state.selectedLanguage ){
             alert('카테고리를 선택해 주세요');
+            return;
+        }
+        if(!this.state.title){
+            alert('제목을 입력해주세요');
             return;
         }
         const data = {
@@ -81,4 +85,5 @@ export default function EditPage({$target}){
         uploadArticle(data)
         .then(response => console.log(response));
     })
+
 }

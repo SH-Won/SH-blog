@@ -7,7 +7,7 @@ export default function SelectOptions({$target,className,initialState,callback})
     this.render = () =>{
         const {options} = this.state;
         component.innerHTML = `
-        <option>선택</option>
+        <option value="0">선택</option>
         ${options.map(option =>`
         <option value="${option._id}">
         ${option.name}
@@ -19,8 +19,9 @@ export default function SelectOptions({$target,className,initialState,callback})
 
     component.addEventListener('change', e =>{
         if(e.target.tagName !=='SELECT') return;
+        console.log(e.target.value);
         const id = parseInt(e.target.value);
-        if(id){
+        if(id !== null){
             callback(id)
         }
     })
