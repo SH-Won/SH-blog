@@ -6,16 +6,19 @@ import { languages,getImageURL } from '../utills/languages';
 import styles from '../styles/EditPage.module.css';
 import SelectOptions from './SelectOptions';
 import TitleInput from './TitleInput';
-
+import ClickButton from './ClickButton';
+import {changeRoute} from '../utills/router'
 export default function EditPage({$target}){
     
     const $page = document.createElement('div');
     const editor = document.createElement('div');
-    const uploadBtn = document.createElement('button');
-    uploadBtn.className = `${styles.uploadBtn}`;
+    const $btnContainer = document.createElement('div');
+    
     $page.className = `${styles.EditPage}`;
+    $btnContainer.className = `${styles.btnContainer}`;
     $target.appendChild($page);
     $target.appendChild(editor);
+    $target.appendChild($btnContainer);
 
     this.state = {
         title:'',
@@ -49,7 +52,50 @@ export default function EditPage({$target}){
             })
         }
     })
+    const cancelBtn = new ClickButton({
+        $target:$btnContainer,
+        initialState : {
+             className : `${styles.cancelBtn}`,
+             name: '취소',
+        },
+        onClick : () =>{
+            const goBack = confirm('정말 작성을 취소 하시겠어요 ?');
+            if(goBack){
+                changeRoute('/article');
+            }
+            else return;
+        }
+    })
+    const uploadBtn = new ClickButton({
+        $target: $btnContainer,
+        initialState : {
+            className : `${styles.uploadBtn}`,
+            name: '완료',
+        },
+        onClick : () =>{
+            if(!this.state.selectedLanguage ){
+                alert('카테고리를 선택해 주세요');
+                return;
+            }
+            if(!this.state.title){
+                alert('제목을 입력해주세요');
+                return;
+            }
+            const data = {
+                'title':this.state.title,
+                'data': this.editor.getData(),
+                'category':this.state.selectedLanguage,
+                'thumbnail': getImageURL(this.state.selectedLanguage)
+            }
+            uploadArticle(data)
+            .then(response =>{
+                console.log(response);
+                changeRoute('/article');
+            });
+        }
+    })
     this.render = () =>{
+
         ClassicEditor.create(editor,{
             extraPlugins:[CustomUploadAdapterPlugin],
         }).then(editor =>{
@@ -62,28 +108,9 @@ export default function EditPage({$target}){
             this.editor = editor
         })
         .catch(err => console.log(err));
-        
-        uploadBtn.innerText = '올리기';
-        $target.appendChild(uploadBtn);
+        cancelBtn.render();
+        uploadBtn.render();
+
     }
     this.render();
-    uploadBtn.addEventListener('click',()=>{
-        if(!this.state.selectedLanguage ){
-            alert('카테고리를 선택해 주세요');
-            return;
-        }
-        if(!this.state.title){
-            alert('제목을 입력해주세요');
-            return;
-        }
-        const data = {
-            'title':this.state.title,
-            'data': this.editor.getData(),
-            'category':this.state.selectedLanguage,
-            'thumbnail': getImageURL(this.state.selectedLanguage)
-        }
-        uploadArticle(data)
-        .then(response => console.log(response));
-    })
-
 }

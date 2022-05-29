@@ -13,13 +13,27 @@
     width:20%;
     padding:.5rem;
 }
-.uploadBtn{
-    width:100px;
-    height:70px;
+.btnContainer{
+    padding:0;
+    margin:1rem 2rem 1rem 2rem;
+    display:flex;
+    justify-content: flex-end;
 }
-/* 
-function diff(a,b){
-    return Math.abs(a-b);
- }
- 
- 함수 diff 는 파라미터 a,b 의 차를 return 한다. */
+.cancelBtn {
+    width:30%;
+    font-size:1rem;
+    border-radius: .5rem;
+    background-color: #e7e2e2;
+    color: #0f1817;
+    border:transparent;
+    margin:.3rem;
+}
+.uploadBtn{
+    width:30%;
+    font-size:1rem;
+    border-radius: .5rem;
+    color:#015834;
+    background-color: #d5f7e7;
+    border:transparent;
+    margin:.3rem;
+}

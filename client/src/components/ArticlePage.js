@@ -1,10 +1,11 @@
 import {request} from '../utills/api'
-import '../styles/style_ck.css';
 import Posts from './Posts';
 import Loading from './Loading';
 import { languages } from '../utills/languages';
 import ListView from './ListView';
 import { changeRoute } from '../utills/router';
+import ClickButton from './ClickButton';
+import '../styles/page.css';
 export default function ArticlePage({$target,initialState}){
     
     const $page = document.createElement('div');
@@ -32,6 +33,15 @@ export default function ArticlePage({$target,initialState}){
         $target:$page,
         maxSize:4,
     })
+    const writeBtn = new ClickButton({
+        $target:$page,
+        initialState:{
+            className:'writeBtn',
+            name : '글 쓰기',
+        },
+        onClick : () => changeRoute('/edit'),
+    }).render();
+
     const articles = new Posts({
         $target:$page,
         initialState:this.state,
