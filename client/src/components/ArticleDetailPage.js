@@ -2,10 +2,13 @@ import { request } from '../utills/api';
 import Loading from './Loading';
 import '../styles/style_ck.css';
 import styles from '../styles/Detail.module.css';
+import ClickButton from './ClickButton';
+import { changeRoute } from '../utills/router';
 export default function ArticleDetailPage({$target,articleId}){
     const $page = document.createElement('div');
     $page.className = `${styles.page}`;
     $target.appendChild($page);
+    
     this.state = {
         article:null,
         createdAt:null,
@@ -23,19 +26,31 @@ export default function ArticleDetailPage({$target,articleId}){
             const date = new Date(article.createdAt).toLocaleString('ko-KR').split('. ');
             this.state.createdAt = `${date[0]}년 ${date[1]}월 ${date[2]}일 ${date[3]}`
         }
-        console.log(article);
         $page.innerHTML = `
         <div class="${styles.container}">
+        <div class="${styles.info}">
         <h2>${article.title}</h2>
-        <div class="${styles.writtenTime}">
-        <span>${this.state.createdAt}</span>
+        <span class="${styles.writtenTime}">${this.state.createdAt}</span>
         </div>
         <div class="ck-content">
         ${article.data}
         </div>
         </div>
         `;
-       
+        const buttonPosition = document.querySelector('.ck-content').previousElementSibling;
+        new ClickButton({
+            $target : buttonPosition,
+            initialState:{
+                className : `${styles.editBtn}`,
+                name : '수정',
+            },
+            onClick : () =>{
+                const params = {
+                    detail : this.state.article,
+                }
+                changeRoute('/edit',params);
+            }
+        }).render();
     }
     const loading = new Loading({
         $target:$page,

@@ -5,7 +5,7 @@ export default function SelectOptions({$target,className,initialState,callback})
     $target.appendChild(component);
 
     this.render = () =>{
-        const {options} = this.state;
+        const {options,selected} = this.state;
         component.innerHTML = `
         <option value="0">선택</option>
         ${options.map(option =>`
@@ -14,6 +14,8 @@ export default function SelectOptions({$target,className,initialState,callback})
         </option>
         `).join('')}
         `
+        console.dir(component.children[1])
+        component.children[selected].selected = true;
     }
     this.render();
 

@@ -1,8 +1,9 @@
-export default function TitleInput({$target,className,callback}){
+export default function TitleInput({$target,initialState,className,callback}){
     const input = document.createElement('input');
     $target.appendChild(input);
     input.placeholder = '제목을 입력해 주세요';
     input.className = className;
+    input.value = initialState;
 
     input.addEventListener('change',e =>{
         if(e.target.tagName !== 'INPUT') return;

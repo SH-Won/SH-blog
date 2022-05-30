@@ -13,7 +13,7 @@ export default function App($target){
 
     }
     const testCache = new Map();
-    this.route = () =>{
+    this.route = (params) =>{
         const {pathname} = location;
 
         $target.innerHTML = '';
@@ -43,6 +43,7 @@ export default function App($target){
         else if(pathname ==='/edit'){
             new EditPage({
                 $target,
+                initialState: params,
             })
         }
         else if(pathname === '/article'){

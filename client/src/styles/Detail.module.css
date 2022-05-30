@@ -5,13 +5,26 @@
     width:100%;
     padding:1rem;
     margin:0 auto;
+    display:flex;
+    flex-direction: column;
     box-sizing: border-box;
 }
-.writtenTime{
+.info{
     display:flex;
-    justify-content: flex-end;
-
+    flex-direction: column;
 }
-.writtenTime > span{
-    font-size: .6rem;
+.writtenTime{
+     align-self: flex-end;
+     font-size: .6rem;
+}
+
+.editBtn{
+    align-self: flex-end;
+    width:20%;
+    font-size:1rem;
+    border-radius: .5rem;
+    color:#015834;
+    background-color: #d5f7e7;
+    border:transparent;
+    margin:.3rem;
 }

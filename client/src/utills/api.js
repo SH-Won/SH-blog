@@ -31,3 +31,10 @@ export const uploadArticle = async (data = {}) =>{
         throw new Error("무언가 이상합니다");
     }
 }
+export const updateArticle = async (data = {}) =>{
+    try{
+
+    }catch(e){
+        
+    }
+}

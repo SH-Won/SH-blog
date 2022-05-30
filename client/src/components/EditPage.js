@@ -1,19 +1,18 @@
 // import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
 import ClassicEditor from '../utills/ckeditor';
 import CustomUploadAdapterPlugin from '../utills/UploadAdapter';
-import {uploadArticle} from '../utills/api'
+import {uploadArticle, updateArticle} from '../utills/api'
 import { languages,getImageURL } from '../utills/languages';
 import styles from '../styles/EditPage.module.css';
 import SelectOptions from './SelectOptions';
 import TitleInput from './TitleInput';
 import ClickButton from './ClickButton';
 import {changeRoute} from '../utills/router'
-export default function EditPage({$target}){
-    
+export default function EditPage({$target,initialState = {}}){
+    let isModify = initialState._id ? true : false;
     const $page = document.createElement('div');
     const editor = document.createElement('div');
     const $btnContainer = document.createElement('div');
-    
     $page.className = `${styles.EditPage}`;
     $btnContainer.className = `${styles.btnContainer}`;
     $target.appendChild($page);
@@ -22,15 +21,21 @@ export default function EditPage({$target}){
 
     this.state = {
         title:'',
-        selectedLanguage:null,
+        data:'',
+        selectedLanguage:0,
+        ...initialState
     }
+    
     this.editor = null;
 
     this.setState = (nextState) =>{
         this.state = nextState;
+        console.log(this.state);
     }
+
     const titleInput = new TitleInput({
         $target:$page,
+        initialState:this.state.title,
         className:`${styles.titleInput}`,
         callback : (value) =>{
             this.setState({
@@ -44,11 +49,12 @@ export default function EditPage({$target}){
         className:`${styles.selectOption}`,
         initialState:{
             options:languages,
+            selected: isModify ? this.state.category : this.state.selectedLanguage,
         },
         callback : (id) => {
             this.setState({
                 ...this.state,
-                selectedLanguage:id === 0 ? null : id,
+                selectedLanguage: id,
             })
         }
     })
@@ -59,7 +65,7 @@ export default function EditPage({$target}){
              name: '취소',
         },
         onClick : () =>{
-            const goBack = confirm('정말 작성을 취소 하시겠어요 ?');
+            const goBack = confirm(isModify ? '정말 수정을 하지 않으시겠어요?' :'정말 작성을 취소 하시겠어요 ?');
             if(goBack){
                 changeRoute('/article');
             }
@@ -87,6 +93,14 @@ export default function EditPage({$target}){
                 'category':this.state.selectedLanguage,
                 'thumbnail': getImageURL(this.state.selectedLanguage)
             }
+            if(isModify){
+                 data['_id'] = this.state._id;
+                 updateArticle(data)
+                 .then(response => {
+                     changeRoute('/article');
+                 })
+            }
+            else 
             uploadArticle(data)
             .then(response =>{
                 console.log(response);
@@ -95,7 +109,6 @@ export default function EditPage({$target}){
         }
     })
     this.render = () =>{
-
         ClassicEditor.create(editor,{
             extraPlugins:[CustomUploadAdapterPlugin],
         }).then(editor =>{
@@ -105,6 +118,7 @@ export default function EditPage({$target}){
 
             });
             editor.ui.element.style.margin = '.4rem 2rem';
+            editor.setData(this.state.data);
             this.editor = editor
         })
         .catch(err => console.log(err));
