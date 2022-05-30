@@ -8,8 +8,7 @@ import SelectOptions from './SelectOptions';
 import TitleInput from './TitleInput';
 import ClickButton from './ClickButton';
 import {changeRoute} from '../utills/router'
-export default function EditPage({$target,initialState = {}}){
-    let isModify = initialState._id ? true : false;
+export default function EditPage({$target,isModify,initialState = {}}){
     const $page = document.createElement('div');
     const editor = document.createElement('div');
     const $btnContainer = document.createElement('div');
@@ -76,7 +75,7 @@ export default function EditPage({$target,initialState = {}}){
         $target: $btnContainer,
         initialState : {
             className : `${styles.uploadBtn}`,
-            name: '완료',
+            name: isModify ? '수정' : '완료',
         },
         onClick : () =>{
             if(!this.state.selectedLanguage ){

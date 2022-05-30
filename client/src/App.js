@@ -43,6 +43,7 @@ export default function App($target){
         else if(pathname ==='/edit'){
             new EditPage({
                 $target,
+                isModify:params === null ? false : true,
                 initialState: params,
             })
         }

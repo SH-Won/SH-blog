@@ -114,6 +114,19 @@ router.post('/uploadArticle', (req,res)=>{
         res.status(200).json({success:true});
     })
 })
-
+router.post('/updateArticle',(req,res) =>{
+    const {_id,title,category,data,thumbnail} = req.body;
+    Article.findOneAndUpdate({_id},
+    {$set : {
+        title,
+        thumbnail,
+        category,
+        data
+    }})
+    .exec((err,result) =>{
+         if(err) res.status(400).json({success:false,err});
+         res.status(200).json({success:true});
+    })
+})
 
 module.exports = router;

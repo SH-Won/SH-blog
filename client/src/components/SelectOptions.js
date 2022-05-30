@@ -14,7 +14,7 @@ export default function SelectOptions({$target,className,initialState,callback})
         </option>
         `).join('')}
         `
-        console.dir(component.children[1])
+
         component.children[selected].selected = true;
     }
     this.render();
