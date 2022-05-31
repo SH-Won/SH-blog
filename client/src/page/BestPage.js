@@ -1,5 +1,5 @@
 import { request } from '../utills/api';
-import Posts from './Posts';
+import Posts from '../components/Posts';
 
 export default function BestPage({$target,cache}){
     const $page = document.createElement('div');

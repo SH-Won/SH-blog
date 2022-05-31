@@ -1,8 +1,8 @@
 import { request } from '../utills/api';
-import Loading from './Loading';
+import Loading from '../components/Loading';
 import '../styles/style_ck.css';
 import styles from '../styles/Detail.module.css';
-import ClickButton from './ClickButton';
+import ClickButton from '../components/ClickButton';
 import { changeRoute } from '../utills/router';
 export default function ArticleDetailPage({$target,articleId}){
     const $page = document.createElement('div');

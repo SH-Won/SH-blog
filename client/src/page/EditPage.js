@@ -4,9 +4,9 @@ import CustomUploadAdapterPlugin from '../utills/UploadAdapter';
 import {uploadArticle, updateArticle} from '../utills/api'
 import { languages,getImageURL } from '../utills/languages';
 import styles from '../styles/EditPage.module.css';
-import SelectOptions from './SelectOptions';
-import TitleInput from './TitleInput';
-import ClickButton from './ClickButton';
+import SelectOptions from '../components/SelectOptions';
+import TitleInput from '../components/TitleInput';
+import ClickButton from '../components/ClickButton';
 import {changeRoute} from '../utills/router'
 export default function EditPage({$target,isModify,initialState = {}}){
     const $page = document.createElement('div');

@@ -1,11 +1,12 @@
-import LandingPage from './components/LandingPage.js';
-import NavBar from './components/NavBar.js';
-import PostDetailPage from './components/PostDetailPage.js';
-import BestPage  from './components/BestPage.js'
 import { init } from './utills/router.js';
-import EditPage from './components/EditPage.js';
-import ArticlePage from './components/ArticlePage.js';
-import ArticleDetailPage from './components/ArticleDetailPage.js';
+import LandingPage from './page/LandingPage.js';
+import NavBar from './components/NavBar.js';
+import PostDetailPage from './page/PostDetailPage.js';
+import BestPage  from './page/BestPage.js'
+import EditPage from './page/EditPage.js';
+import ArticlePage from './page/ArticlePage.js';
+import ArticleDetailPage from './page/ArticleDetailPage.js';
+import TestPage from './page/TestPage.js';
 
 
 export default function App($target){
@@ -39,6 +40,11 @@ export default function App($target){
                 $target,
                 cache
             }).render();
+        }
+        else if(pathname === '/test'){
+            new TestPage({
+                $target,
+            })
         }
         else if(pathname ==='/edit'){
             new EditPage({

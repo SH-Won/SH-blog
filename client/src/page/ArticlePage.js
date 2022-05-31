@@ -1,10 +1,10 @@
 import {request} from '../utills/api'
-import Posts from './Posts';
-import Loading from './Loading';
+import Posts from '../components/Posts';
+import Loading from '../components/Loading';
 import { languages } from '../utills/languages';
-import ListView from './ListView';
+import ListView from '../components/ListView';
 import { changeRoute } from '../utills/router';
-import ClickButton from './ClickButton';
+import ClickButton from '../components/ClickButton';
 import '../styles/page.css';
 export default function ArticlePage({$target,initialState}){
     

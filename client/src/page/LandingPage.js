@@ -1,10 +1,10 @@
 import {request} from '../utills/api.js';
-import Posts from './Posts.js';
-import Button from './Button.js';
-import Loading from './Loading.js';
+import Posts from '../components/Posts.js';
+import Button from '../components/Button.js';
+import Loading from '../components/Loading.js';
 import  {InfinityScroll}  from '../utills/InfinityScroll.js';
-import ListView from './ListView.js';
-import CheckBox from './CheckBox.js';
+import ListView from '../components/ListView.js';
+import CheckBox from '../components/CheckBox.js';
 import { category } from '../utills/category.js';
 import { changeRoute } from '../utills/router.js';
 

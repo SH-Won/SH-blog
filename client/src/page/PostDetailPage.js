@@ -1,7 +1,7 @@
 import { request } from '../utills/api';
-import Loading from './Loading';
-import PostDetail_Image from './PostDetail_Image';
-import PostDetail_Info from './PostDetail_Info';
+import Loading from '../components/Loading';
+import PostDetail_Image from '../components/PostDetail_Image';
+import PostDetail_Info from '../components/PostDetail_Info';
 
 export default function PostDetailPage({$target,postId}){
     this.state = {
