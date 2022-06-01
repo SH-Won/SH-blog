@@ -4,7 +4,11 @@
     margin:0;
     margin-bottom: 4px;
     box-sizing: border-box;
-    background-color: #ac9ca9;
+    background-color: #f8f8f8;
+    box-shadow: 0 .1rem .3rem #C9f3d7;
+    position: sticky;
+    top:0;
+    z-index: 10;
 }
 .list{
     padding:0;
@@ -12,9 +16,17 @@
     display:flex;
     justify-content: flex-start;
     list-style: none;
-    color:ivory
+    z-index: inherit;
 }
+
 .list > li{
     padding:4px;
     margin:8px;
+    color: black;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+.list > li:nth-child(1){
+    border-right: 2px solid #3b4df1;
+    padding-right:1rem;
 }

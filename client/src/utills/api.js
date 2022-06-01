@@ -48,3 +48,19 @@ export const updateArticle = async (data = {}) =>{
         throw new Error("무언가 이상합니다");
     }
 }
+export const deleteArticle = async (data = {}) =>{
+    try{
+        const fullUrl = `${ENDPOINT}/posts/deleteArticle`;
+        const res = await fetch(fullUrl,{
+            method:'POST',
+            headers:{
+                'Content-Type': 'application/json',
+            },
+            body:JSON.stringify(data),
+        })
+        const {success} = await res.json();
+        if(success) return success;
+    }catch(e){
+
+    }
+}

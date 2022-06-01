@@ -128,5 +128,13 @@ router.post('/updateArticle',(req,res) =>{
          res.status(200).json({success:true});
     })
 })
+router.post('/deleteArticle',(req,res) =>{
+    const {_id}  = req.body;
+    Article.findOneAndDelete({_id})
+    .exec((err,result) =>{
+        if(err) res.status(400).json({success:false,err});
+        res.status(200).json({success:true});
+    })
+})
 
 module.exports = router;

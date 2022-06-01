@@ -1,4 +1,4 @@
-import { request } from '../utills/api';
+import { request,deleteArticle } from '../utills/api';
 import Loading from '../components/Loading';
 import '../styles/style_ck.css';
 import styles from '../styles/Detail.module.css';
@@ -49,6 +49,25 @@ export default function ArticleDetailPage({$target,articleId}){
                     detail : this.state.article,
                 }
                 changeRoute('/edit',params);
+            }
+        }).render();
+        new ClickButton({
+            $target : buttonPosition,
+            initialState : {
+                className:`${styles.deleteBtn}`,
+                name: '삭제',
+            },
+            onClick : () =>{
+                const isDelete = confirm("정말 삭제 하시겠어요 ?");
+                if(!isDelete) return;
+                const data = {
+                    _id : this.state.article._id,
+                }
+                deleteArticle(data)
+                .then(response => {
+                    alert('삭제 하였습니다');
+                    if(response) changeRoute('/article');
+                })
             }
         }).render();
     }
