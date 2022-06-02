@@ -3,10 +3,10 @@ const storage = localStorage;
 export const getItem = (key) =>{
     try{
         const value = storage.getItem(key);
-        return value ? JSON.parse(value) : [];
+        return value ? JSON.parse(value) : "";
     }
     catch{
-        return [];
+        return "";
     }
 } 
 export const setItem = (key,value) =>{

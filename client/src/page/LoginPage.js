@@ -4,7 +4,8 @@ import { changeRoute } from '../utills/router';
 export default function LoginPage({$target}){
     const $form = document.createElement('form');
     $target.appendChild($form);
-
+    console.dir(history);
+    console.log(history.state);
     this.state = {
         email:'',
         password:'',

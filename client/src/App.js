@@ -22,6 +22,7 @@ export default function App($target){
 
         $target.innerHTML = '';
         new NavBar({$target}).render();
+        
         if(pathname === '/'){
             const initialState = testCache.has('pre') ? testCache.get('pre') : {
                 posts:[],

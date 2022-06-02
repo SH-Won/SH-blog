@@ -5,8 +5,8 @@ export const init = (onRouteChange) =>{
         onRouteChange(e.detail);
     });
 }
-export const changeRoute = (url,params) =>{
-    window.history.pushState(null,null,url);
+export const changeRoute = (url,params=null) =>{
+    window.history.pushState(params,null,url);
     // window.history.pushState()
     window.dispatchEvent(new CustomEvent(ROUTE_EVENT,params));
 }

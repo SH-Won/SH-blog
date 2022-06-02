@@ -106,3 +106,12 @@ export const auth = async () =>{
         
     }
 }
+export const logoutUser = async () =>{
+    try{
+        const fullUrl =`${ENDPOINT}/users/logout`;
+        const res = await fetch(fullUrl);
+        if(res.ok) return await res.json();
+    }catch(e){
+        
+    }
+}
