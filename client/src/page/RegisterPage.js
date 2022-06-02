@@ -43,7 +43,8 @@ export default function RegisterPage({$target}){
             }
         },200)
     })
-    $form.addEventListener('submit',() =>{
+    $form.addEventListener('submit', e =>{
+        e.preventDefault();
         const {name,email,password,confirmPassword}  = this.state;
         if(password.trim() !== confirmPassword){
             alert("비밀번호와 비밀번호 확인이 일치하지 않습니다");
@@ -59,7 +60,10 @@ export default function RegisterPage({$target}){
             if(!response.success){
                 return alert("회원가입을 실패했습니다");
             }
-            else changeRoute('/login');
+            else{
+                console.log('회원가입 완료');
+                changeRoute('/login');
+            }
         })
     })
 }

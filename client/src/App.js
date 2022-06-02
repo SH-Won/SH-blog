@@ -8,6 +8,8 @@ import ArticlePage from './page/ArticlePage.js';
 import ArticleDetailPage from './page/ArticleDetailPage.js';
 import TestPage from './page/TestPage.js';
 import RegisterPage from './page/RegisterPage.js';
+import LoginPage from './page/LoginPage.js';
+import Auth from './Auth.js';
 
 
 export default function App($target){
@@ -21,19 +23,35 @@ export default function App($target){
         $target.innerHTML = '';
         new NavBar({$target}).render();
         if(pathname === '/'){
-            new LandingPage({
+            const initialState = testCache.has('pre') ? testCache.get('pre') : {
+                posts:[],
+                skip:0,
+                limit:2,
+            };
+            // new LandingPage({
+            //     $target,
+            //     initialState : testCache.has('pre') ? testCache.get('pre') : {
+            //         posts:[],
+            //         skip:0,
+            //         limit:2,
+            //     },
+            //     cache,
+            //     testCache,
+            // })
+            Auth(LandingPage,false)({
                 $target,
-                initialState : testCache.has('pre') ? testCache.get('pre') : {
-                    posts:[],
-                    skip:0,
-                    limit:2,
-                },
+                initialState,
                 cache,
-                testCache,
+                testCache
             })
         }
         else if(pathname ==='/register'){
             new RegisterPage({
+                $target,
+            })
+        }
+        else if(pathname ==='/login'){
+            new LoginPage({
                 $target,
             })
         }
@@ -53,10 +71,16 @@ export default function App($target){
             })
         }
         else if(pathname ==='/edit'){
-            new EditPage({
+            const isModify = params === null ? false : true;
+            // new EditPage({
+            //     $target,
+            //     isModify:params === null ? false : true,
+            //     initialState: params,
+            // })
+            Auth(EditPage,true)({
                 $target,
-                isModify:params === null ? false : true,
-                initialState: params,
+                isModify,
+                initialState:params,
             })
         }
         else if(pathname === '/article'){

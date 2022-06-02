@@ -7,9 +7,11 @@ import ListView from '../components/ListView.js';
 import CheckBox from '../components/CheckBox.js';
 import { category } from '../utills/category.js';
 import { changeRoute } from '../utills/router.js';
+import { getItem } from '../utills/storage.js';
 
 export default function LandingPage({$target,initialState,cache,testCache}){
-
+    const user = getItem('userId');
+    console.log(user);
     const $page = document.createElement('div');
     
     $page.className = 'page landing';

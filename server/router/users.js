@@ -15,12 +15,14 @@ router.get('/auth',auth,(req,res) =>{
 });
 router.post('/register',(req,res) =>{
     const user = new User(req.body);
+    console.log(req.body);
     user.save((err,doc) =>{
         if(err) return res.json({ success:false, err});
         return res.status(200).json({ success : true });
     })
 })
 router.post('/login',(req,res) =>{
+    console.log(req.body);
     User.findOne({ email:req.body.email}, (err,user) =>{
         if(!user) return res.json({loginSuccess:false, message : "가입한 이메일이 없습니다"});
         

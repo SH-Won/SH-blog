@@ -1,4 +1,4 @@
-import {storage} from '../utills/storage';
+import {setItem} from '../utills/storage';
 import { loginUser } from '../utills/api';
 import { changeRoute } from '../utills/router';
 export default function LoginPage({$target}){
@@ -10,36 +10,39 @@ export default function LoginPage({$target}){
         password:'',
     }
     this.setState = (nextState) =>{
-
+        this.state = nextState;
     } 
     this.render = () =>{
         $form.innerHTML = `
         <label for="email">이메일</label>
-        <input id="email" type="text" placeholder="이메일을 입력해주세요"/>
+        <input id="email" name="email" type="text" placeholder="이메일을 입력해주세요"/>
         <br>
         <label for="password">비밀번호</label>
-        <input id="password" type="password" placeholder="비밀번호를 입력해주세요"/>
+        <input id="password" name="password" type="password" placeholder="비밀번호를 입력해주세요"/>
         <br>
         <input type="submit" id="login" value="로그인"/> 
         `
     }
+    this.render();
     $form.addEventListener('change', e =>{
         if(e.target.tagName !== 'INPUT') return;
         let {name,value} = e.target;
         setTimeout(() =>{
             if(value === e.target.value){
                 const copy = {...this.state};
-                copy[name] = value;
+                copy[name] = e.target.value;
                 this.setState(copy);
             }
         })
     })
-    $form.addEventListener('submit' , () =>{
+    $form.addEventListener('submit' , e =>{
+        e.preventDefault();
         const data = this.state;
         loginUser(data)
         .then(response =>{
+            console.log(response);
             if(response.loginSuccess){
-                storage.setItem('userId',response.userId);
+                setItem('userId',response.userId);
                 changeRoute('/');
 
             }else alert('이메일이나 비밀번호를 확인해주세요')
