@@ -64,3 +64,45 @@ export const deleteArticle = async (data = {}) =>{
 
     }
 }
+export const registerUser = async (data = {}) =>{
+    try{
+        const fullUrl = `${ENDPOINT}/users/register`;
+        const res = await fetch(fullUrl,{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json',
+            },
+            body:JSON.stringify(data),
+        });
+        if(!res.ok) throw new Error("회원가입 실패");
+        return await res.json();
+
+    }catch(e){
+
+    }
+}
+export const loginUser = async (data = {}) =>{
+    try{
+        const fullUrl = `${ENDPOINT}/users/login`;
+        const res = await fetch(fullUrl,{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json',
+            },
+            body:JSON.stringify(data),
+        });
+        if(res.ok) return await res.json(); 
+
+    }catch(e){
+
+    }
+}
+export const auth = async () =>{
+    try{
+        const fullUrl = `${ENDPOINT}/users/auth`;
+        const res = await fetch(fullUrl);
+        if(res.ok) return await res.json();
+    }catch(e){
+        
+    }
+}
