@@ -7,6 +7,7 @@ import EditPage from './page/EditPage.js';
 import ArticlePage from './page/ArticlePage.js';
 import ArticleDetailPage from './page/ArticleDetailPage.js';
 import TestPage from './page/TestPage.js';
+import RegisterPage from './page/RegisterPage.js';
 
 
 export default function App($target){
@@ -29,6 +30,11 @@ export default function App($target){
                 },
                 cache,
                 testCache,
+            })
+        }
+        else if(pathname ==='/register'){
+            new RegisterPage({
+                $target,
             })
         }
         else if(pathname.split('/')[1] === 'post'){

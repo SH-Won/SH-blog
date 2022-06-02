@@ -5,7 +5,7 @@ import {uploadArticle, updateArticle} from '../utills/api'
 import { languages,getImageURL } from '../utills/languages';
 import styles from '../styles/EditPage.module.css';
 import SelectOptions from '../components/SelectOptions';
-import TitleInput from '../components/TitleInput';
+import Input from '../components/Input';
 import ClickButton from '../components/ClickButton';
 import {changeRoute} from '../utills/router'
 export default function EditPage({$target,isModify,initialState = {}}){
@@ -32,10 +32,13 @@ export default function EditPage({$target,isModify,initialState = {}}){
         console.log(this.state);
     }
 
-    const titleInput = new TitleInput({
+    const titleInput = new Input({
         $target:$page,
-        initialState:this.state.title,
-        className:`${styles.titleInput}`,
+        initialState:{
+            title:this.state.title,
+            className:`${styles.titleInput}`,
+            placeholder:'제목을 입력해주세요'
+        },
         callback : (value) =>{
             this.setState({
                 ...this.state,

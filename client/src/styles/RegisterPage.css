@@ -1,0 +1,19 @@
+#register-form{
+    width:80%;
+    margin:2rem auto;
+}
+#register-field{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+#register-field > input {
+    margin:.5rem;
+    width:60%;
+    height:30px;
+    border: 1px solid #e4e2e2;
+    border-radius: .5rem;
+}
+#submit{
+    width:20%;
+}

@@ -14,6 +14,7 @@ const config = require("./config/key");
 //   .catch(err => console.error(err));
 
 const mongoose = require("mongoose");
+const cookieParser = require('cookie-parser');
 const connect = mongoose.connect(config.mongoURI,
   {
     useNewUrlParser: true, useUnifiedTopology: true,
@@ -28,11 +29,12 @@ app.use(cors());
 // app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(express.urlencoded({extended:true}));
 app.use(express.json());
-
+app.use(cookieParser());
 //to get json data
 // app.use(express.bodyParser());
 // app.use(bodyParser.json());
-app.use('/api/posts',require('./router/posts'))
+app.use('/api/users',require('./router/users'));
+app.use('/api/posts',require('./router/posts'));
 
 //to not get any deprecation warning or error
 //support parsing of application/x-www-form-urlencoded post data
