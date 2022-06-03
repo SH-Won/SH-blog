@@ -10,6 +10,7 @@ import TestPage from './page/TestPage.js';
 import RegisterPage from './page/RegisterPage.js';
 import LoginPage from './page/LoginPage.js';
 import Auth from './Auth.js';
+import { removeItem } from './utills/storage.js';
 
 
 export default function App($target){
@@ -97,5 +98,5 @@ export default function App($target){
     init(this.route);
     this.route();
     window.addEventListener('popstate',this.route);
-    
+    window.addEventListener('beforeunload', () => removeItem('userId'))
 }
