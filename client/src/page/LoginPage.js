@@ -3,51 +3,82 @@ import {setItem} from '../utills/storage';
 import { loginUser } from '../utills/api';
 import { changeRoute } from '../utills/router';
 export default function LoginPage({$target,connect}){
+    const $page = document.createElement('div');
     const $form = document.createElement('form');
+    $page.id = 'login-page';
     $form.id = 'login-form';
-    $target.appendChild($form);
+    $page.appendChild($form)
+    $target.appendChild($page);
 
     this.state = {
         email:'',
         password:'',
-        isValidEmail : false,
-        isValidPassword : false,
+        isValidEmail : null,
+        isValidPassword : null,
     }
     this.setState = (nextState) =>{
         this.state = nextState;
-        this.render();
+        // this.render();
     } 
     this.render = () =>{
         const {email,password,isValidEmail,isValidPassword} = this.state;
-        console.log(isValidPassword);
         $form.innerHTML = `
         <label for="email">이메일</label>
-        <input class="${isValidEmail ? 'login valid' : email === "" ? 'login' : 'login invalid'}" name="email" type="text" placeholder="이메일을 입력해주세요" value="${email}"/>
+        <input class="login" name="email" type="text" placeholder="이메일을 입력해주세요" value="${email}"/>
         <br>
         <label for="password">비밀번호</label>
-        <input class="${isValidPassword ? 'login valid' : password === "" ? 'login' : 'login invalid'}" name="password" type="password" placeholder="비밀번호를 입력해주세요" value="${password}"/>
+        <input class="login" name="password" type="password" placeholder="비밀번호를 입력해주세요" value="${password}"/>
         <br>
         <input type="submit" id="login-submit" value="로그인"/> 
         `
     }
     this.render();
-    $form.addEventListener('change', e =>{
+    let timer = null;
+    $form.addEventListener('input', e =>{
         if(e.target.tagName !== 'INPUT') return;
-        let {name,value} = e.target;
-        setTimeout(() =>{
-            if(value === e.target.value){
-                const copy = {...this.state};
-                copy[name] = e.target.value;
+        const {name,value} = e.target;
+        if(timer) clearTimeout(timer);
+        timer = setTimeout(() =>{
+            // if(value === e.target.value){
+            //     console.log(value,e.target.value);
+            //     const copy = {...this.state};
+            //     copy[name] = e.target.value;
+            //     if(name === 'email'){
+            //         copy['isValidEmail'] = copy[name].search(/[@]/g) >= 1 ? true : false;
+            //     }
+            //     else if(name === 'password'){
+            //         copy['isValidPassword'] = copy[name].match(/\s/g) ? false : true; 
+            //         console.log(copy['isValidPassword'])
+            //     }
+            //     console.log(copy);
+            //     this.setState(copy);
+            // }
+            const copy = {...this.state};
+                copy[name] = value;
                 if(name === 'email'){
-                    copy['isValidEmail'] = copy[name].search(/[@]/g) >= 1 ? true : false;
+                    e.target.className = 'login'
+                    if(value === '') copy['isValidEmail'] = null;
+                    else{
+                        const isValid = copy[name].search(/[@]/g) >= 1 ? true : false;
+                        copy['isValidEmail'] = isValid;
+                        
+                        e.target.classList.add(isValid ? 'valid' : 'invalid');
+                        
+                    }
                 }
                 else if(name === 'password'){
-                    copy['isValidPassword'] = copy[name].match(/\s/g) ? false : true; 
-                    console.log(copy['isValidPassword'])
+                    e.target.className = 'login'
+                    if(value === '') copy['isValidPassword'] = null;
+                    else{
+                        const isValid = copy[name].match(/\s/g) ? false : true;
+                        copy['isValidPassword'] = isValid;
+                        e.target.classList.add(isValid ? 'valid' : 'invalid');
+                        
+                    }
                 }
                 console.log(copy);
                 this.setState(copy);
-            }
+                
         },200)
     })
     $form.addEventListener('submit' , e =>{
@@ -56,7 +87,10 @@ export default function LoginPage({$target,connect}){
             alert('이메일이나 비밀번호 형식이 잘못됐습니다');
             return;
         }
-        const data = this.state;
+        const data = {
+            email:this.state.email,
+            password:this.state.password,
+        }
         loginUser(data)
         .then(response =>{
             if(response.loginSuccess){
