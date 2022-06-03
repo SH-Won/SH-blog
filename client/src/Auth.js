@@ -16,10 +16,9 @@ export default function (page,option,pre= null ,admin = null){
         //     }
         // })
         const {isAuth} = await auth();
-        console.log(isAuth);
         if(!isAuth){
             if(option){
-                changeRoute('/login');
+                changeRoute('/login',{detail : pre });
             }
             else{
                 return new page({

@@ -1,11 +1,10 @@
 import {setItem} from '../utills/storage';
 import { loginUser } from '../utills/api';
 import { changeRoute } from '../utills/router';
-export default function LoginPage({$target}){
+export default function LoginPage({$target,connect}){
     const $form = document.createElement('form');
     $target.appendChild($form);
-    console.dir(history);
-    console.log(history.state);
+
     this.state = {
         email:'',
         password:'',
@@ -41,10 +40,9 @@ export default function LoginPage({$target}){
         const data = this.state;
         loginUser(data)
         .then(response =>{
-            console.log(response);
             if(response.loginSuccess){
                 setItem('userId',response.userId);
-                changeRoute('/');
+                changeRoute(connect);
 
             }else alert('이메일이나 비밀번호를 확인해주세요')
         })

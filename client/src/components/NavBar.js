@@ -41,11 +41,13 @@ export default function NavBar({$target,initialState}){
                         alert("로그아웃에 실패했습니다");
                     }else{
                         removeItem('userId');
-                        changeRoute('/');
+                        return changeRoute('/');
                     }
                 })
             }
+            else if(route === '/login') return changeRoute(route,{detail: location.pathname});
             changeRoute(route);
         }
     })
 }
+//  articlePage -> edit 클릭 -> editPage 이동 auth 에 걸림

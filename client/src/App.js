@@ -29,16 +29,7 @@ export default function App($target){
                 skip:0,
                 limit:2,
             };
-            // new LandingPage({
-            //     $target,
-            //     initialState : testCache.has('pre') ? testCache.get('pre') : {
-            //         posts:[],
-            //         skip:0,
-            //         limit:2,
-            //     },
-            //     cache,
-            //     testCache,
-            // })
+            
             Auth(LandingPage,false)({
                 $target,
                 initialState,
@@ -52,8 +43,10 @@ export default function App($target){
             })
         }
         else if(pathname ==='/login'){
+            const connect = params === null ? pathname : params; 
             new LoginPage({
                 $target,
+                connect,
             })
         }
         else if(pathname.split('/')[1] === 'post'){
@@ -78,7 +71,7 @@ export default function App($target){
             //     isModify:params === null ? false : true,
             //     initialState: params,
             // })
-            Auth(EditPage,true)({
+            Auth(EditPage,true,pathname)({
                 $target,
                 isModify,
                 initialState:params,
