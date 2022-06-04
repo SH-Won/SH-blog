@@ -12,6 +12,7 @@ import LoginPage from './page/LoginPage.js';
 import Auth from './Auth.js';
 import { removeItem } from './utills/storage.js';
 import { logoutUser } from './utills/api.js';
+import { selector } from './utills/selector.js';
 
 export default function App($target){
     const cache = {
@@ -20,7 +21,6 @@ export default function App($target){
     const testCache = new Map();
     this.route = (params) =>{
         const {pathname} = location;
-
         $target.innerHTML = '';
         new NavBar({$target}).render();
         
@@ -45,7 +45,7 @@ export default function App($target){
         }
         else if(pathname ==='/login'){
             const connect = params === null ? pathname : params; 
-            new LoginPage({
+            Auth(LoginPage,false)({
                 $target,
                 connect,
             })
