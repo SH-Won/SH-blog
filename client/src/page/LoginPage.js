@@ -15,6 +15,7 @@ export default function LoginPage({$target,connect}){
         password:'',
         isValidEmail : null,
         isValidPassword : null,
+        
     }
     this.setState = (nextState) =>{
         this.state = nextState;

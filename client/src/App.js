@@ -11,7 +11,7 @@ import RegisterPage from './page/RegisterPage.js';
 import LoginPage from './page/LoginPage.js';
 import Auth from './Auth.js';
 import { removeItem } from './utills/storage.js';
-
+import { logoutUser } from './utills/api.js';
 
 export default function App($target){
     const cache = {
@@ -88,7 +88,7 @@ export default function App($target){
         }
         else if(pathname.split('/')[1] === 'article'){
             const [ , ,articleId] = pathname.split('/');
-            new ArticleDetailPage({
+            Auth(ArticleDetailPage,false)({
                 $target,
                 articleId,
             })
@@ -98,5 +98,9 @@ export default function App($target){
     init(this.route);
     this.route();
     window.addEventListener('popstate',this.route);
-    window.addEventListener('beforeunload', () => removeItem('userId'))
+    window.addEventListener('beforeunload', () =>{
+        removeItem('userId');
+        logoutUser()
+        .then()
+    })
 }

@@ -8,7 +8,8 @@ import SelectOptions from '../components/SelectOptions';
 import Input from '../components/Input';
 import ClickButton from '../components/ClickButton';
 import {changeRoute} from '../utills/router'
-export default function EditPage({$target,isModify,initialState = {}}){
+export default function EditPage({$target,isModify,initialState = {},user}){
+    console.log(user);
     const $page = document.createElement('div');
     const editor = document.createElement('div');
     const $btnContainer = document.createElement('div');
@@ -90,6 +91,7 @@ export default function EditPage({$target,isModify,initialState = {}}){
                 return;
             }
             const data = {
+                'writer':user._id,
                 'title':this.state.title,
                 'data': this.editor.getData(),
                 'category':this.state.selectedLanguage,

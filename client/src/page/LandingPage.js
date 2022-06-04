@@ -9,8 +9,7 @@ import { category } from '../utills/category.js';
 import { changeRoute } from '../utills/router.js';
 import { getItem } from '../utills/storage.js';
 
-export default function LandingPage({$target,initialState,cache,testCache}){
-    const user = getItem('userId');
+export default function LandingPage({$target,initialState,cache,testCache,user}){
     console.log(user);
     const $page = document.createElement('div');
     

@@ -5,11 +5,11 @@ import styles from '../styles/Detail.module.css';
 import ClickButton from '../components/ClickButton';
 import { changeRoute } from '../utills/router';
 import { getItem } from '../utills/storage';
-export default function ArticleDetailPage({$target,articleId}){
-    const user = getItem('userId');
+export default function ArticleDetailPage({$target,articleId,user}){
     const $page = document.createElement('div');
     $page.className = `${styles.page}`;
     $target.appendChild($page);
+    console.log(user);
     
     this.state = {
         article:null,

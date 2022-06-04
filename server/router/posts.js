@@ -88,6 +88,7 @@ router.get('/detail',(req,res)=>{
 router.get('/article',(req,res) =>{
     Article
     .find()
+    .populate('writer')
     .exec((err,articles)=>{
         if(err) res.status(400).json({success:false,err});
         res.status(200).json({articles,success:true});

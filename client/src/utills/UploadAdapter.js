@@ -8,7 +8,6 @@ class UploadAdapter{
         return this.loader.file.then(async file => {
            let formData = new FormData();
            formData.append('file',file);
-           console.log(formData);
             const res = await fetch(ENDPOINT,{
                 method:'POST',
                 headers:{

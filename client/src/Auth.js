@@ -3,36 +3,26 @@ import {changeRoute} from './utills/router';
 export default function (page,option,pre= null ,admin = null){
     // option ( true = need login , false = not to need)
     async function Authentication(arg){
-        let needLogin = false;
-        // await auth().then(response =>{
-        //     if(!response.isAuth){
-        //         if(option){
-        //             needLogin = true;
-        //         }
-        //     }else{
-        //         if(option === false){
-                 
-        //         }
-        //     }
-        // })
-        const {isAuth} = await auth();
-        if(!isAuth){
+        
+        const user = await auth();
+        if(!user.isAuth){
             if(option){
                 changeRoute('/login',{detail : pre });
             }
             else{
                 return new page({
                     ...arg,
+                    user,
                 })
             }
         }
         else{
-            if(option === false){
-
-            }
+            console.log('user login');
             return new page({
                 ...arg,
+                user,
             })
+            
         }
     }
 
