@@ -4,7 +4,11 @@ import { selector } from './utills/selector';
 export default function (page,option,pre= null ,admin = null){
     // option ( true = need login , false = not to need)
     async function Authentication(arg){
-        
+        const userInfo = selector((state) => state.user);
+        if(userInfo && userInfo.isAuth) return new page({
+            ...arg,
+            user:userInfo,
+        })
         const user = await auth();
         selector(null,'user',user);
         if(!user.isAuth){
@@ -19,7 +23,6 @@ export default function (page,option,pre= null ,admin = null){
             }
         }
         else{
-            console.log('user login');
             return new page({
                 ...arg,
                 user,

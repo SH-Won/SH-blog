@@ -8,6 +8,7 @@ import CheckBox from '../components/CheckBox.js';
 import { category } from '../utills/category.js';
 import { changeRoute } from '../utills/router.js';
 import { getItem } from '../utills/storage.js';
+import ClickButton from '../components/ClickButton.js';
 
 export default function LandingPage({$target,initialState,cache,testCache,user}){
     console.log(user);
@@ -40,7 +41,8 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
        testCache.set('pre',this.state);
        const hasMore = this.state.postSize >= this.state.limit;
        const loading = this.state.isLoading;
-       const element = $page.children[2].lastElementChild;
+       const posts = document.querySelector('.page > article');
+       const element = posts.lastElementChild;
        InfinityScroll(element,this.fetchPosts,hasMore,loading);
     }
     this.fetchPosts = async () =>{
@@ -101,6 +103,16 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
             this.fetchPosts();
         }
     })
+    const writeBtn = new ClickButton({
+        $target:$page,
+        initialState:{
+            name:'글 쓰기',
+            className:'button write-post'
+        },
+        onClick : () => {
+
+        }
+    }).render();
     const posts = new Posts({
         $target : $page,
         initialState:this.state,

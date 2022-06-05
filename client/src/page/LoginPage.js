@@ -8,7 +8,8 @@ export default function LoginPage({$target,connect}){
     const $form = document.createElement('form');
     $page.id = 'login-page';
     $form.id = 'login-form';
-    $page.appendChild($form)
+    $page.innerHTML = '<h2>로그인</h2>'
+    $page.appendChild($form);
     $target.appendChild($page);
 
     this.state = {
@@ -16,20 +17,18 @@ export default function LoginPage({$target,connect}){
         password:'',
         isValidEmail : null,
         isValidPassword : null,
-        
     }
     this.setState = (nextState) =>{
         this.state = nextState;
         // this.render();
     } 
     this.render = () =>{
-        const {email,password,isValidEmail,isValidPassword} = this.state;
         $form.innerHTML = `
         <label for="email">이메일</label>
-        <input class="login" name="email" type="text" placeholder="이메일을 입력해주세요" value="${email}"/>
+        <input class="login" name="email" type="text" placeholder="이메일을 입력해주세요" value=""/>
         <br>
         <label for="password">비밀번호</label>
-        <input class="login" name="password" type="password" placeholder="비밀번호를 입력해주세요" value="${password}"/>
+        <input class="login" name="password" type="password" placeholder="비밀번호를 입력해주세요" value=""/>
         <br>
         <input type="submit" id="login-submit" value="로그인"/> 
         `
@@ -41,20 +40,7 @@ export default function LoginPage({$target,connect}){
         const {name,value} = e.target;
         if(timer) clearTimeout(timer);
         timer = setTimeout(() =>{
-            // if(value === e.target.value){
-            //     console.log(value,e.target.value);
-            //     const copy = {...this.state};
-            //     copy[name] = e.target.value;
-            //     if(name === 'email'){
-            //         copy['isValidEmail'] = copy[name].search(/[@]/g) >= 1 ? true : false;
-            //     }
-            //     else if(name === 'password'){
-            //         copy['isValidPassword'] = copy[name].match(/\s/g) ? false : true; 
-            //         console.log(copy['isValidPassword'])
-            //     }
-            //     console.log(copy);
-            //     this.setState(copy);
-            // }
+            
             const copy = {...this.state};
                 copy[name] = value;
                 if(name === 'email'){
@@ -96,7 +82,6 @@ export default function LoginPage({$target,connect}){
         loginUser(data)
         .then(async response =>{
             if(response.loginSuccess){
-                setItem('userId',response.userId);
                 selector(null,'user',await auth());
                 changeRoute(connect);
 

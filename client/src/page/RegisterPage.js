@@ -2,15 +2,21 @@ import '../styles/RegisterPage.css';
 import {registerUser} from '../utills/api';
 import {changeRoute} from '../utills/router'
 export default function RegisterPage({$target}){
+    const $page = document.createElement('div');
     const $form = document.createElement('form');
+    $page.className = 'register-page';
     $form.id = 'register-form';
-    $target.appendChild($form);
+    $page.appendChild($form)
+    $target.appendChild($page);
 
     this.state = {
         name:'',
         email:'',
         password:'',
         confirmPassword:'',
+        isValidName:false,
+        isValidEmail:false,
+        isValidPassword:false,
     }
     this.setState = (nextState) =>{
         this.state = nextState;

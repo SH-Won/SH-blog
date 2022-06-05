@@ -1,5 +1,10 @@
+.register-page{
+    height:90vh;
+    display:flex;
+    align-items: center;
+}
 #register-form{
-    width:80%;
+    width:400px;
     margin:2rem auto;
 }
 #register-field{
@@ -14,6 +19,19 @@
     border: 1px solid #e4e2e2;
     border-radius: .5rem;
 }
+#register-field > .valid{
+
+}
+#register-field > .invalid{
+    
+}
+#register-field > input:focus{
+    outline: none;
+}
 #submit{
     width:20%;
+    border:transparent;
+    background-color:blue;
+    color:white;
+
 }

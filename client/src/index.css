@@ -42,3 +42,13 @@ body{
     top:0;
     left:0;
 }
+.button{
+    margin:1rem;
+    padding:.5rem;
+    width:15%;
+    align-self : flex-end;
+    border-radius: .6rem;
+    border: transparent;
+    color:#015834;
+    background-color: #d5f7e7;
+}
