@@ -1,7 +1,7 @@
 // import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
 import ClassicEditor from '../utills/ckeditor';
 import CustomUploadAdapterPlugin from '../utills/UploadAdapter';
-import {uploadArticle, updateArticle} from '../utills/api'
+import {uploadArticle, updateArticle, uploadCloudinary} from '../utills/api'
 import { languages,getImageURL } from '../utills/languages';
 import styles from '../styles/EditPage.module.css';
 import SelectOptions from '../components/SelectOptions';
@@ -9,7 +9,7 @@ import Input from '../components/Input';
 import ClickButton from '../components/ClickButton';
 import {changeRoute} from '../utills/router'
 export default function EditPage({$target,isModify,initialState = {},user}){
-    console.log(user);
+
     const $page = document.createElement('div');
     const editor = document.createElement('div');
     const $btnContainer = document.createElement('div');
@@ -23,6 +23,7 @@ export default function EditPage({$target,isModify,initialState = {},user}){
         title:'',
         data:'',
         selectedLanguage:0,
+        imageData:[],
         ...initialState
     }
     
@@ -30,7 +31,6 @@ export default function EditPage({$target,isModify,initialState = {},user}){
 
     this.setState = (nextState) =>{
         this.state = nextState;
-        console.log(this.state);
     }
 
     const titleInput = new Input({
@@ -98,7 +98,7 @@ export default function EditPage({$target,isModify,initialState = {},user}){
                 'thumbnail': getImageURL(this.state.selectedLanguage)
             }
             if(isModify){
-                 data['_id'] = this.state._id;
+                 
                  updateArticle(data)
                  .then(response => {
                      changeRoute('/article');
@@ -112,6 +112,30 @@ export default function EditPage({$target,isModify,initialState = {},user}){
             });
         }
     })
+    const testBtn = new ClickButton({
+        $target:$btnContainer,
+        initialState:{
+            name:'test',
+            className:''
+        },
+        onClick : () => {
+            const images = document.querySelectorAll('.image > img');
+            if(images.length === 0) return;
+            const paths = [];
+            images.forEach(el => {
+                const path = el.src.split('/').pop();
+                paths.push(path);
+            })
+            const data = {
+                userId : user._id,
+                paths,
+            }
+            uploadCloudinary(data)
+            .then(response => {
+                console.log(response);
+            })
+        }
+    })
     this.render = () =>{
         ClassicEditor.create(editor,{
             extraPlugins:[CustomUploadAdapterPlugin],
@@ -122,13 +146,26 @@ export default function EditPage({$target,isModify,initialState = {},user}){
 
             });
             editor.ui.element.style.margin = '.4rem 2rem';
+            const imageUploadEditing = editor.plugins.get('ImageUploadEditing');
+            imageUploadEditing.on('uploadComplete',(evt, {data,imageElement}) =>{
+                const {imageData} = this.state;
+                imageData.push({
+                    src:data.default,
+                    id: data.id,
+                });
+            })
             editor.setData(this.state.data);
             this.editor = editor
         })
         .catch(err => console.log(err));
         cancelBtn.render();
         uploadBtn.render();
+        testBtn.render();
 
     }
     this.render();
+    const dele = () =>{
+         console.log(2);
+    }
+    
 }

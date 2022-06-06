@@ -1,7 +1,8 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const cors = require('cors')
+const cors = require('cors');
+
 
 const bodyParser = require("body-parser");
 
@@ -28,11 +29,17 @@ app.use(cors());
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(express.urlencoded({extended:true}));
+app.use('/uploads',express.static(path.join(__dirname,'uploads')))
+// app.use('/uploads',express.static('uploads'));
 app.use(express.json());
+
+app.use(express.urlencoded({extended:false}))
+
 app.use(cookieParser());
 //to get json data
 // app.use(express.bodyParser());
 // app.use(bodyParser.json());
+// app.use(express.static('uploads'));
 app.use('/api/users',require('./router/users'));
 app.use('/api/posts',require('./router/posts'));
 
@@ -52,7 +59,7 @@ if (process.env.NODE_ENV === "production") {
   // Set static folder   
   // All the javascript and css files will be read and served from this folder
   app.use(express.static("client/build"));
-
+  
   // index.html for all page routes    html or routing and naviagtion
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "../client", "build", "index.html"));

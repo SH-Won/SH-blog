@@ -48,7 +48,9 @@ export default function ArticleDetailPage({$target,articleId,user}){
             },
             onClick : () =>{
                 const params = {
-                    detail : this.state.article,
+                    detail : {
+                        article:this.state.article,
+                    }
                 }
                 changeRoute('/edit',params);
             }

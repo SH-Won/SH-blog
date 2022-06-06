@@ -12,9 +12,9 @@ export const request  = async (url ="",params = {}) =>{
          throw new Error("무언가 이상해~~");
     }
 }
-export const uploadArticle = async (data = {}) =>{
+export const uploadArticle = async (data = {} , category ='article') =>{
     try{    
-        const fullUrl = `${ENDPOINT}/posts/uploadArticle`;
+        const fullUrl = `${ENDPOINT}/posts/${category === 'article' ? 'uploadArticle' : 'uploadPost'}`;
         
         const res = await fetch(fullUrl,{
             method:'POST',
@@ -113,5 +113,38 @@ export const logoutUser = async () =>{
         if(res.ok) return await res.json();
     }catch(e){
         
+    }
+}
+export const destoryImage = async (data = {}) =>{
+    try{
+        const fullUrl = `${ENDPOINT}/posts/destory`;
+        const res = await fetch(fullUrl,{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json',
+            },
+            body:JSON.stringify(data),
+        })
+        const {success} = await res.json();
+        if(success) return success;
+           
+    }catch(e) {
+
+    }
+}
+export const uploadCloudinary = async (data = {}) =>{
+    try{
+        const fullUrl = `${ENDPOINT}/posts/upload`;
+        const res = await fetch(fullUrl,{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json',
+            },
+            body:JSON.stringify(data)
+        })
+        if(res.ok) return await res.json();
+
+    }catch(e){
+
     }
 }

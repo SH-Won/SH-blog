@@ -12,14 +12,14 @@ import LoginPage from './page/LoginPage.js';
 import Auth from './Auth.js';
 import { removeItem } from './utills/storage.js';
 import { logoutUser } from './utills/api.js';
-import { selector } from './utills/selector.js';
+
 
 export default function App($target){
     const cache = {
 
     }
     const testCache = new Map();
-    this.route = (params) =>{
+    this.route = (params = {}) =>{
         const {pathname} = location;
         $target.innerHTML = '';
         new NavBar({$target}).render();
@@ -44,7 +44,8 @@ export default function App($target){
             })
         }
         else if(pathname ==='/login'){
-            const connect = params === null ? pathname : params; 
+            console.log(params);
+            const connect = params !==null && params.hasOwnProperty('route') ?  params.route : '/'; 
             Auth(LoginPage,false)({
                 $target,
                 connect,
@@ -66,16 +67,14 @@ export default function App($target){
             })
         }
         else if(pathname ==='/edit'){
-            const isModify = params === null ? false : true;
-            // new EditPage({
-            //     $target,
-            //     isModify:params === null ? false : true,
-            //     initialState: params,
-            // })
-            Auth(EditPage,true,pathname)({
+            console.log(params);
+            const isModify = params !== null && params.hasOwnProperty('article') ? true : false;
+            const prevRoute = params !== null && params.hasOwnProperty('route') ? params.route : pathname;
+            
+            Auth(EditPage,true,prevRoute)({
                 $target,
                 isModify,
-                initialState:params,
+                initialState:isModify ? params.article : null,
             })
         }
         else if(pathname === '/article'){
@@ -98,9 +97,9 @@ export default function App($target){
     init(this.route);
     this.route();
     window.addEventListener('popstate',this.route);
-    window.addEventListener('beforeunload', () =>{
-        removeItem('userId');
-        logoutUser()
-        .then()
-    })
+    // window.addEventListener('beforeunload', () =>{
+    //     removeItem('userId');
+    //     logoutUser()
+    //     .then()
+    // })
 }

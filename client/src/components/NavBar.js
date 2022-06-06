@@ -47,7 +47,7 @@ export default function NavBar({$target,initialState}){
                     }
                 })
             }
-            else if(route === '/login') return changeRoute(route,{detail: location.pathname});
+            else if(route === '/login') return changeRoute(route,{detail:{route: location.pathname}});
             changeRoute(route);
         }
     })

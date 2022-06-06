@@ -7,11 +7,10 @@ import ListView from '../components/ListView.js';
 import CheckBox from '../components/CheckBox.js';
 import { category } from '../utills/category.js';
 import { changeRoute } from '../utills/router.js';
-import { getItem } from '../utills/storage.js';
 import ClickButton from '../components/ClickButton.js';
 
 export default function LandingPage({$target,initialState,cache,testCache,user}){
-    console.log(user);
+
     const $page = document.createElement('div');
     
     $page.className = 'page landing';
@@ -109,10 +108,9 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
             name:'글 쓰기',
             className:'button write-post'
         },
-        onClick : () => {
-
-        }
+        onClick : () =>  changeRoute('/edit',{detail : {route : location.pathname}})
     }).render();
+    
     const posts = new Posts({
         $target : $page,
         initialState:this.state,

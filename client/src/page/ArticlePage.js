@@ -39,7 +39,7 @@ export default function ArticlePage({$target,initialState}){
             className:'writeBtn',
             name : '글 쓰기',
         },
-        onClick : () => changeRoute('/edit'),
+        onClick : () => changeRoute('/edit',{detail: {route : location.pathname}}),
     }).render();
 
     const articles = new Posts({
