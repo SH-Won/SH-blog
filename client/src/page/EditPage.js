@@ -125,13 +125,11 @@ export default function EditPage({$target,isModify,initialState = {},user}){
             // remove id는 지워야함.
             // const imgs = this.editor.editing.view.document.getRoot().document.
             // console.log(imageElements);
-            
-            // imageElements.forEach(el =>{
-            //     el._attrs.set('src','11234');
-            //     el._attrs.set('data-id','idid');
+            // this.editor.model.document.getRoot()._children._nodes.forEach((element,idx) =>{
+            //     if(element.name !=='imageBlock') return;
+            //     element._attrs.set('src',`${idx}`);
             // })
-            console.log(this.editor.getData());
-            return;
+            
             
             const totalImgElements = document.querySelectorAll('.image > img');
             const addImageElements = [];
@@ -146,7 +144,8 @@ export default function EditPage({$target,isModify,initialState = {},user}){
                     addImageElements.push(el);
                 }
                 else{
-                    const id = el.src.split('/')
+                    const splitSrc = el.src.split(/[/|.]/g).slice(-3,-1);
+                    const id = splitSrc.join('/');
                     const idx = removeIds.includes(id);
                     removeIds.splice(idx,1);
                     imageIds.push(id);
@@ -159,12 +158,12 @@ export default function EditPage({$target,isModify,initialState = {},user}){
             }
             uploadCloudinary(data)
             .then(response => {
-                addImageElements.forEach((el,idx) => {
-                     const {url,id} = response.data[idx];
-                     el.setAttribute('src',url)
-                     el.setAttribute('data-id',id);
-                     
-                     imageIds.push(id);
+                let idx = 0;
+                this.editor.model.document.getRoot()._children._nodes.forEach(element =>{
+                    if(element.name !== 'imageBlock') return;
+                    const {url,id} = response.data[idx++];
+                    element._attrs.set('src',url);
+                    imageIds.push(id);
                 })
                 
                 const data = {

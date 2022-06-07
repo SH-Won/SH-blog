@@ -106,9 +106,10 @@ router.post('/upload', async (req,res) =>{
         return new Promise((resolve,reject) => {
             cloudinary.uploader.upload(filePath,{folder:'Article-Images'},(err,result) => {
                 if(err) reject(err);
+                console.log(result);
                 resolve({
                     id:result.public_id,
-                    url:result.url,
+                    url:result.secure_url,
                 });
             })
         })
@@ -243,13 +244,22 @@ router.post('/updateArticle',(req,res) =>{
          res.status(200).json({success:true});
     })
 })
-router.post('/deleteArticle',(req,res) =>{
-    const {_id}  = req.body;
+router.post('/deleteArticle',async (req,res) =>{
+    const {_id,imageIds}  = req.body;
     Article.findOneAndDelete({_id})
     .exec((err,result) =>{
         if(err) res.status(400).json({success:false,err});
         res.status(200).json({success:true});
     })
+    const remove = await Promise.all(imageIds.map(async id => {
+        return new Promise((resolve,reject) =>{
+            cloudinary.uploader.destroy(id, result =>{
+                resolve(result)
+            })
+        })
+    }))
+    console.log('delete Article');
+
 })
 
 module.exports = router;
