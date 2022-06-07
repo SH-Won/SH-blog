@@ -133,6 +133,10 @@ export default function EditPage({$target,isModify,initialState = {},user}){
             uploadCloudinary(data)
             .then(response => {
                 console.log(response);
+                images.forEach((el,idx) =>{
+                    el.src = response.data[idx].url;
+                    el.setAttribute('data-id',response.data[idx].id);
+                })
             })
         }
     })

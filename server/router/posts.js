@@ -73,26 +73,49 @@ router.post('/upload', async (req,res) =>{
     const {userId,paths} = req.body;
     console.log(paths);
     const data = [];
-    const result =  await paths.reduce( async (prev,cur) =>{
-        //   console.log(`${path.join(__dirname,'..')}/uploads/${userId}/${cur}`)
-    //    const file = fs.readFileSync(`${path.join(__dirname,'..','uploads',`${userId}`,`${cur}`)}`,'base64');
-    const filePath = `${path.join(__dirname,'..','uploads',`${userId}`,`${cur}`)}`
-      
-        return prev.then(async () => {
-            await cloudinary.uploader.upload(filePath,{folder:'uploads'},(err,result) =>{
-                if(err) return res.status(400).json({success:false});
-                data.push({
-                   id:result.public_id,
-                   url:result.url,
-                })
+    // const result =  await paths.reduce( async (prev,cur) =>{
+    //     //   console.log(`${path.join(__dirname,'..')}/uploads/${userId}/${cur}`)
+    // //    const file = fs.readFileSync(`${path.join(__dirname,'..','uploads',`${userId}`,`${cur}`)}`,'base64');
+    // const filePath = `${path.join(__dirname,'..','uploads',`${userId}`,`${cur}`)}`
+    //     return prev.then(data => new Promise((resolve,reject) => {
+    //         cloudinary.uploader.upload(filePath,{folder:'uploads'},(err,result) => {
+    //             if(err) reject(err);
+    //             data.push({
+    //                 id:result.public_id,
+    //                 url:result.url,
+    //             })
+    //             resolve(data);
+    //         }).catch(err => res.status(400).json({success:false, err}) )
+    //     }))
+    //     // return prev.then(async () => {
+    //     //     await cloudinary.uploader.upload(filePath,{folder:'uploads'},(err,result) =>{
+    //     //         if(err) return res.status(400).json({success:false});
+    //     //         data.push({
+    //     //            id:result.public_id,
+    //     //            url:result.url,
+    //     //         })
                 
-            })
-            return Promise.resolve();
-        })
+    //     //     })
+    //     //     return Promise.resolve();
+    //     // })
        
-    },Promise.resolve());
-
-    res.status(200).json({success:true, data});
+    // },Promise.resolve([]));
+    
+    const result1 = await Promise.all(paths.map(async p => {
+        const filePath = `${path.join(__dirname,'..','uploads',`${userId}`,`${p}`)}`;
+        return new Promise((resolve,reject) => {
+            cloudinary.uploader.upload(filePath,{folder:'uploads'},(err,result) => {
+                if(err) reject(err);
+                resolve({
+                    id:result.public_id,
+                    url:result.url,
+                });
+            })
+        })
+    }))
+    console.log(result1);
+    // res.status(200).json({success:true,data:result1});
+    // res.status(200).json({success:true, data});
 })
 
 router.post('/uploadfiles', upload ,(req,res)=>{
