@@ -23,10 +23,10 @@ export default function EditPage({$target,isModify,initialState = {},user}){
         title:'',
         data:'',
         selectedLanguage:0,
-        imageData:[],
+        imageIds : [],
         ...initialState
     }
-    
+    const imageElements = [];
     this.editor = null;
 
     this.setState = (nextState) =>{
@@ -119,25 +119,88 @@ export default function EditPage({$target,isModify,initialState = {},user}){
             className:''
         },
         onClick : () => {
-            const images = document.querySelectorAll('.image > img');
-            if(images.length === 0) return;
+            // 먼저 id 가 있는 이미지태그와 없는 이미지 태그를 분리
+            // imageId 데이터와 id가 있는 태그가 맞지 않으면 remove id 를 해야함
+            // upload 형태의 image 데이터들은 모두 cloudi 로 업로드 해야하고
+            // remove id는 지워야함.
+            // const imgs = this.editor.editing.view.document.getRoot().document.
+            // console.log(imageElements);
+            
+            // imageElements.forEach(el =>{
+            //     el._attrs.set('src','11234');
+            //     el._attrs.set('data-id','idid');
+            // })
+            console.log(this.editor.getData());
+            return;
+            
+            const totalImgElements = document.querySelectorAll('.image > img');
+            const addImageElements = [];
+            const removeIds = [...this.state.imageIds];
+            const imageIds = [];
             const paths = [];
-            images.forEach(el => {
-                const path = el.src.split('/').pop();
-                paths.push(path);
+            totalImgElements.forEach(el => {
+                const isMatch = el.src.match('cloudinary');
+                if(!isMatch){
+                    const path = el.src.split('/').pop();
+                    paths.push(path);
+                    addImageElements.push(el);
+                }
+                else{
+                    const id = el.src.split('/')
+                    const idx = removeIds.includes(id);
+                    removeIds.splice(idx,1);
+                    imageIds.push(id);
+                }
             })
+            // if(removeIds.length === 0) return;
             const data = {
                 userId : user._id,
                 paths,
             }
             uploadCloudinary(data)
             .then(response => {
-                console.log(response);
-                images.forEach((el,idx) =>{
-                    el.src = response.data[idx].url;
-                    el.setAttribute('data-id',response.data[idx].id);
+                addImageElements.forEach((el,idx) => {
+                     const {url,id} = response.data[idx];
+                     el.setAttribute('src',url)
+                     el.setAttribute('data-id',id);
+                     
+                     imageIds.push(id);
                 })
+                
+                const data = {
+                    'writer':user._id,
+                    'title':this.state.title,
+                    'data': this.editor.getData(),
+                    'category':this.state.selectedLanguage,
+                    'thumbnail': getImageURL(this.state.selectedLanguage),
+                    imageIds,
+                    removeIds,
+                }
+                console.log(data.data);
+                return uploadArticle(data)
             })
+            .then(response =>{
+                console.log(response);
+            })
+            // const images = document.querySelectorAll('.image > img');
+            // if(images.length === 0) return;
+            // const paths = [];
+            // images.forEach(el => {
+            //     const path = el.src.split('/').pop();
+            //     paths.push(path);
+            // })
+            // const data = {
+            //     userId : user._id,
+            //     paths,
+            // }
+            // uploadCloudinary(data)
+            // .then(response => {
+            //     console.log(response);
+            //     images.forEach((el,idx) =>{
+            //         el.src = response.data[idx].url;
+            //         el.setAttribute('data-id',response.data[idx].id);
+            //     })
+            // })
         }
     })
     this.render = () =>{
@@ -150,13 +213,14 @@ export default function EditPage({$target,isModify,initialState = {},user}){
 
             });
             editor.ui.element.style.margin = '.4rem 2rem';
+            
             const imageUploadEditing = editor.plugins.get('ImageUploadEditing');
             imageUploadEditing.on('uploadComplete',(evt, {data,imageElement}) =>{
-                const {imageData} = this.state;
-                imageData.push({
-                    src:data.default,
-                    id: data.id,
-                });
+                imageElements.push(imageElement);
+                editor.model.change(writer => {
+                    // console.log(writer);
+                    // writer.setAttribute('data-id',data.attributes['data-id'],imageElement);
+                })
             })
             editor.setData(this.state.data);
             this.editor = editor

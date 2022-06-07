@@ -64,7 +64,7 @@ export default function LoginPage({$target,connect}){
                         
                     }
                 }
-                console.log(copy);
+                
                 this.setState(copy);
                 
         },200)

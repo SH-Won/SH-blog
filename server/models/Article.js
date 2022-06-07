@@ -18,6 +18,10 @@ const articleSchema = mongoose.Schema({
     },
     category:{
         type:Number,
+    },
+    imagesIds:{
+        type:Array,
+        default:[],
     }
     
 
