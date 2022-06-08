@@ -26,7 +26,6 @@ export default function EditPage({$target,isModify,initialState = {},user}){
         imageIds : [],
         ...initialState
     }
-    const imageElements = [];
     this.editor = null;
 
     this.setState = (nextState) =>{
@@ -90,12 +89,13 @@ export default function EditPage({$target,isModify,initialState = {},user}){
                 alert('제목을 입력해주세요');
                 return;
             }
+
             const data = {
                 'writer':user._id,
                 'title':this.state.title,
                 'data': this.editor.getData(),
                 'category':this.state.selectedLanguage,
-                'thumbnail': getImageURL(this.state.selectedLanguage)
+                'thumbnail': getImageURL(this.state.selectedLanguage),
             }
             if(isModify){
                  
@@ -118,53 +118,64 @@ export default function EditPage({$target,isModify,initialState = {},user}){
             name:'test',
             className:''
         },
-        onClick : () => {
+        onClick : async () => {
             // 먼저 id 가 있는 이미지태그와 없는 이미지 태그를 분리
             // imageId 데이터와 id가 있는 태그가 맞지 않으면 remove id 를 해야함
             // upload 형태의 image 데이터들은 모두 cloudi 로 업로드 해야하고
             // remove id는 지워야함.
-            // const imgs = this.editor.editing.view.document.getRoot().document.
-            // console.log(imageElements);
-            // this.editor.model.document.getRoot()._children._nodes.forEach((element,idx) =>{
-            //     if(element.name !=='imageBlock') return;
-            //     element._attrs.set('src',`${idx}`);
-            // })
             
             
-            const totalImgElements = document.querySelectorAll('.image > img');
-            const addImageElements = [];
+            const totalElements = this.editor.model.document.getRoot()._children._nodes;
+            
+            // const totalImgElements = document.querySelectorAll('.image > img');
+            const addImgElement = [];
             const removeIds = [...this.state.imageIds];
             const imageIds = [];
             const paths = [];
-            totalImgElements.forEach(el => {
-                const isMatch = el.src.match('cloudinary');
-                if(!isMatch){
-                    const path = el.src.split('/').pop();
-                    paths.push(path);
-                    addImageElements.push(el);
-                }
-                else{
-                    const splitSrc = el.src.split(/[/|.]/g).slice(-3,-1);
-                    const id = splitSrc.join('/');
-                    const idx = removeIds.includes(id);
-                    removeIds.splice(idx,1);
-                    imageIds.push(id);
-                }
-            })
-            // if(removeIds.length === 0) return;
-            const data = {
-                userId : user._id,
-                paths,
+            if(totalElements.length !== 0){
+              totalElements.forEach(el => {
+                  if(el.name !=='imageBlock') return;
+                  const src = el._attrs.get('src');
+                  const isMatch = src.match('cloudinary');     
+                  if(!isMatch){
+                      const path = src.split('\\').pop();
+                      paths.push(path);
+                      addImgElement.push(el);
+                  }
+                  else{
+                      const splitSrc = src.split(/[/|.]/g).slice(-3,-1);
+                      console.log('match',splitSrc);
+                      const id = splitSrc.join('/');
+                      const idx = removeIds.includes(id);
+                      removeIds.splice(idx,1);
+                      imageIds.push(id);
+                  }
+              })
             }
-            uploadCloudinary(data)
-            .then(response => {
-                let idx = 0;
-                this.editor.model.document.getRoot()._children._nodes.forEach(element =>{
-                    if(element.name !== 'imageBlock') return;
-                    const {url,id} = response.data[idx++];
-                    element._attrs.set('src',url);
-                    imageIds.push(id);
-                })
+            
+            let isUpload = Promise.resolve();
+            if(addImgElement.length > 0){
+                const data = {
+                    userId : user._id,
+                    paths,
+                }
+                 await uploadCloudinary(data)
+                      .then(response =>{
+                          let idx = 0;
+                          addImgElement.forEach(element =>{
+                              if(element.name !=='imageBlock') return;
+                              const {url,id} = response.data[idx++];
+                              element._attrs.set('src',url);
+                              imageIds.push(id);
+                          })
+                          console.log('promise flag');
+                      })
+                      .catch(err => console.log(err));
+              }
+              console.log('promise end');
+              
+
+            isUpload.then(response => {
                 
                 const data = {
                     'writer':user._id,
@@ -181,25 +192,7 @@ export default function EditPage({$target,isModify,initialState = {},user}){
             .then(response =>{
                 console.log(response);
             })
-            // const images = document.querySelectorAll('.image > img');
-            // if(images.length === 0) return;
-            // const paths = [];
-            // images.forEach(el => {
-            //     const path = el.src.split('/').pop();
-            //     paths.push(path);
-            // })
-            // const data = {
-            //     userId : user._id,
-            //     paths,
-            // }
-            // uploadCloudinary(data)
-            // .then(response => {
-            //     console.log(response);
-            //     images.forEach((el,idx) =>{
-            //         el.src = response.data[idx].url;
-            //         el.setAttribute('data-id',response.data[idx].id);
-            //     })
-            // })
+            
         }
     })
     this.render = () =>{
@@ -215,11 +208,7 @@ export default function EditPage({$target,isModify,initialState = {},user}){
             
             const imageUploadEditing = editor.plugins.get('ImageUploadEditing');
             imageUploadEditing.on('uploadComplete',(evt, {data,imageElement}) =>{
-                imageElements.push(imageElement);
-                editor.model.change(writer => {
-                    // console.log(writer);
-                    // writer.setAttribute('data-id',data.attributes['data-id'],imageElement);
-                })
+               
             })
             editor.setData(this.state.data);
             this.editor = editor
@@ -231,8 +220,5 @@ export default function EditPage({$target,isModify,initialState = {},user}){
 
     }
     this.render();
-    const dele = () =>{
-         console.log(2);
-    }
     
 }

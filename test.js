@@ -3,3 +3,13 @@ const url = 'https://res.cloudinary.com/dhjegsbqv/image/upload/v1654596896/Artic
 const array = url.split(/[/|.]/g);
 console.log(array);
 console.log(array.slice(-3,-1).join('/'))
+
+// const imgs = this.editor.editing.view.document.getRoot().document.
+            // console.log(imageElements);
+            // this.editor.model.document.getRoot()._children._nodes.forEach((element,idx) =>{
+            //     if(element.name !=='imageBlock') return;
+            //     element._attrs.set('src',`${idx}`);
+            // })
+
+            
+            
