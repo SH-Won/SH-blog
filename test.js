@@ -13,3 +13,14 @@ console.log(array.slice(-3,-1).join('/'))
 
             
             
+function A({number,user}){
+    this.number = number;
+    this.g = () => this.get(user);
+}
+A.prototype.get = function (user){
+    console.log(user);
+}
+
+const a = new A({number:1,user:2});
+
+a.g();

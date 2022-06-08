@@ -101,7 +101,7 @@ router.post('/upload', async (req,res) =>{
        
     // },Promise.resolve([]));
     
-    const result1 = await Promise.all(paths.map(async p => {
+    const result = await Promise.all(paths.map(async p => {
         const filePath = `${path.join(__dirname,'..','uploads',`${userId}`,`${p}`)}`;
         return new Promise((resolve,reject) => {
             cloudinary.uploader.upload(filePath,{folder:'Article-Images'},(err,result) => {
@@ -114,8 +114,7 @@ router.post('/upload', async (req,res) =>{
             })
         })
     }))
-    console.log(result1);
-    res.status(200).json({success:true,data:result1});
+    res.status(200).json({success:true,data:result});
     // res.status(200).json({success:true, data});
 })
 
@@ -228,21 +227,32 @@ router.post('/uploadArticle', (req,res)=>{
         })
     }))
     const dir = `${path.join(__dirname,'..','uploads',`${writer}`)}`
-    fs.rmdirSync(dir,{recursive:true});
+    if(fs.existsSync(dir)) fs.rmdirSync(dir,{recursive:true});
 })
 router.post('/updateArticle',(req,res) =>{
-    const {_id,title,category,data,thumbnail} = req.body;
+    const {_id,writer,title,category,data,thumbnail,imageIds,removeIds} = req.body;
     Article.findOneAndUpdate({_id},
     {$set : {
+        writer,
         title,
         thumbnail,
         category,
-        data
+        data,
+        imageIds,
     }})
     .exec((err,result) =>{
          if(err) res.status(400).json({success:false,err});
          res.status(200).json({success:true});
     })
+    const remove = Promise.all(removeIds.map(async id => {
+        return new Promise((resolve,reject) =>{
+            cloudinary.uploader.destroy(id,result =>{
+                resolve(result);
+            })
+        })
+    }))
+    const dir = `${path.join(__dirname,'..','uploads',`${writer}`)}`
+    if(fs.existsSync(dir)) fs.rmdirSync(dir,{recursive:true});
 })
 router.post('/deleteArticle',async (req,res) =>{
     const {_id,imageIds}  = req.body;
