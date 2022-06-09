@@ -96,7 +96,13 @@ export default function App($target){
     }
     init(this.route);
     this.route();
-    window.addEventListener('popstate',this.route);
+    window.onpopstate = function(){
+    
+    }
+    window.addEventListener('popstate',(e) =>{
+        console.log(e);
+        this.route();
+    });
     // window.addEventListener('beforeunload', () =>{
     //     removeItem('userId');
     //     logoutUser()

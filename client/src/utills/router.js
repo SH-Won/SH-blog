@@ -14,6 +14,7 @@ export const init = (onRouteChange) =>{
     });
 }
 export const changeRoute = (url,params=null) =>{
+    // window.history.replaceState(params,null,url);
     window.history.pushState(params,null,url);
     // window.history.pushState()
     window.dispatchEvent(new CustomEvent(ROUTE_EVENT,params));

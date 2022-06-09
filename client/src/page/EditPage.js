@@ -9,7 +9,7 @@ import ClickButton from '../components/ClickButton';
 import {changeRoute} from '../utills/router'
 
 export default function EditPage({$target,isModify,initialState = {},user}){
-
+    const from = window.history.state.detail.route;
     this.$page = document.createElement('div');
     const editor = document.createElement('div');
     const $infoContainer = document.createElement('div');
@@ -116,4 +116,6 @@ export default function EditPage({$target,isModify,initialState = {},user}){
     }
     this.render();
     console.log('edit page loaded');
+    window.history.replaceState({detail:{route:'/edit'}},null,'/edit');
+    // console.log(history.state);
 }
