@@ -12,7 +12,7 @@ import LoginPage from './page/LoginPage.js';
 import Auth from './Auth.js';
 import { removeItem } from './utills/storage.js';
 import { logoutUser } from './utills/api.js';
-
+import './utills/prototype';
 
 export default function App($target){
     const cache = {

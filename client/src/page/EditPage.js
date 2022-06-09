@@ -1,29 +1,34 @@
 // import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
 import ClassicEditor from '../utills/ckeditor';
 import CustomUploadAdapterPlugin from '../utills/UploadAdapter';
-import {uploadArticle, updateArticle, uploadCloudinary} from '../utills/api'
-import { languages,getImageURL } from '../utills/languages';
+import { languages } from '../utills/languages';
 import styles from '../styles/EditPage.module.css';
 import SelectOptions from '../components/SelectOptions';
 import Input from '../components/Input';
 import ClickButton from '../components/ClickButton';
 import {changeRoute} from '../utills/router'
-import { EditPrototype } from '../utills/prototype';
+
 export default function EditPage({$target,isModify,initialState = {},user}){
 
-    const $page = document.createElement('div');
+    this.$page = document.createElement('div');
     const editor = document.createElement('div');
+    const $infoContainer = document.createElement('div');
     const $btnContainer = document.createElement('div');
-    $page.className = `${styles.EditPage}`;
+    $infoContainer.className = `${styles.infoContainer}`
+    this.$page.className = `${styles.EditPage}`;
     $btnContainer.className = `${styles.btnContainer}`;
-    $target.appendChild($page);
-    $target.appendChild(editor);
-    $target.appendChild($btnContainer);
+    // $target.appendChild($page);
+    // $target.appendChild(editor);
+    // $target.appendChild($btnContainer);
+    this.$page.appendChild($infoContainer);
+    this.$page.appendChild(editor);
+    this.$page.appendChild($btnContainer);
+    $target.appendChild(this.$page);
 
     this.state = {
         title:'',
         data:'',
-        selectedLanguage:initialState['category'] ? initialState['category'] : 0,
+        selectedLanguage:isModify ? initialState['category'] : 0,
         imageIds : [],
         ...initialState
     }
@@ -34,7 +39,7 @@ export default function EditPage({$target,isModify,initialState = {},user}){
     }
 
     const titleInput = new Input({
-        $target:$page,
+        $target:$infoContainer,
         initialState:{
             title:this.state.title,
             className:`${styles.titleInput}`,
@@ -48,7 +53,7 @@ export default function EditPage({$target,isModify,initialState = {},user}){
         }
     })
     const selectOption = new SelectOptions({
-        $target:$page,
+        $target:$infoContainer,
         className:`${styles.selectOption}`,
         initialState:{
             options:languages,
@@ -61,6 +66,7 @@ export default function EditPage({$target,isModify,initialState = {},user}){
             })
         }
     })
+
     const cancelBtn = new ClickButton({
         $target:$btnContainer,
         initialState : {
@@ -86,6 +92,7 @@ export default function EditPage({$target,isModify,initialState = {},user}){
     })
     
     this.render = () =>{
+        
         ClassicEditor.create(editor,{
             extraPlugins:[CustomUploadAdapterPlugin],
         }).then(editor =>{
@@ -95,7 +102,7 @@ export default function EditPage({$target,isModify,initialState = {},user}){
 
             });
             editor.ui.element.style.margin = '.4rem 2rem';
-            
+            editor.ui.element.style.width = '100%';
             const imageUploadEditing = editor.plugins.get('ImageUploadEditing');
             imageUploadEditing.on('uploadComplete',(evt, {data,imageElement}) =>{
                
@@ -108,5 +115,5 @@ export default function EditPage({$target,isModify,initialState = {},user}){
         uploadBtn.render();
     }
     this.render();
-    
+    console.log('edit page loaded');
 }

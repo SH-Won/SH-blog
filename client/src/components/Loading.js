@@ -1,8 +1,8 @@
 import style from'../styles/Loading.module.css';
-export default function Loading ({$target,initialState}){
+export default function Loading ({$target,initialState,covered = false}){
     this.state = initialState;
     const $loading = document.createElement('div');
-    $loading.className = `${style.loadingContainer}`
+    $loading.className = `${!covered ? style.loadingContainer : style.covered}`
     $loading.innerHTML = `
             <div class="${style.loadingItem}"></div>
         `.repeat(4);

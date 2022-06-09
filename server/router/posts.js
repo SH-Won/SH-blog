@@ -156,7 +156,9 @@ router.post('/uploadPost',(req,res)=>{
     })
 })
 router.post('/destory' ,(req,res) =>{
-    
+    const {writer} = req.body;
+    const dir = `${path.join(__dirname,'..','uploads',`${writer}`)}`
+    if(fs.existsSync(dir)) fs.rmdirSync(dir,{recursive:true});
 })
 router.get('/', (req,res) =>{
     let skip = req.query.skip ? parseInt(req.query.skip) : Number(0);

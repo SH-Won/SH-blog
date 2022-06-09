@@ -4,13 +4,14 @@ import { updateArticle, uploadArticle, uploadCloudinary } from './api';
 import { getImageURL } from './languages';
 import { changeRoute } from './router';
 
-
+// Edit Page
 (() => {
 EditPage.prototype.uploadItem = async function(user,isModify){
-    const {$page} = this.state;
+    
     const loading = new Loading({
-        $target:$page,
+        $target:this.$page,
         initialState:false,
+        covered:true,
     })
     if(!this.state.selectedLanguage ){
         alert('카테고리를 선택해 주세요');
@@ -20,6 +21,8 @@ EditPage.prototype.uploadItem = async function(user,isModify){
         alert('제목을 입력해주세요');
         return;
     }
+    
+    loading.setState(true);
     const totalElements = this.editor.model.document.getRoot()._children._nodes;
             
         // const totalImgElements = document.querySelectorAll('.image > img');
@@ -47,7 +50,8 @@ EditPage.prototype.uploadItem = async function(user,isModify){
                 }
               })
         }
-    loading.setState(true);
+    
+    
     let isUpload = Promise.resolve();
             if(addImgElement.length > 0){
                 const data = {
@@ -85,9 +89,14 @@ EditPage.prototype.uploadItem = async function(user,isModify){
         return uploadArticle(data);
     })
     .then(response =>{
-        console.log(response);
+        const haveToDelete = addImgElement.length ? true : false;
         loading.setState(false);
-        changeRoute('/');   
+        changeRoute('/',{
+            detail : {
+                writer:user._id,
+                haveToDelete,
+            }
+        });
     })
 }
 console.log('prototype');
