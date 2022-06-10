@@ -108,7 +108,10 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
             name:'글 쓰기',
             className:'button write-post'
         },
-        onClick : () =>  changeRoute('/edit',{detail : {route : location.pathname}})
+        onClick : () => {
+            // window.history.replaceState({detail:{ from :'/edit'}},null);
+            changeRoute('/edit',{detail : {route : location.pathname}})
+        }
     }).render();
     
     const posts = new Posts({

@@ -10,8 +10,8 @@ import TestPage from './page/TestPage.js';
 import RegisterPage from './page/RegisterPage.js';
 import LoginPage from './page/LoginPage.js';
 import Auth from './Auth.js';
-import { removeItem } from './utills/storage.js';
-import { logoutUser } from './utills/api.js';
+import { selector } from './utills/selector.js';
+import { destoryImage, logoutUser } from './utills/api.js';
 import './utills/prototype';
 
 export default function App($target){
@@ -22,7 +22,10 @@ export default function App($target){
     this.route = (params = {}) =>{
         const {pathname} = location;
         $target.innerHTML = '';
-        new NavBar({$target}).render();
+        // NavBar
+        Auth(NavBar,false)({
+            $target,
+        })
         
         if(pathname === '/'){
             const initialState = testCache.has('pre') ? testCache.get('pre') : {
@@ -44,7 +47,6 @@ export default function App($target){
             })
         }
         else if(pathname ==='/login'){
-            console.log(params);
             const connect = params !==null && params.hasOwnProperty('route') ?  params.route : '/'; 
             Auth(LoginPage,false)({
                 $target,
@@ -96,16 +98,21 @@ export default function App($target){
     }
     init(this.route);
     this.route();
-    window.onpopstate = function(){
-    
-    }
     window.addEventListener('popstate',(e) =>{
-        console.log(e);
+        if(e.state.from === '/edit'){
+            const user = selector(state => state.user);
+            destoryImage({writer:user._id})
+        }
         this.route();
     });
-    // window.addEventListener('beforeunload', () =>{
-    //     removeItem('userId');
-    //     logoutUser()
-    //     .then()
-    // })
+    
+    window.addEventListener('beforeunload', () =>{
+        logoutUser()
+        .then(response =>{
+            if(response.success){
+                alert('안전하게 로그아웃 했습니다')
+            }
+        })
+    })
+
 }

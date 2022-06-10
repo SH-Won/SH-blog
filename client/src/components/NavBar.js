@@ -3,13 +3,13 @@ import { getItem,removeItem } from '../utills/storage.js';
 import style from '../styles/NavBar.module.css';
 import { logoutUser } from '../utills/api.js';
 import { selector } from '../utills/selector.js';
-export default function NavBar({$target,initialState}){
+export default function NavBar({$target,initialState=null,user}){
     this.state = initialState;
     const $navBar = document.createElement('nav');
     $navBar.className = `${style.navBar}`;
     $target.appendChild($navBar);
-    const user = selector((state) => state.user);
-    console.log(user);
+    // const user = selector((state) => state.user);
+    
     this.render = () =>{
         $navBar.innerHTML = `
         <ul class="${style.list}">

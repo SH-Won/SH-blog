@@ -10,9 +10,9 @@ export default function (page,option,prevRoute = null ,admin = null){
             user:userInfo,
         })
         
-        console.log('request auth to backend ');
         const user = await auth();
         selector(null,'user',user);
+        console.log(page,user);
         if(!user.isAuth){
             if(option){
                 changeRoute('/login',{detail : { route : prevRoute} });

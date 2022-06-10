@@ -1,4 +1,5 @@
 import { destoryImage } from './api';
+import { selector } from './selector';
 
 const ROUTE_EVENT = 'ROUTE_EVENT';
 
@@ -14,8 +15,12 @@ export const init = (onRouteChange) =>{
     });
 }
 export const changeRoute = (url,params=null) =>{
-    // window.history.replaceState(params,null,url);
+    window.history.replaceState({from:url},null);
+    if(location.pathname === '/edit'){
+        const user = selector(state => state.user);
+        destoryImage({writer : user._id});
+    }
+    console.log('url : ',url, 'current :' , location.pathname );
     window.history.pushState(params,null,url);
-    // window.history.pushState()
     window.dispatchEvent(new CustomEvent(ROUTE_EVENT,params));
 }
