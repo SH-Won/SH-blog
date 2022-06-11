@@ -65,8 +65,8 @@ userSchema.methods.generateToken = function(cb) {
     var user = this;
 
     var token =  jwt.sign(user._id.toHexString(),'secret')
-    var oneHour = moment().add(1, 'hour').valueOf();
-
+    var oneHour = moment().add(1, 'minute').valueOf();
+    console.log(oneHour);
     user.tokenExp = oneHour;
     user.token = token;
     user.save(function (err, user){

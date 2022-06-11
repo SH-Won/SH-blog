@@ -106,13 +106,13 @@ export default function App($target){
         this.route();
     });
     
-    // window.addEventListener('beforeunload', () =>{
-    //     logoutUser()
-    //     .then(response =>{
-    //         if(response.success){
-    //             alert('안전하게 로그아웃 했습니다')
-    //         }
-    //     })
-    // })
+    window.addEventListener('beforeunload', () =>{
+        logoutUser()
+        .then(response =>{
+            if(response.success){
+                
+            }
+        })
+    })
 
 }

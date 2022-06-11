@@ -6,8 +6,8 @@
     box-sizing: border-box;
 }
 .post{
-    margin:.5rem;
-    flex:0 0 calc( ( 100% - (0.5rem * 8) ) / 4);
+    margin:1rem;
+    flex:0 0 calc( ( 100% - (1rem * 8) ) / 4);
     display:flex;
     flex-direction: column;
     border-radius: .8rem;
@@ -46,7 +46,7 @@
     /* background-color: #e4f0ea; */
 }
 .info > li{
- width:120px;
+ width:100px;
  text-align: center;
  overflow: hidden;
  white-space: nowrap; 
@@ -57,13 +57,13 @@
 
 @media screen and (max-width:600px) {
     .post{
-        flex:0 0 calc( ( 100% - (0.5rem * 4) ) / 2);
+        flex:0 0 calc( ( 100% - (1rem * 4) ) / 2);
     }
     
 }
 @media screen and (max-width:850px) and (min-width:601px)  {
     .post{
-        flex:0 0 calc( ( 100% - (0.5rem * 6) ) /3 );
+        flex:0 0 calc( ( 100% - (1rem * 6) ) /3 );
     }
     
 }
