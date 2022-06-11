@@ -13,8 +13,11 @@ export const init = (onRouteChange) =>{
         
         onRouteChange(e.detail);
     });
+    
+    
 }
 export const changeRoute = (url,params=null) =>{
+    
     window.history.replaceState({from:url},null);
     if(location.pathname === '/edit'){
         const user = selector(state => state.user);

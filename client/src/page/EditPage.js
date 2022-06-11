@@ -76,7 +76,7 @@ export default function EditPage({$target,isModify,initialState = {},user}){
         onClick : () =>{
             const goBack = confirm(isModify ? '정말 수정을 하지 않으시겠어요?' :'정말 작성을 취소 하시겠어요 ?');
             if(goBack){
-                changeRoute('/article');
+                changeRoute(history.state.detail.route);
             }
             else return;
         }

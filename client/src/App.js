@@ -69,7 +69,6 @@ export default function App($target){
             })
         }
         else if(pathname ==='/edit'){
-            console.log(params);
             const isModify = params !== null && params.hasOwnProperty('article') ? true : false;
             const prevRoute = params !== null && params.hasOwnProperty('route') ? params.route : pathname;
             
@@ -99,20 +98,21 @@ export default function App($target){
     init(this.route);
     this.route();
     window.addEventListener('popstate',(e) =>{
-        if(e.state.from === '/edit'){
+        console.log('pop state');
+        if(e.state && e.state.from === '/edit'){
             const user = selector(state => state.user);
             destoryImage({writer:user._id})
         }
         this.route();
     });
     
-    window.addEventListener('beforeunload', () =>{
-        logoutUser()
-        .then(response =>{
-            if(response.success){
-                alert('안전하게 로그아웃 했습니다')
-            }
-        })
-    })
+    // window.addEventListener('beforeunload', () =>{
+    //     logoutUser()
+    //     .then(response =>{
+    //         if(response.success){
+    //             alert('안전하게 로그아웃 했습니다')
+    //         }
+    //     })
+    // })
 
 }

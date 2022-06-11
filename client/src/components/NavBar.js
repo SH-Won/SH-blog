@@ -9,7 +9,8 @@ export default function NavBar({$target,initialState=null,user}){
     $navBar.className = `${style.navBar}`;
     $target.appendChild($navBar);
     // const user = selector((state) => state.user);
-    
+    console.log(user);
+    console.log('navbar render');
     this.render = () =>{
         $navBar.innerHTML = `
         <ul class="${style.list}">
