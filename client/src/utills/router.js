@@ -21,7 +21,9 @@ export const changeRoute = (url,params=null) =>{
     window.history.replaceState({from:url},null);
     if(location.pathname === '/edit'){
         const user = selector(state => state.user);
+        if(user){
         destoryImage({writer : user._id});
+        }
     }
     console.log('url : ',url, 'current :' , location.pathname );
     window.history.pushState(params,null,url);

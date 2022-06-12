@@ -11,7 +11,7 @@ export default function CheckBox({$target,initialState,callback = null}){
     }
     this.render = () => {
         const {items,checked} = this.state;
-        checkBox.innerHTML = `
+        const templete = `
         ${items.map(item => `
         <label>
         <input type="checkbox" value="${item.id}"/>
@@ -19,6 +19,7 @@ export default function CheckBox({$target,initialState,callback = null}){
         </label>
         `).join('')}
         `;
+        checkBox.insertAdjacentHTML('beforeend',templete);
         checked.forEach(id => checkBox.children[+id-1].children[0].checked = true);
     }
     this.render();

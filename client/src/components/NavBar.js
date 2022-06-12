@@ -12,7 +12,7 @@ export default function NavBar({$target,initialState=null,user}){
     console.log(user);
     console.log('navbar render');
     this.render = () =>{
-        $navBar.innerHTML = `
+        const template = `
         <ul class="${style.list}">
         <li data-route="/">BLOG</li>
         <li data-route="/article">게시글</li>
@@ -30,11 +30,13 @@ export default function NavBar({$target,initialState=null,user}){
         </ul>
         `
         }
-        `
+        `;
+        $navBar.insertAdjacentHTML('beforeend',template); 
     }
     this.render();
     $navBar.addEventListener('click',e=>{
         const $li = e.target.closest('li');
+        e.preventDefault();
         if($li){
             const {route} = $li.dataset;
             if(route ==='/logout'){

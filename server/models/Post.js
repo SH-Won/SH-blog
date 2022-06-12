@@ -25,6 +25,10 @@ const postSchema = mongoose.Schema({
         type:String,
         default:''
     },
+    imageUrls :{
+        type: Array,
+        default : [],
+    },
     category:{
         type:Number,
         default:1

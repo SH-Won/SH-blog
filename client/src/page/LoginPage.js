@@ -23,7 +23,7 @@ export default function LoginPage({$target,connect}){
         // this.render();
     } 
     this.render = () =>{
-        $form.innerHTML = `
+        const template = `
         <label for="email">이메일</label>
         <input class="login" name="email" type="text" placeholder="이메일을 입력해주세요" value=""/>
         <br>
@@ -32,6 +32,7 @@ export default function LoginPage({$target,connect}){
         <br>
         <input type="submit" id="login-submit" value="로그인"/> 
         `
+        $form.insertAdjacentHTML('beforeend',template);
     }
     this.render();
     let timer = null;

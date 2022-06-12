@@ -12,14 +12,15 @@ export default function ListView({$target,maxSize}){
         this.state = nextState;
     }
     this.render = () =>{
-         $ListView.innerHTML = `
-         <ul class="${style.list}">
-         ${Array(maxSize).fill().map((_,i) =>
-            `
-            <li data-index="${i}"><button class="${style.listBtn}">${i+1}EA</button></li>
-            `).join('')}
-         </ul>
-         ` 
+        const template = `
+        <ul class="${style.list}">
+        ${Array(maxSize).fill().map((_,i) =>
+           `
+           <li data-index="${i}"><button class="${style.listBtn}">${i+1}EA</button></li>
+           `).join('')}
+        </ul>
+        `;
+         $ListView.insertAdjacentHTML('beforeend',template);
     }
     this.render();
     $ListView.addEventListener('click', e=>{
@@ -43,6 +44,7 @@ export default function ListView({$target,maxSize}){
          posts.style.gridTemplateColumns = `repeat(${selectedIndex+1},1fr)`;
          if(currentIndex !== null){
          $ListView.children[0].children[currentIndex].children[0].style.border = `0.5px gray solid`;
+         $ListView.children[0].children[currentIndex].children[0].style.backgroundColor = 'white';
          }
         //  e.target.style.border = `1px black solid`;
         e.target.style.border = 'transparent'

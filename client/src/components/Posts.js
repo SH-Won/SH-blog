@@ -10,10 +10,15 @@ export default function Posts({$target,initialState,callback = null}){
         this.state = nextState;
         this.render();
     }
+    this.removeAllChild = (parent) =>{
+        while(parent.firstChild){
+            parent.removeChild(parent.firstChild);
+        }
+    }
     this.render = () =>{
         const {posts} = this.state;
         if(!posts.length) return;
-        const templete = posts.map((post,index) => `
+        const template = posts.map((post,index) => `
         <div class="${style.post}" data-post-id="${post._id}">
         <div class="${style.imageContainer}">
         <img src="${post.imageUrls ? post.imageUrls[0] : post.thumbnail}" />
@@ -23,7 +28,8 @@ export default function Posts({$target,initialState,callback = null}){
         </ul>
         </div>
         `).join('');
-        $postContainer.innerHTML = templete;
+        this.removeAllChild($postContainer);
+        $postContainer.insertAdjacentHTML('beforeend',template);
     }
     this.render();
     

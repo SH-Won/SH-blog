@@ -3,9 +3,8 @@ export default function Loading ({$target,initialState,covered = false}){
     this.state = initialState;
     const $loading = document.createElement('div');
     $loading.className = `${!covered ? style.loadingContainer : style.covered}`
-    $loading.innerHTML = `
-            <div class="${style.loadingItem}"></div>
-        `.repeat(4);
+    const template = `<div class="${style.loadingItem}"></div>`.repeat(4);
+    $loading.insertAdjacentHTML('beforeend',template);
     this.setState = (nextState) =>{
         this.state = nextState;
         this.render();

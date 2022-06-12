@@ -18,10 +18,15 @@ export default function App($target){
     const cache = {
 
     }
+    this.removeAllChild = (parent) =>{
+        while(parent.firstChild){
+            parent.removeChild(parent.firstChild);
+        }
+    }
     const testCache = new Map();
     this.route = (params = {}) =>{
         const {pathname} = location;
-        $target.innerHTML = '';
+        this.removeAllChild($target);
         // NavBar
         Auth(NavBar,false)({
             $target,
@@ -79,7 +84,7 @@ export default function App($target){
             })
         }
         else if(pathname === '/article'){
-            new ArticlePage({
+            Auth(ArticlePage,false)({
                 $target,
                 initialState:{
                     posts:[],
@@ -101,6 +106,7 @@ export default function App($target){
         console.log('pop state');
         if(e.state && e.state.from === '/edit'){
             const user = selector(state => state.user);
+            if(user)
             destoryImage({writer:user._id})
         }
         this.route();

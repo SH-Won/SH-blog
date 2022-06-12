@@ -13,12 +13,12 @@ export default function (page,option,prevRoute = null ,admin = null){
         // })
         // }
         // console.log('before fetch auth')
-        if(option === false){
-            return await new page({
-                ...arg,
-                user,
-            })
-        }
+        // if(option === false){
+        //     return await new page({
+        //         ...arg,
+        //         user,
+        //     })
+        // }
         const user = await auth();
         // selector(null,'user',user);
         // console.log('after fetch auth');

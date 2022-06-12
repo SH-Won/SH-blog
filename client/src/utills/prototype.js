@@ -1,13 +1,40 @@
 import Loading from '../components/Loading';
 import EditPage from '../page/EditPage';
+import LandingPage from '../page/LandingPage';
 import { updateArticle, uploadArticle, uploadCloudinary } from './api';
 import { getImageURL } from './languages';
 import { changeRoute } from './router';
-
+import { request } from './api';
 // Edit Page
 (() => {
+LandingPage.prototype.fetchPosts = async function(){
+    try{
+    const params = {
+        skip:this.state.skip,
+        limit:this.state.limit,
+        category:this.state.checked,
+    }
+    console.log(params);
+    this.setState({
+        ...this.state,
+        isLoading:true,
+    })
+    const {posts,postSize} = await request("",params);
+    this.setState({
+        ...this.state,
+        posts : !this.state.skip ? posts : [...this.state.posts,...posts],
+        skip : this.state.skip + this.state.limit,
+        postSize,
+        isLoading:false,
+    })
+    }catch(e){
+        throw new Error("서버가 이상합니다");
+
+    }finally{
+        
+    }
+}
 EditPage.prototype.uploadItem = async function(user,isModify){
-    
     const loading = new Loading({
         $target:this.$page,
         initialState:false,

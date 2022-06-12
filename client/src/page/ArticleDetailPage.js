@@ -29,18 +29,20 @@ export default function ArticleDetailPage({$target,articleId,user}){
             const date = new Date(article.createdAt).toLocaleString('ko-KR').split('. ');
             this.state.createdAt = `${date[0]}년 ${date[1]}월 ${date[2]}일 ${date[3]}`
         }
-        $page.innerHTML = `
+        const template = `
         <div class="${styles.container}">
         <div class="${styles.info}">
         <h2>${article.title}</h2>
         <span class="${styles.writtenTime}">${this.state.createdAt}</span>
         </div>
         <div class="ck-content">
-        ${article.data}
         </div>
         </div>
         `;
-        const buttonPosition = document.querySelector('.ck-content').previousElementSibling;
+        $page.insertAdjacentHTML('beforeend',template);
+        const content = document.querySelector('.ck-content');
+        content.insertAdjacentHTML('beforeend',`${article.data}`);
+        const buttonPosition = content.previousElementSibling;
         new ClickButton({
             $target : buttonPosition,
             initialState:{

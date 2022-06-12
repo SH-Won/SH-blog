@@ -6,14 +6,15 @@ export default function SelectOptions({$target,className,initialState,callback})
 
     this.render = () =>{
         const {options,selected} = this.state;
-        component.innerHTML = `
+        const template = `
         <option value="0">선택</option>
         ${options.map(option =>`
         <option value="${option._id}">
         ${option.name}
         </option>
         `).join('')}
-        `
+        `;
+        component.insertAdjacentHTML('beforeend',template);
 
         component.children[selected].selected = true;
     }

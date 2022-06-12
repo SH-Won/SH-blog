@@ -30,13 +30,14 @@ export default function Carousel({$target,initialState}){
 
     this.render = () =>{
         const {images} = this.state;
-        $slider.innerHTML = `
+        const templete = `
         ${images.map(image => `
         <div class="${style.item}">
           <img src="${image}"/>
         </div>
         `).join('')}
         `
+        $slider.insertAdjacentHTML('beforeend',templete);
        
         for(let i=0; i<this.state.images.length; i++){
         $slider.children[i].style.paddingTop = `${68 / this.state.images.length}%`;

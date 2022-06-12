@@ -22,7 +22,7 @@ export default function RegisterPage({$target}){
         this.state = nextState;
     }
     this.render = () =>{
-        $form.innerHTML = `
+        const template = `
         <fieldset id="register-field">
         <legend>회원 가입</legend>
         <label for="name">성함</label>
@@ -35,7 +35,8 @@ export default function RegisterPage({$target}){
         <input id="confirmPassword" name="confirmPassword" type="password" placeholder="비밀번호를 다시한번 입력해주세요"/>
         <input id="submit" type="submit" value="회원가입"/>
         </fieldset>
-        `
+        `;
+        $form.insertAdjacentHTML('beforeend',template);
     }
     this.render();
     $form.addEventListener('change', e=>{
