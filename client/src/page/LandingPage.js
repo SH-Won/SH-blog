@@ -23,7 +23,6 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
     };
     this.setState = (nextState) =>{
         this.state = nextState;
-        console.log(this.state);
         posts.setState({
             isLoading:this.state.isLoading,
             posts: this.state.posts,

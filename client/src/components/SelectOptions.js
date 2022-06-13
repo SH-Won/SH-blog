@@ -23,7 +23,6 @@ export default function SelectOptions({$target,className,initialState,callback})
 
     component.addEventListener('change', e =>{
         if(e.target.tagName !=='SELECT') return;
-        console.log(e.target.value);
         const id = parseInt(e.target.value);
         if(id !== null){
             callback(id)

@@ -10,7 +10,7 @@ import {changeRoute} from '../utills/router'
 import { selector } from '../utills/selector';
 
 export default function EditPage({$target,isModify,initialState = {},user}){
-    console.log(history.state);
+    console.log('history.state',history.state);
     this.$page = document.createElement('div');
     const editor = document.createElement('div');
     const $infoContainer = document.createElement('div');
@@ -25,7 +25,8 @@ export default function EditPage({$target,isModify,initialState = {},user}){
     this.$page.appendChild(editor);
     this.$page.appendChild($btnContainer);
     $target.appendChild(this.$page);
-    selector(null,'userId',user._id);
+    // selector(null,'userId',user._id);
+    console.log(user);
     this.state = {
         title:'',
         data:'',

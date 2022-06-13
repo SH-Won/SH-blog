@@ -4,13 +4,15 @@ import '../styles/style_ck.css';
 import styles from '../styles/Detail.module.css';
 import ClickButton from '../components/ClickButton';
 import { changeRoute } from '../utills/router';
-import { getItem } from '../utills/storage';
+import { selector } from '../utills/selector';
+
 export default function ArticleDetailPage({$target,articleId,user}){
     const $page = document.createElement('div');
     $page.className = `${styles.page}`;
     $target.appendChild($page);
-    console.log(user);
-    
+    // const userId = selector(state => state?.userId);
+    // console.log('user',userId);
+    console.log('user',user);
     this.state = {
         article:null,
         createdAt:null,
@@ -43,6 +45,7 @@ export default function ArticleDetailPage({$target,articleId,user}){
         const content = document.querySelector('.ck-content');
         content.insertAdjacentHTML('beforeend',`${article.data}`);
         const buttonPosition = content.previousElementSibling;
+        if(user._id === article.writer){
         new ClickButton({
             $target : buttonPosition,
             initialState:{
@@ -78,6 +81,7 @@ export default function ArticleDetailPage({$target,articleId,user}){
                 })
             }
         }).render();
+        }
     }
     const loading = new Loading({
         $target:$page,

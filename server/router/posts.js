@@ -8,6 +8,7 @@ const {CloudinaryStorage} =require('multer-storage-cloudinary');
 const path = require('path');
 const fs = require('fs');
 const {Article} = require('../models/Article');
+const { auth } = require('../middleware/auth')
 
 
 
@@ -39,11 +40,11 @@ const Storage = new CloudinaryStorage({
 })
 const storage = multer.diskStorage({
     destination : function (req,file,cb) {
-        console.log(req.body.id);
+        console.log(req.user.id);
         console.log(__dirname);
-        if(!fs.existsSync(`${path.join(__dirname,'..')}/uploads/${req.body.id}`))
-        fs.mkdirSync(`${path.join(__dirname,'..')}/uploads/${req.body.id}`)
-        cb(null,`${path.join(__dirname,'..')}/uploads/${req.body.id}`)
+        if(!fs.existsSync(`${path.join(__dirname,'..')}/uploads/${req.user.id}`))
+        fs.mkdirSync(`${path.join(__dirname,'..')}/uploads/${req.user.id}`)
+        cb(null,`${path.join(__dirname,'..')}/uploads/${req.user.id}`)
         // cb(null,'/uploads' + '/'+ req.body.id);
         // if(!fs.existsSync(`${path.join(__dirname,'..')}/uploads/${req.body.id}`)) fs.mkdirSync(`${path.join(__dirname,'..')}/uploads/${req.body.id}`);
         // if(!fs.existsSync(`../uploads/${req.body.id}`)) fs.mkdirSync(`../uploads/${req.body.id}`);
@@ -118,7 +119,7 @@ router.post('/upload', async (req,res) =>{
     // res.status(200).json({success:true, data});
 })
 
-router.post('/uploadfiles', upload ,(req,res)=>{
+router.post('/uploadfiles',auth, upload ,(req,res)=>{
     // fs.mkdirSync(`../uploads/${req.body.id}`);
     let dataUrl = [];
     req.files.forEach(file => {

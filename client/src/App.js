@@ -115,7 +115,6 @@ export default function App($target){
     init(this.route);
     this.route();
     window.addEventListener('popstate',(e) =>{
-        console.log('pop state');
         if(e.state && e.state.from === '/edit'){
             const user = selector(state => state.user);
             if(user)

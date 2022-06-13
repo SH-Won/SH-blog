@@ -20,12 +20,14 @@ export default function (page,option,prevRoute = null ,admin = null){
         //     })
         // }
         // const loginSuccess = selector(state => state?.loginSuccess);
-        if(option === false){
-            return await new page({
-                ...arg,
-            })
-        }
+        // if(option === false){
+        //     return await new page({
+        //         ...arg,
+        //     })
+        // }
+        console.time('auth');
         const user = await auth();
+        console.timeEnd('auth');
         // selector(null,'user',user);
         // console.log('after fetch auth');
         if(!user.isAuth){
