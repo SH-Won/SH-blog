@@ -19,6 +19,12 @@ export default function (page,option,prevRoute = null ,admin = null){
         //         user,
         //     })
         // }
+        // const loginSuccess = selector(state => state?.loginSuccess);
+        if(option === false){
+            return await new page({
+                ...arg,
+            })
+        }
         const user = await auth();
         // selector(null,'user',user);
         // console.log('after fetch auth');

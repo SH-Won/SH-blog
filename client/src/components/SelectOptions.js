@@ -14,7 +14,8 @@ export default function SelectOptions({$target,className,initialState,callback})
         </option>
         `).join('')}
         `;
-        component.insertAdjacentHTML('beforeend',template);
+        component.innerHTML = template;
+        // component.insertAdjacentHTML('beforeend',template);
 
         component.children[selected].selected = true;
     }

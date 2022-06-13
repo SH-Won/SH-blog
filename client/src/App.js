@@ -23,15 +23,27 @@ export default function App($target){
             parent.removeChild(parent.firstChild);
         }
     }
+    // const navBar = new NavBar({
+    //     $target,
+    // })
     const testCache = new Map();
     this.route = (params = {}) =>{
         const {pathname} = location;
         this.removeAllChild($target);
         // NavBar
-        Auth(NavBar,false)({
+        // $target.innerHTML = '';
+        console.log(params);
+        // console.log('loginSuccess1',params.loginSuccess);
+        const loginSuccess = params?.loginSuccess;
+        // console.log('loginSuccess2',loginSuccess)
+        // if(loginSuccess) navBar.setState({
+        //     ...navBar.state,
+        //     loginSuccess
+        // })
+        new NavBar({
             $target,
         })
-        
+
         if(pathname === '/'){
             const initialState = testCache.has('pre') ? testCache.get('pre') : {
                 posts:[],

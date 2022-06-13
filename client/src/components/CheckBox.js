@@ -7,11 +7,11 @@ export default function CheckBox({$target,initialState,callback = null}){
     $target.appendChild(checkBox);
     this.setState = (nextState) =>{
         this.state = nextState;
-        this.render();
+        // this.render();
     }
     this.render = () => {
         const {items,checked} = this.state;
-        const templete = `
+        const template = `
         ${items.map(item => `
         <label>
         <input type="checkbox" value="${item.id}"/>
@@ -19,7 +19,8 @@ export default function CheckBox({$target,initialState,callback = null}){
         </label>
         `).join('')}
         `;
-        checkBox.insertAdjacentHTML('beforeend',templete);
+        checkBox.insertAdjacentHTML('beforeend',template);
+        // checkBox.innerHTML = template;
         checked.forEach(id => checkBox.children[+id-1].children[0].checked = true);
     }
     this.render();

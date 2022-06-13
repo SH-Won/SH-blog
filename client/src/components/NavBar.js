@@ -3,15 +3,21 @@ import { getItem,removeItem } from '../utills/storage.js';
 import style from '../styles/NavBar.module.css';
 import { logoutUser } from '../utills/api.js';
 import { selector } from '../utills/selector.js';
-export default function NavBar({$target,initialState=null,user}){
+export default function NavBar({$target,initialState={}}){
     this.state = initialState;
+    this.setState = (nextState) =>{
+        this.state = nextState;
+        this.render();
+    }
     const $navBar = document.createElement('nav');
     $navBar.className = `${style.navBar}`;
     $target.appendChild($navBar);
-    // const user = selector((state) => state.user);
-    console.log(user);
+    const user = selector((state) => state?.loginSuccess);
+    
     console.log('navbar render');
     this.render = () =>{
+        
+        console.log(user);
         const template = `
         <ul class="${style.list}">
         <li data-route="/">BLOG</li>
@@ -19,7 +25,7 @@ export default function NavBar({$target,initialState=null,user}){
         <li data-route="/best">베스트</li>
         <li data-route="/test">테스트</li>
         </ul>
-        ${!user || !user.isAuth ? `
+        ${!user ? `
         <ul class="${style.list}">
         <li data-route="/login">로그인</li>
         <li data-route="/register">회원가입</li>
@@ -31,6 +37,7 @@ export default function NavBar({$target,initialState=null,user}){
         `
         }
         `;
+        // $navBar.innerHTML = template;
         $navBar.insertAdjacentHTML('beforeend',template); 
     }
     this.render();
@@ -45,7 +52,7 @@ export default function NavBar({$target,initialState=null,user}){
                     if(!response.success){
                         alert("로그아웃에 실패했습니다");
                     }else{
-                        selector(null,'user',null);
+                        selector(null,'loginSuccess',false);
                         return changeRoute('/');
                     }
                 })

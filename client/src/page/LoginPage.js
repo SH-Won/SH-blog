@@ -83,8 +83,8 @@ export default function LoginPage({$target,connect}){
         loginUser(data)
         .then(async response =>{
             if(response.loginSuccess){
-                selector(null,'user',await auth());
-                changeRoute(connect);
+                selector(null,'loginSuccess',true);
+                changeRoute(connect,{detail : {loginSuccess:true}});
 
             }else alert('이메일이나 비밀번호를 확인해주세요')
         })

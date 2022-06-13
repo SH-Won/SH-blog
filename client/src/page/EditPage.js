@@ -7,6 +7,7 @@ import SelectOptions from '../components/SelectOptions';
 import Input from '../components/Input';
 import ClickButton from '../components/ClickButton';
 import {changeRoute} from '../utills/router'
+import { selector } from '../utills/selector';
 
 export default function EditPage({$target,isModify,initialState = {},user}){
     console.log(history.state);
@@ -24,7 +25,7 @@ export default function EditPage({$target,isModify,initialState = {},user}){
     this.$page.appendChild(editor);
     this.$page.appendChild($btnContainer);
     $target.appendChild(this.$page);
-
+    selector(null,'userId',user._id);
     this.state = {
         title:'',
         data:'',

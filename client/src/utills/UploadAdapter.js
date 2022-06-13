@@ -1,14 +1,17 @@
 const ENDPOINT = `${window.origin}/api/posts/uploadfiles`;
+
 import {selector} from './selector';
 class UploadAdapter{
     constructor(loader){
         this.loader = loader;
+        this.userId = selector(state => state?.userId);
     }
     upload = () =>{
         return this.loader.file.then(async file => {
            let formData = new FormData();
-           const user = selector(state => state.user)
-           formData.append('id',user._id)
+        //    const user = await auth();
+           
+           formData.append('id',this.userId)
            formData.append('file',file);
             const res = await fetch(ENDPOINT,{
                 method:'POST',

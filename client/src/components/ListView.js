@@ -21,6 +21,7 @@ export default function ListView({$target,maxSize}){
         </ul>
         `;
          $ListView.insertAdjacentHTML('beforeend',template);
+        // $ListView.innerHTML = template;
     }
     this.render();
     $ListView.addEventListener('click', e=>{

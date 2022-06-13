@@ -23,9 +23,11 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
     };
     this.setState = (nextState) =>{
         this.state = nextState;
+        console.log(this.state);
         posts.setState({
-            ...this.state,
+            isLoading:this.state.isLoading,
             posts: this.state.posts,
+            end: (-1) * this.state.limit,
         })
         loading.setState(this.state.isLoading);
         loadMoreBtn.setState({
@@ -35,7 +37,7 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
         this.init();
     }
     this.init = () =>{
-        console.log(this.state);
+      
        const stateKey = this.state.checked.sort().join(',');
        testCache.set(stateKey,this.state);
        testCache.set('pre',this.state);
@@ -117,7 +119,11 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
     
     const posts = new Posts({
         $target : $page,
-        initialState:this.state,
+        initialState:{
+            posts:this.state.posts,
+            isLoading:this.state.isLoading,
+            end : 0,
+        },
         callback : (id) => {
             changeRoute(`/post/${id}`);
         }
