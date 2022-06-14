@@ -45,7 +45,7 @@ export default function ArticleDetailPage({$target,articleId,user}){
         const content = document.querySelector('.ck-content');
         content.insertAdjacentHTML('beforeend',`${article.data}`);
         const buttonPosition = content.previousElementSibling;
-        if(user._id === article.writer){
+        if(user._id === article.writer._id){
         new ClickButton({
             $target : buttonPosition,
             initialState:{

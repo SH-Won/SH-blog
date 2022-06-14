@@ -1,7 +1,7 @@
 import {request} from '../utills/api'
 import Posts from '../components/Posts';
 import Loading from '../components/Loading';
-import { languages } from '../utills/languages';
+
 import ListView from '../components/ListView';
 import { changeRoute } from '../utills/router';
 import ClickButton from '../components/ClickButton';

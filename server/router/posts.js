@@ -204,6 +204,7 @@ router.get('/article',(req,res) =>{
 router.get('/detailArticle',(req,res)=>{
     const articleId = req.query.articleId;
     Article.find({_id:articleId})
+    .populate('writer')
     .exec((err,article) =>{
         if(err) res.status(400).json({success:false,err});
         res.status(200).json(article)

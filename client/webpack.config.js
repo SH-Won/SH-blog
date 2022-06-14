@@ -15,15 +15,42 @@ const CKEditorWebpackPlugin = require('@ckeditor/ckeditor5-dev-webpack-plugin');
 //     }
 //   }
 module.exports={
-    entry:["babel-polyfill","./src/index.js"],
-   
     
+    entry:["babel-polyfill","./src/index.js"],
+    plugins:[
+        new HtmlWebPackPlugin({
+            title:'Caching',
+            template:path.join(__dirname,'public/index.html'),
+            filename:'index.html'
+        }),
+        new MiniCssExtractPlugin({
+            filename:'style.css'
+        }),
+        // new CKEditorWebpackPlugin({
+        //     language:'ko',
+        //     additionalLanguages:'all',
+        // })
+    ],
     output:{
-        filename:"[name].js",
+        filename:"[name].[contenthash].js",
         path:path.join(__dirname,'build'),
-        publicPath:'/'
-        
+        publicPath:'/',
     },
+    optimization: {
+        moduleIds: 'deterministic',
+        runtimeChunk: 'single',
+       splitChunks: {
+         cacheGroups: {
+           vendor: {
+             test: /[\\/]node_modules[\\/]/,
+             name: 'vendors',
+             chunks: 'all',
+           },
+         },
+       },
+      },
+    
+    
     mode:'development',
     resolve:{
         extensions:['.js','.jsx','css'],
@@ -234,17 +261,5 @@ module.exports={
             
         ]
     },
-    plugins:[
-        new HtmlWebPackPlugin({
-            template:path.join(__dirname,'public/index.html'),
-            filename:'index.html'
-        }),
-        new MiniCssExtractPlugin({
-            filename:'style.css'
-        }),
-        // new CKEditorWebpackPlugin({
-        //     language:'ko',
-        //     additionalLanguages:'all',
-        // })
-    ]
+    
 };

@@ -7,7 +7,7 @@ import { changeRoute } from './router';
 import { request } from './api';
 // Edit Page
 (() => {
-LandingPage.prototype.fetchPosts = async function(){
+LandingPage.prototype.fetchPosts = async function(checkToggle = false){
     try{
     const params = {
         skip:this.state.skip,
@@ -26,6 +26,7 @@ LandingPage.prototype.fetchPosts = async function(){
         skip : this.state.skip + this.state.limit,
         postSize,
         isLoading:false,
+        checkToggle,
     })
     }catch(e){
         throw new Error("서버가 이상합니다");
@@ -118,12 +119,7 @@ EditPage.prototype.uploadItem = async function(user,isModify){
     .then(response =>{
         const haveToDelete = addImgElement.length ? true : false;
         loading.setState(false);
-        changeRoute('/',{
-            detail : {
-                writer:user._id,
-                haveToDelete,
-            }
-        });
+        changeRoute('/article');
     })
 }
 console.log('prototype');

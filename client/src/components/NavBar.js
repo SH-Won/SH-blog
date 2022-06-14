@@ -22,8 +22,6 @@ export default function NavBar({$target,initialState={}}){
         <ul class="${style.list}">
         <li data-route="/">BLOG</li>
         <li data-route="/article">게시글</li>
-        <li data-route="/best">베스트</li>
-        <li data-route="/test">테스트</li>
         </ul>
         ${!user ? `
         <ul class="${style.list}">
@@ -63,3 +61,6 @@ export default function NavBar({$target,initialState={}}){
     })
 }
 //  articlePage -> edit 클릭 -> editPage 이동 auth 에 걸림
+
+{/* <li data-route="/best">베스트</li>
+<li data-route="/test">테스트</li> */}

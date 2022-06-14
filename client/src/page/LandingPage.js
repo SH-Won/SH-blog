@@ -1,4 +1,4 @@
-import {request} from '../utills/api.js';
+// import {request} from '../utills/api.js';
 import Posts from '../components/Posts.js';
 import Button from '../components/Button.js';
 import Loading from '../components/Loading.js';
@@ -8,6 +8,7 @@ import CheckBox from '../components/CheckBox.js';
 import { category } from '../utills/category.js';
 import { changeRoute } from '../utills/router.js';
 import ClickButton from '../components/ClickButton.js';
+import '../styles/page.css';
 
 export default function LandingPage({$target,initialState,cache,testCache,user}){
 
@@ -27,6 +28,8 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
             isLoading:this.state.isLoading,
             posts: this.state.posts,
             end: (-1) * this.state.limit,
+            checkToggle:this.state.checkToggle,
+            postSize : this.state.postSize,
         })
         loading.setState(this.state.isLoading);
         loadMoreBtn.setState({
@@ -46,32 +49,7 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
        const element = posts.lastElementChild;
        InfinityScroll(element,this.fetchPosts.bind(this),hasMore,loading);
     }
-    // this.fetchPosts = async () =>{
-    //     try{
-    //     const params = {
-    //         skip:this.state.skip,
-    //         limit:this.state.limit,
-    //         category:this.state.checked,
-    //     }
-    //     this.setState({
-    //         ...this.state,
-    //         isLoading:true,
-    //     })
-    //     const {posts,postSize} = await request("",params);
-    //     this.setState({
-    //         ...this.state,
-    //         posts : !this.state.skip ? posts : [...this.state.posts,...posts],
-    //         skip : this.state.skip + this.state.limit,
-    //         postSize,
-    //         isLoading:false,
-    //     })
-    //     }catch(e){
-    //         throw new Error("서버가 이상합니다");
-
-    //     }finally{
-            
-    //     }
-    // }
+    
     const listView = new ListView({
         $target:$page,
         maxSize:4,
@@ -93,15 +71,19 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
             const stateKey = checked.sort().join(',');
             // stateKey = stateKey === '' ? 'root' : stateKey;
             if(testCache.has(stateKey)){
-                this.setState(testCache.get(stateKey));
+                this.setState({
+                    ...testCache.get(stateKey),
+                    checkToggle:true,
+                });
                 return;
             }
             this.setState({
                 ...this.state,
                 checked,
+                checkToggle:true,
                 skip:0,
             });
-            this.fetchPosts();
+            this.fetchPosts(true);
         }
     })
     const writeBtn = new ClickButton({
@@ -122,6 +104,7 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
             posts:this.state.posts,
             isLoading:this.state.isLoading,
             end : 0,
+            checkToggle:false,
         },
         callback : (id) => {
             changeRoute(`/post/${id}`);
@@ -160,3 +143,32 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
         this.fetchPosts();
     })
 }
+
+
+
+// this.fetchPosts = async () =>{
+    //     try{
+    //     const params = {
+    //         skip:this.state.skip,
+    //         limit:this.state.limit,
+    //         category:this.state.checked,
+    //     }
+    //     this.setState({
+    //         ...this.state,
+    //         isLoading:true,
+    //     })
+    //     const {posts,postSize} = await request("",params);
+    //     this.setState({
+    //         ...this.state,
+    //         posts : !this.state.skip ? posts : [...this.state.posts,...posts],
+    //         skip : this.state.skip + this.state.limit,
+    //         postSize,
+    //         isLoading:false,
+    //     })
+    //     }catch(e){
+    //         throw new Error("서버가 이상합니다");
+
+    //     }finally{
+            
+    //     }
+    // }

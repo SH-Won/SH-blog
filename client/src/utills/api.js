@@ -3,7 +3,6 @@ const ENDPOINT = `${window.origin}/api`;
 export const request  = async (url ="",params = {}) =>{
     try{
         let query = Object.keys(params).map(key => key + '=' + params[key]).join('&');
-        console.log(query);
         const fullUrl = `${ENDPOINT}/posts${url !== "" ? url : ""}${query === '' ? '' : `?${query}`}`;
         // console.log(JSON.stringify(params))
         const res = await fetch(fullUrl);
