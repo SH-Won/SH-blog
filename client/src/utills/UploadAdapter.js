@@ -22,9 +22,11 @@ class UploadAdapter{
             });
             return await res.json();
         }).then(({data}) => {
-            console.log(data);
+            // console.log(data);
+            
             return Promise.resolve({
-                default:`http://localhost:5000${data.url}`,
+                // default:`http://localhost:5000${data.url}`,
+                default:`${window.origin}${data.url}`,
                 attributes : {
                     'data-id' : 'image',
                 }

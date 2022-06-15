@@ -118,13 +118,7 @@ export const logoutUser = async () =>{
 export const destoryImage = async (data = {}) =>{
     try{
         const fullUrl = `${ENDPOINT}/posts/destory`;
-        const res = await fetch(fullUrl,{
-            method:'POST',
-            headers:{
-                'Content-Type':'application/json',
-            },
-            body:JSON.stringify(data),
-        })
+        const res = await fetch(fullUrl);
         const {success} = await res.json();
         if(success) return success;
            

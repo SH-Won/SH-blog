@@ -13,10 +13,11 @@ export default function CheckBox({$target,initialState,callback = null}){
         const {items,checked} = this.state;
         const template = `
         ${items.map(item => `
-        <label>
         <input type="checkbox" value="${item.id}"/>
+        <label>
         ${item.name}
         </label>
+        &nbsp;
         `).join('')}
         `;
         checkBox.insertAdjacentHTML('beforeend',template);

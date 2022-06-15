@@ -5,8 +5,9 @@
     align-items: center;
 }
 #login-form{
-    width:400px;
-    margin:auto auto;
+    width:100%;
+    max-width:400px;
+    margin:5rem auto;
     display:flex;
     flex-direction: column;
     align-items: center;

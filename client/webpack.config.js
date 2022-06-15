@@ -65,12 +65,13 @@ module.exports={
         contentBase:path.join(__dirname,'build'),
         //publicPath:'/',
         //index:'index.html',
-        host:'localhost',
-        // host:'0.0.0.0',
+        // host:'localhost',
+        host:'0.0.0.0',
         port:3000,
         open:true,
         compress:true,
         historyApiFallback:true,
+        disableHostCheck:true,
        /* historyApiFallback:{
             rewrites:[
                 {from: /^\/post/, to:path.join(__dirname,'build/index.html')}
@@ -82,6 +83,10 @@ module.exports={
                 target:'http://localhost:5000',
                 changeOrigin:true,
             },
+            '/uploads/' : {
+                target:'http://localhost:5000',
+                changeOrigin:true,
+            }
         }
     },
     module:{

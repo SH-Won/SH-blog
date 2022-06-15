@@ -7,7 +7,7 @@ export const init = (onRouteChange) =>{
     window.addEventListener(ROUTE_EVENT,(e) =>{
         const isExist = e.detail !== null && e.detail.hasOwnProperty('haveToDelete');
         if(isExist && e.detail.haveToDelete){
-            destoryImage({writer:e.detail.writer});
+            destoryImage();
             return onRouteChange();   
         }
         
@@ -20,9 +20,9 @@ export const changeRoute = (url,params=null) =>{
     
     window.history.replaceState({from:url},null);
     if(location.pathname === '/edit'){
-        const user = selector(state => state.user);
-        if(user){
-        destoryImage({writer : user._id});
+        const loginSuccess = selector(state => state?.loginSuccess);
+        if(loginSuccess){
+        destoryImage();
         }
     }
     console.log('url : ',url, 'current :' , location.pathname );

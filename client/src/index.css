@@ -46,7 +46,7 @@ body{
 .button{
     margin:1rem;
     padding:.5rem;
-    width:15%;
+    /* width:15%; */
     align-self : flex-end;
     border-radius: .6rem;
     border: transparent;

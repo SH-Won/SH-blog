@@ -123,13 +123,12 @@ router.post('/uploadfiles',auth, upload ,(req,res)=>{
     // fs.mkdirSync(`../uploads/${req.body.id}`);
     let dataUrl = [];
     req.files.forEach(file => {
-        console.log(file);
         dataUrl.push({
             url:file.path.split('server')[1],
         });
     })
     console.log(dataUrl);
-    return res.json({success:true, data:dataUrl.length === 1 ? dataUrl[0] : dataUrl});
+    return res.json({success:true, data:dataUrl.length === 1 ? dataUrl[0] : dataUrl });
     
     // upload(req,res, (err,result)=>{
     //     // console.log(req.body);
@@ -156,8 +155,9 @@ router.post('/uploadPost',(req,res)=>{
         // console.log(result);
     })
 })
-router.post('/destory' ,(req,res) =>{
-    const {writer} = req.body;
+router.get('/destory', auth,(req,res) =>{
+    const writer = req.user._id;
+    console.log(writer);
     const dir = `${path.join(__dirname,'..','uploads',`${writer}`)}`
     if(fs.existsSync(dir)) fs.rmdirSync(dir,{recursive:true});
     res.status(200).json({success:true});
