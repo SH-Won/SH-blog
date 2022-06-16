@@ -135,8 +135,18 @@ export default function App($target){
             //     isModify,
             //     initialState:isModify ? params.article : null,
             // })
+
+            // import('./Auth.js').then(async ({default:Auth}) =>{
+            //     const editPage = await import('./page/EditPage')
+            //                         .then(({default: page}) => page);
+            //     Auth(editPage,true,prevRoute)({
+            //         $target,
+            //         isModify,
+            //         initialState : isModify ? params.article : null,
+            //     })
+            // })
             import('./Auth.js').then(async ({default:Auth}) =>{
-                const editPage = await import('./page/EditPage')
+                const editPage = await import('./page/EditPage2')
                                     .then(({default: page}) => page);
                 Auth(editPage,true,prevRoute)({
                     $target,
@@ -192,13 +202,13 @@ export default function App($target){
         this.route();
     });
     
-    window.addEventListener('beforeunload', () =>{
-        logoutUser()
-        .then(response =>{
-            if(response.success){
+    // window.addEventListener('beforeunload', () =>{
+    //     logoutUser()
+    //     .then(response =>{
+    //         if(response.success){
                 
-            }
-        })
-    })
+    //         }
+    //     })
+    // })
 
 }

@@ -128,7 +128,7 @@ router.post('/uploadfiles',auth, upload ,(req,res)=>{
         });
     })
     console.log(dataUrl);
-    return res.json({success:true, data:dataUrl.length === 1 ? dataUrl[0] : dataUrl });
+    return res.json({success:true, data:dataUrl});
     
     // upload(req,res, (err,result)=>{
     //     // console.log(req.body);

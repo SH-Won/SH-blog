@@ -53,9 +53,13 @@ module.exports={
     
     mode:'development',
     resolve:{
-        extensions:['.js','.jsx','css'],
+        extensions:['.js','.jsx','css','ts','svg'],
         modules:['node_modules'],
-        
+        alias:{
+            // 'parchment': path.resolve(__dirname, 'node_modules/parchment/src/parchment.ts'),
+            // 'quill$': path.resolve(__dirname, 'node_modules/quill/quill.js')
+            'quill$': require.resolve('quill')
+        }
         // alias: {
         //     'react-redux': require.resolve('react-redux'),
         //     'redux': require.resolve("redux"),
@@ -65,13 +69,13 @@ module.exports={
         contentBase:path.join(__dirname,'build'),
         //publicPath:'/',
         //index:'index.html',
-        // host:'localhost',
-        host:'0.0.0.0',
+        host:'localhost',
+        // host:'0.0.0.0',
         port:3000,
         open:true,
         compress:true,
         historyApiFallback:true,
-        disableHostCheck:true,
+        // disableHostCheck:true,
        /* historyApiFallback:{
             rewrites:[
                 {from: /^\/post/, to:path.join(__dirname,'build/index.html')}
@@ -263,7 +267,15 @@ module.exports={
         //         name: 'static/media/[name].[hash:8].[ext]',
         //     }
         // }
-            
+        {
+            test: /\.svg$/,
+            use: [{
+              loader: 'html-loader',
+              options: {
+                minimize: true
+              }
+            }]
+          }
         ]
     },
     

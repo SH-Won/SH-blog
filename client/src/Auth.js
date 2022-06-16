@@ -28,6 +28,7 @@ export default function (page,option,prevRoute = null ,admin = null){
         console.time('auth');
         const user = await auth();
         console.timeEnd('auth');
+        
         // selector(null,'user',user);
         // console.log('after fetch auth');
         if(!user.isAuth){

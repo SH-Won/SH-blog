@@ -26,7 +26,7 @@ class UploadAdapter{
             
             return Promise.resolve({
                 // default:`http://localhost:5000${data.url}`,
-                default:`${window.origin}${data.url}`,
+                default:`${window.origin}${data[0].url}`,
                 attributes : {
                     'data-id' : 'image',
                 }

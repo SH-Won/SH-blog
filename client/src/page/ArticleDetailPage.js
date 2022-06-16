@@ -1,6 +1,6 @@
 import { request,deleteArticle } from '../utills/api';
 import Loading from '../components/Loading';
-import '../styles/style_ck.css';
+// import '../styles/style_ck.css';
 import styles from '../styles/Detail.module.css';
 import ClickButton from '../components/ClickButton';
 import { changeRoute } from '../utills/router';
@@ -37,7 +37,7 @@ export default function ArticleDetailPage({$target,articleId,user}){
         <h2>${article.title}</h2>
         <span class="${styles.writtenTime}">${this.state.createdAt}</span>
         </div>
-        <div class="ck-content">
+        <div class="ck-content .ql-content">
         </div>
         </div>
         `;

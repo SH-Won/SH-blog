@@ -65,8 +65,7 @@ userSchema.methods.generateToken = function(cb) {
     var user = this;
 
     var token =  jwt.sign(user._id.toHexString(),'secret')
-    var oneHour = moment().add(1, 'minute').valueOf();
-    console.log(oneHour);
+    var oneHour = moment().add(1, 'hour').valueOf();
     user.tokenExp = oneHour;
     user.token = token;
     user.save(function (err, user){
@@ -77,8 +76,11 @@ userSchema.methods.generateToken = function(cb) {
 
 userSchema.statics.findByToken = function (token, cb) {
     var user = this;
+
     jwt.verify(token,'secret',function(err, decode){
+        
         user.findOne({"_id":decode, "token":token}, function(err, user){
+            console.log(user);
             if(err) return cb(err);
             cb(null, user);
         })

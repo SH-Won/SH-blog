@@ -12,3 +12,21 @@
     color:#015834;
     background-color: #d5f7e7;
 }
+
+.ql-content{
+
+}
+.ql-content .image{
+    clear: both;
+    display: table;
+    margin: 0.9em auto;
+    min-width: 50px;
+    text-align: center;
+    /* max-width:70%; */
+}
+.ql-conent .image img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    min-width: 100%;
+}

@@ -12,6 +12,7 @@ export default function NavBar({$target,initialState={}}){
     const $navBar = document.createElement('nav');
     $navBar.className = `${style.navBar}`;
     $target.appendChild($navBar);
+    // console.log(selector(state => state));
     const user = selector((state) => state?.loginSuccess);
     
     console.log('navbar render');
