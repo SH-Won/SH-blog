@@ -74,7 +74,6 @@ const upload = multer({storage}).array('file');
 // const upload = cloudinary.uploader.upload;
 router.post('/upload', async (req,res) =>{
     const {userId,paths} = req.body;
-    console.log(paths);
     const data = [];
     // const result =  await paths.reduce( async (prev,cur) =>{
     //     //   console.log(`${path.join(__dirname,'..')}/uploads/${userId}/${cur}`)
