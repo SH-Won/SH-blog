@@ -42,7 +42,7 @@ const Storage = new CloudinaryStorage({
 })
 const storage = multer.diskStorage({
     destination : function (req,file,cb) {
-        console.log(req.user.id);
+        
         console.log(__dirname);
         if(!fs.existsSync(`${path.join(__dirname,'..')}/uploads/${req.user.id}`))
         fs.mkdirSync(`${path.join(__dirname,'..')}/uploads/${req.user.id}`)
@@ -122,7 +122,8 @@ router.post('/upload', async (req,res) =>{
 })
 
 router.post('/uploadfiles',cors({origin,credentials:true}),auth,upload ,(req,res)=>{
-    
+    console.log('upload');
+    console.log(req.files.map(file => file.path));
     // fs.mkdirSync(`../uploads/${req.body.id}`);
     let dataUrl = [];
     req.files.forEach(file => {
