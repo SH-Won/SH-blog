@@ -109,8 +109,8 @@ export default function EditPage2({$target,isModify,initialState = {},user}){
     this.render = () =>{
         
         this.editor = quillEditor(editor);
-        const delta = this.editor.clipboard.convert(this.state.data);
         console.log(this.editor);
+        const delta = this.editor.clipboard.convert(this.state.data);
         this.editor.setContents(delta);
         testBtn.render();
         cancelBtn.render();
