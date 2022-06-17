@@ -25,7 +25,20 @@ const connect = mongoose.connect(mongoURI,
   .then(() => console.log('MongoDB Connected...'))
   .catch(err => console.log(err));
 
-app.use(cors());
+// const whitelist = ['https://js-gallery-project.vercel.app','http://localhost:3000'];
+// const corsOptions = {
+//   origin : function (origin,callback) {
+//     console.log(origin);
+//     if(whitelist.indexOf(origin)  !== -1){
+//       callback(null,true);
+//     }else{
+//       callback(new Error('허용 되지 않았습니다'))
+//     }
+//   }
+// }
+// app.use(cors(corsOptions))
+const origin = process.env.WHITE_URL || 'http://localhost:3000';
+app.use(cors({origin}));
 // app.use(express.json());
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
@@ -69,6 +82,7 @@ if (process.env.NODE_ENV === "production") {
 
 
 const port = process.env.PORT || 5000
+console.log(port);
 
 app.listen(port, () => {
   console.log(`Server Listening on ${port}`)

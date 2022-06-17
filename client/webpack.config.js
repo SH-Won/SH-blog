@@ -34,6 +34,7 @@ module.exports={
     output:{
         filename:"[name].[contenthash].js",
         path:path.join(__dirname,'build'),
+        // path:path.join(__dirname,'public'),
         publicPath:'/',
     },
     optimization: {

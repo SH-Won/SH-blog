@@ -1,4 +1,4 @@
-
+import Quill from 'quill';
 const ENDPOINT = `${window.origin}/api/posts/uploadfiles`;
 const options = {
     // debug: 'info',
@@ -81,7 +81,7 @@ ImageBlot.tagName = 'figure';
 export const quillEditor = async (element) =>{
      Quill.register(ImageBlot);
     //  const editor = new Quill(element,options);
-    const editor = await import('quill').then(({default : Quill}) => new Quill(element,options))
+    const editor = new Quill(element,options);e
      editor.getModule('toolbar').addHandler('image',() =>{
         uploadMulter(editor);
     });

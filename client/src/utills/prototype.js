@@ -141,8 +141,10 @@ EditPage2.prototype.uploadItem = async function(user,isModify){
         }
         else{
             const index = removeIds.indexOf(id);
-            if(index > -1) removeIds.splice(index,1);
-            else imageIds.push(id);
+            if(index > -1) {
+                removeIds.splice(index,1);
+                imageIds.push(id);
+            }
         }
     });
     
