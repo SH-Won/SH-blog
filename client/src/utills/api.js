@@ -1,9 +1,9 @@
-const ENDPOINT = `${window.origin}/api`;
+const ENDPOINT = process.env.ENDPOINT || `${window.origin}`;
 
 export const request  = async (url ="",params = {}) =>{
     try{
         let query = Object.keys(params).map(key => key + '=' + params[key]).join('&');
-        const fullUrl = `${ENDPOINT}/posts${url !== "" ? url : ""}${query === '' ? '' : `?${query}`}`;
+        const fullUrl = `${ENDPOINT}/api/posts${url !== "" ? url : ""}${query === '' ? '' : `?${query}`}`;
         // console.log(JSON.stringify(params))
         const res = await fetch(fullUrl);
         if(!res.ok) throw new Error("서버가 이상해요");
@@ -14,7 +14,7 @@ export const request  = async (url ="",params = {}) =>{
 }
 export const uploadArticle = async (data = {} , category ='article') =>{
     try{    
-        const fullUrl = `${ENDPOINT}/posts/${category === 'article' ? 'uploadArticle' : 'uploadPost'}`;
+        const fullUrl = `${ENDPOINT}/api/posts/${category === 'article' ? 'uploadArticle' : 'uploadPost'}`;
         
         const res = await fetch(fullUrl,{
             method:'POST',
@@ -33,7 +33,7 @@ export const uploadArticle = async (data = {} , category ='article') =>{
 }
 export const updateArticle = async (data = {}) =>{
     try{
-        const fullUrl = `${ENDPOINT}/posts/updateArticle`;
+        const fullUrl = `${ENDPOINT}/api/posts/updateArticle`;
         const res = await fetch(fullUrl,{
             method:'POST',
             headers:{
@@ -50,7 +50,7 @@ export const updateArticle = async (data = {}) =>{
 }
 export const deleteArticle = async (data = {}) =>{
     try{
-        const fullUrl = `${ENDPOINT}/posts/deleteArticle`;
+        const fullUrl = `${ENDPOINT}/api/posts/deleteArticle`;
         const res = await fetch(fullUrl,{
             method:'POST',
             headers:{
@@ -66,7 +66,7 @@ export const deleteArticle = async (data = {}) =>{
 }
 export const registerUser = async (data = {}) =>{
     try{
-        const fullUrl = `${ENDPOINT}/users/register`;
+        const fullUrl = `${ENDPOINT}/api/users/register`;
         const res = await fetch(fullUrl,{
             method:'POST',
             headers:{
@@ -83,7 +83,7 @@ export const registerUser = async (data = {}) =>{
 }
 export const loginUser = async (data = {}) =>{
     try{
-        const fullUrl = `${ENDPOINT}/users/login`;
+        const fullUrl = `${ENDPOINT}/api/users/login`;
         const res = await fetch(fullUrl,{
             method:'POST',
             headers:{
@@ -99,7 +99,7 @@ export const loginUser = async (data = {}) =>{
 }
 export const auth = async () =>{
     try{
-        const fullUrl = `${ENDPOINT}/users/auth`;
+        const fullUrl = `${ENDPOINT}/api/users/auth`;
         const res = await fetch(fullUrl);
         if(res.ok) return await res.json();
     }catch(e){
@@ -108,7 +108,7 @@ export const auth = async () =>{
 }
 export const logoutUser = async () =>{
     try{
-        const fullUrl =`${ENDPOINT}/users/logout`;
+        const fullUrl =`${ENDPOINT}/api/users/logout`;
         const res = await fetch(fullUrl);
         if(res.ok) return await res.json();
     }catch(e){
@@ -117,7 +117,7 @@ export const logoutUser = async () =>{
 }
 export const destoryImage = async (data = {}) =>{
     try{
-        const fullUrl = `${ENDPOINT}/posts/destory`;
+        const fullUrl = `${ENDPOINT}/api/posts/destory`;
         const res = await fetch(fullUrl);
         const {success} = await res.json();
         if(success) return success;
@@ -128,7 +128,7 @@ export const destoryImage = async (data = {}) =>{
 }
 export const uploadCloudinary = async (data = {}) =>{
     try{
-        const fullUrl = `${ENDPOINT}/posts/upload`;
+        const fullUrl = `${ENDPOINT}/api/posts/upload`;
         const res = await fetch(fullUrl,{
             method:'POST',
             headers:{

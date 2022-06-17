@@ -1,5 +1,5 @@
 import Quill from 'quill';
-const ENDPOINT = `${window.origin}/api/posts/uploadfiles`;
+const ENDPOINT = `${process.env.ENDPOINT}` || `${window.origin}`;
 const options = {
     // debug: 'info',
     modules: {
@@ -25,7 +25,7 @@ function uploadMulter(editor){
         for(let i=0; i<this.files.length; i++){
             formData.append('file',this.files[i]);
         }
-        const res = await fetch(ENDPOINT,{
+        const res = await fetch(`${ENDPOINT}/api/posts/uploadfiles`,{
             method:'POST',
             headers:{
                 // 'Content-Type':'multipart/form-data'
@@ -43,7 +43,7 @@ function uploadMulter(editor){
                 //     attributes: { 'data-upload':'upload' }
                 //   }
                 const value = {
-                     url :`${window.origin}${url}`,
+                     url :`${ENDPOINT}${url}`,
                      id:'',
                 }
                 editor.insertEmbed(range.index++,'image',value);                
