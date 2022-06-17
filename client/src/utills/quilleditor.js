@@ -1,5 +1,6 @@
 import Quill from 'quill';
-const ENDPOINT = `${process.env.ENDPOINT}` || `${window.origin}`;
+// const ENDPOINT = `${window.origin}`;
+const ENDPOINT = 'https://shlog.herokuapp.com/';
 const options = {
     // debug: 'info',
     modules: {
