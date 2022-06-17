@@ -119,7 +119,8 @@ router.post('/upload', async (req,res) =>{
     // res.status(200).json({success:true, data});
 })
 
-router.post('/uploadfiles',auth, upload ,(req,res)=>{
+router.post('/uploadfiles',auth,upload ,(req,res)=>{
+    
     // fs.mkdirSync(`../uploads/${req.body.id}`);
     let dataUrl = [];
     req.files.forEach(file => {

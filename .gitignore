@@ -4,10 +4,10 @@
 /client/node_modules
 
 /dev.js
-/uploads
+
 /server/config/dev.js
 
-/server/uploads
+
 
 .DS_Store
 

@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const cors = require('cors');
-
+const fs = require('fs');
 
 const bodyParser = require("body-parser");
 
@@ -43,6 +43,7 @@ app.use(cors({origin,credentials:true}));
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(express.urlencoded({extended:true}));
+if(fs.existsSync(`${path.join(__dirname,'..')}/uploads`)) fs.mkdirSync(`${path.join(__dirname,'..')}/uploads`)
 app.use('/uploads',express.static(path.join(__dirname,'uploads')))
 // app.use('/uploads',express.static('uploads'));
 app.use(express.json());
