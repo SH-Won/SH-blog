@@ -83,7 +83,7 @@ ImageBlot.tagName = 'figure';
 export const quillEditor = async (element) =>{
      Quill.register(ImageBlot);
     //  const editor = new Quill(element,options);
-    const editor = new Quill(element,options);e
+    const editor = new Quill(element,options);
      editor.getModule('toolbar').addHandler('image',() =>{
         uploadMulter(editor);
     });

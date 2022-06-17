@@ -34,7 +34,8 @@ router.post('/login',(req,res) =>{
                 res.cookie('w_auth',user.token,{
                     httpOnly:true,
                     sameSite:'none',
-                    secure:true
+                    secure:true,
+                    
                 })
                 .status(200)
                 .json({
