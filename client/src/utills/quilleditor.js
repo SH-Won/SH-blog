@@ -80,7 +80,7 @@ class ImageBlot extends BlockEmbed{
 ImageBlot.blotName = 'image';
 ImageBlot.tagName = 'figure';
 
-export const quillEditor = async (element) =>{
+export const quillEditor = (element) =>{
      Quill.register(ImageBlot);
     //  const editor = new Quill(element,options);
     const editor = new Quill(element,options);
