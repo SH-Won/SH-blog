@@ -1,6 +1,5 @@
 // const ENDPOINT =  `${window.origin}`;
 const ENDPOINT = 'https://shlog.herokuapp.com';
-const credentials = 'include';
 
 export const request  = async (url ="",params = {}) =>{
     try{
@@ -24,7 +23,7 @@ export const uploadArticle = async (data = {} , category ='article') =>{
                 'Content-Type' : 'application/json',
                 // 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            credentials,
+            credentials : 'include',
             body:JSON.stringify(data)
         })
         const {success} = await res.json();
@@ -42,7 +41,7 @@ export const updateArticle = async (data = {}) =>{
             headers:{
                 'Content-Type' : 'application/json'
             },
-            credentials,
+            credentials:'include',
             body:JSON.stringify(data)
         })
         const {success} = await res.json();
@@ -60,7 +59,7 @@ export const deleteArticle = async (data = {}) =>{
             headers:{
                 'Content-Type': 'application/json',
             },
-            credentials,
+            credentials:'include',
             body:JSON.stringify(data),
         })
         const {success} = await res.json();
@@ -77,7 +76,7 @@ export const registerUser = async (data = {}) =>{
             headers:{
                 'Content-Type':'application/json',
             },
-            credentials,
+            credentials:'include',
             body:JSON.stringify(data),
         });
         if(!res.ok) throw new Error("회원가입 실패");
@@ -95,7 +94,7 @@ export const loginUser = async (data = {}) =>{
             headers:{
                 'Content-Type':'application/json',
             },
-            credentials,
+            credentials:'include',
             body:JSON.stringify(data),
         });
         if(res.ok) return await res.json(); 
@@ -107,7 +106,9 @@ export const loginUser = async (data = {}) =>{
 export const auth = async () =>{
     try{
         const fullUrl = `${ENDPOINT}/api/users/auth`;
-        const res = await fetch(fullUrl);
+        const res = await fetch(fullUrl,{
+            credentials:'include'
+        });
         if(res.ok) return await res.json();
     }catch(e){
         
@@ -116,7 +117,9 @@ export const auth = async () =>{
 export const logoutUser = async () =>{
     try{
         const fullUrl =`${ENDPOINT}/api/users/logout`;
-        const res = await fetch(fullUrl);
+        const res = await fetch(fullUrl,{
+            credentials:'include',
+        });
         if(res.ok) return await res.json();
     }catch(e){
         
@@ -125,7 +128,9 @@ export const logoutUser = async () =>{
 export const destoryImage = async (data = {}) =>{
     try{
         const fullUrl = `${ENDPOINT}/api/posts/destory`;
-        const res = await fetch(fullUrl);
+        const res = await fetch(fullUrl,{
+            credentials:'include',
+        });
         const {success} = await res.json();
         if(success) return success;
            
@@ -140,8 +145,9 @@ export const uploadCloudinary = async (data = {}) =>{
             method:'POST',
             headers:{
                 'Content-Type':'application/json',
+                
             },
-            credentials,
+            credentials:'include',
             body:JSON.stringify(data)
         })
         if(res.ok) return await res.json();
