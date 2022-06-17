@@ -9,7 +9,9 @@ const path = require('path');
 const fs = require('fs');
 const {Article} = require('../models/Article');
 const { auth } = require('../middleware/auth')
+const cors =require('cors');
 
+const origin = process.env.WHITE_URL || 'http://localhost:3000';
 
 
 const cloud_name=process.env.cloud_name || config.cloud_name
@@ -119,7 +121,7 @@ router.post('/upload', async (req,res) =>{
     // res.status(200).json({success:true, data});
 })
 
-router.post('/uploadfiles',auth,upload ,(req,res)=>{
+router.post('/uploadfiles',cors({origin,credentials:true}),auth,upload ,(req,res)=>{
     
     // fs.mkdirSync(`../uploads/${req.body.id}`);
     let dataUrl = [];
