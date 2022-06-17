@@ -12,10 +12,8 @@ export default function NavBar({$target,initialState={}}){
     const $navBar = document.createElement('nav');
     $navBar.className = `${style.navBar}`;
     $target.appendChild($navBar);
-    // console.log(selector(state => state));
     const user = selector((state) => state?.loginSuccess);
     
-    console.log('navbar render');
     this.render = () =>{
         
         console.log(user);
@@ -63,5 +61,3 @@ export default function NavBar({$target,initialState={}}){
 }
 //  articlePage -> edit 클릭 -> editPage 이동 auth 에 걸림
 
-{/* <li data-route="/best">베스트</li>
-<li data-route="/test">테스트</li> */}
