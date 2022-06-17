@@ -35,7 +35,7 @@ router.post('/login',(req,res) =>{
                     httpOnly:true,
                     sameSite:'none',
                     secure:true,
-                    domain:process.env.WHITE_URL || 'http://localhost:3000',
+                    // domain:process.env.WHITE_URL || 'http://localhost:3000',
                 })
                 .status(200)
                 .json({
