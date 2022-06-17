@@ -127,7 +127,7 @@ router.post('/uploadfiles',auth, upload ,(req,res)=>{
             url:file.path.split('server')[1],
         });
     })
-    console.log(dataUrl);
+    
     return res.json({success:true, data:dataUrl});
     
     // upload(req,res, (err,result)=>{
