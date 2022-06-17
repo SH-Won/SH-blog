@@ -31,7 +31,11 @@ router.post('/login',(req,res) =>{
             user.generateToken((err,user) =>{
                 if(err) return res.status(400).send(err);
                 res.cookie("w_authExp" ,user.tokenExp);
-                res.cookie('w_auth',user.token)
+                res.cookie('w_auth',user.token,{
+                    httpOnly:true,
+                    sameSite:'none',
+                    secure:true
+                })
                 .status(200)
                 .json({
                     loginSuccess: true, userId : user._id,

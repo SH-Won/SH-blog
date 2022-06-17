@@ -1,5 +1,6 @@
 // const ENDPOINT =  `${window.origin}`;
 const ENDPOINT = 'https://shlog.herokuapp.com';
+const credentials = 'include';
 
 export const request  = async (url ="",params = {}) =>{
     try{
@@ -23,6 +24,7 @@ export const uploadArticle = async (data = {} , category ='article') =>{
                 'Content-Type' : 'application/json',
                 // 'Content-Type': 'application/x-www-form-urlencoded',
             },
+            credentials,
             body:JSON.stringify(data)
         })
         const {success} = await res.json();
@@ -40,6 +42,7 @@ export const updateArticle = async (data = {}) =>{
             headers:{
                 'Content-Type' : 'application/json'
             },
+            credentials,
             body:JSON.stringify(data)
         })
         const {success} = await res.json();
@@ -57,6 +60,7 @@ export const deleteArticle = async (data = {}) =>{
             headers:{
                 'Content-Type': 'application/json',
             },
+            credentials,
             body:JSON.stringify(data),
         })
         const {success} = await res.json();
@@ -73,6 +77,7 @@ export const registerUser = async (data = {}) =>{
             headers:{
                 'Content-Type':'application/json',
             },
+            credentials,
             body:JSON.stringify(data),
         });
         if(!res.ok) throw new Error("회원가입 실패");
@@ -90,6 +95,7 @@ export const loginUser = async (data = {}) =>{
             headers:{
                 'Content-Type':'application/json',
             },
+            credentials,
             body:JSON.stringify(data),
         });
         if(res.ok) return await res.json(); 
@@ -135,6 +141,7 @@ export const uploadCloudinary = async (data = {}) =>{
             headers:{
                 'Content-Type':'application/json',
             },
+            credentials,
             body:JSON.stringify(data)
         })
         if(res.ok) return await res.json();

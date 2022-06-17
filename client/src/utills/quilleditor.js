@@ -32,6 +32,7 @@ function uploadMulter(editor){
                 // 'Content-Type':'multipart/form-data'
                 // 'Content-Type':'multipart/x-www-form-urlencoded'
             },
+            credentials:'include',
             body:formData,
         });
         if(res.ok){
