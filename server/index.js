@@ -16,7 +16,8 @@ const config = require("./config/key");
 
 const mongoose = require("mongoose");
 const cookieParser = require('cookie-parser');
-const connect = mongoose.connect(config.mongoURI,
+const mongoURI = process.env.mongoURI || config.mongoURI;
+const connect = mongoose.connect(mongoURI,
   {
     useNewUrlParser: true, useUnifiedTopology: true,
     useCreateIndex: true, useFindAndModify: false
