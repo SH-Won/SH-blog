@@ -22,14 +22,14 @@ function uploadMulter(editor){
     input.setAttribute('accept','image/*');
     input.style.fontSize = '16px';
     input.click();
-    alert('click completed');
-    input.addEventListener('change',async e => {
+    
+    input.addEventListener('change',async () => {
         
         const formData = new FormData();
-        for(let i=0; i<e.target.files.length; i++){
-            formData.append('file',e.target.files[i]);
+        for(let i=0; i<input.files.length; i++){
+            formData.append('file',input.files[i]);
         }
-        alert('select completed')
+        console.log(input.files);
         const res = await fetch(`${ENDPOINT}/api/posts/uploadfiles`,{
             method:'POST',
             headers:{
@@ -59,7 +59,7 @@ function uploadMulter(editor){
         }
     }
     )
-    alert('end'); 
+    
 }
 let BlockEmbed = Quill.import('blots/block/embed');
 class ImageBlot extends BlockEmbed{
