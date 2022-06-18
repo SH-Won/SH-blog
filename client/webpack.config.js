@@ -66,6 +66,7 @@ module.exports={
         //     'redux': require.resolve("redux"),
         //   },
     },
+    mode:'production',
     devServer:{
         contentBase:path.join(__dirname,'build'),
         //publicPath:'/',
