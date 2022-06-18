@@ -22,7 +22,7 @@ function uploadMulter(editor){
     input.setAttribute('accept','image/*');
     input.style.fontSize = '16px';
     input.style.display = 'none';
-    const editorRoot = document.querySelector('.ql-container ql-snow');
+    const editorRoot = document.querySelector('.ql-container.ql-snow');
     editorRoot.appendChild(input);
    
     
