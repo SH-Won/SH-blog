@@ -9,6 +9,7 @@ export default function CheckBox({$target,initialState,callback = null}){
         this.state = nextState;
         // this.render();
     }
+    console.log('checkbox',this.state)
     this.render = () => {
         const {items,checked} = this.state;
         const template = `
@@ -22,7 +23,7 @@ export default function CheckBox({$target,initialState,callback = null}){
         `;
         checkBox.insertAdjacentHTML('beforeend',template);
         // checkBox.innerHTML = template;
-        checked.forEach(id => checkBox.children[+id-1].children[0].checked = true);
+        checked.forEach(id => checkBox.children[(+id-1)*2].checked = true);
     }
     this.render();
     checkBox.addEventListener('change',e =>{

@@ -15,7 +15,6 @@ LandingPage.prototype.fetchPosts = async function(checkToggle = false){
         limit:this.state.limit,
         category:this.state.checked,
     }
-    console.log(params);
     this.setState({
         ...this.state,
         isLoading:true,

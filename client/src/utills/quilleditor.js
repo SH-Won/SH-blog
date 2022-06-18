@@ -26,7 +26,7 @@ function uploadMulter(editor){
     editorRoot.appendChild(input);
    
     
-    
+     // IOS 의 경우 실제 input 이 웹 DOM 어딘가에 존재해야 change가 trigger 됨
     input.addEventListener('change',async () => {
         const formData = new FormData();
         for(let i=0; i<input.files.length; i++){
