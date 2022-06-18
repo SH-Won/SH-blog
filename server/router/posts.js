@@ -61,7 +61,7 @@ const storage = multer.diskStorage({
     },
     fileFilter : (req,file,cb) =>{
         const ext = path.extname(file.originalname);
-        if(ext !=='.jpg' || ext !=='.png' || ext !=='gif'){
+        if(ext !=='.jpg' || ext !=='.png' || ext !=='.gif'){
             return cb(res.status(400).end('jpg,png,gif 파일만 가능합니다'),false);
         }
         cb(null,true);

@@ -1,6 +1,6 @@
 .EditPage{
     position:relative;
-    margin:1rem 2rem .1rem 2rem;
+    margin:2rem 1rem .3rem 1rem;
     /* display:flex; */
     /* flex-direction: column; */
     /* align-items: center; */
@@ -22,7 +22,7 @@
 .btnContainer{
     /* width:100%; */
     padding:0;
-    margin:1rem 2rem 1rem 2rem;
+    margin:1.2rem 0;
     display:flex;
     justify-content: flex-end;
 }
@@ -34,8 +34,10 @@
     color: #0f1817;
     border:transparent;
     margin:.3rem;
+    max-width:150px;
 }
 .uploadBtn{
+    max-width:150px;
     width:30%;
     font-size:1rem;
     border-radius: .5rem;
