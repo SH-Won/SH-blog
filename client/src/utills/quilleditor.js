@@ -22,7 +22,9 @@ function uploadMulter(editor){
     input.setAttribute('accept','image/*');
     input.style.fontSize = '16px';
     input.style.display = 'none';
-    editor.root.appendChild(input);
+    const editorRoot = document.querySelector('.ql-container ql-snow');
+    editorRoot.appendChild(input);
+   
     
     
     input.addEventListener('change',async () => {
@@ -30,7 +32,7 @@ function uploadMulter(editor){
         for(let i=0; i<input.files.length; i++){
             formData.append('file',input.files[i]);
         }
-        console.log(input.files);
+        
         const res = await fetch(`${ENDPOINT}/api/posts/uploadfiles`,{
             method:'POST',
             headers:{
@@ -58,7 +60,7 @@ function uploadMulter(editor){
             editor.setSelection(++range.index,0);
             
         }
-        editor.root.removeChild(input);
+        editorRoot.removeChild(input);
     }
     )
     input.click();
