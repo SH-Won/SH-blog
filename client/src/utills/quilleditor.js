@@ -23,7 +23,7 @@ function uploadMulter(editor){
     input.style.fontSize = '16px';
     input.style.display = 'none';
     editor.root.appendChild(input);
-    input.click();
+    
     
     input.addEventListener('change',async () => {
         const formData = new FormData();
@@ -61,7 +61,7 @@ function uploadMulter(editor){
         editor.root.removeChild(input);
     }
     )
-    
+    input.click();
 }
 let BlockEmbed = Quill.import('blots/block/embed');
 class ImageBlot extends BlockEmbed{
