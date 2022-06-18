@@ -21,8 +21,11 @@ function uploadMulter(editor){
     input.setAttribute('multiple','');
     input.setAttribute('accept','image/*');
     input.click();
+    alert('after click')
     input.onchange = async function() {
+        
         const formData = new FormData();
+        alert('IOS input file error ?')
         console.log(this.files);
         for(let i=0; i<this.files.length; i++){
             formData.append('file',this.files[i]);
