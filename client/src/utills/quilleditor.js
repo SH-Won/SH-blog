@@ -24,7 +24,7 @@ function uploadMulter(editor){
     input.click();
     
     input.addEventListener('change',async () => {
-        
+        alert('change');
         const formData = new FormData();
         for(let i=0; i<input.files.length; i++){
             formData.append('file',input.files[i]);
