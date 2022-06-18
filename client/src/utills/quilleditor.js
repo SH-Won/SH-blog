@@ -21,10 +21,11 @@ function uploadMulter(editor){
     input.setAttribute('multiple','');
     input.setAttribute('accept','image/*');
     input.style.fontSize = '16px';
+    input.style.display = 'none';
+    editor.root.appendChild(input);
     input.click();
     
     input.addEventListener('change',async () => {
-        alert('change');
         const formData = new FormData();
         for(let i=0; i<input.files.length; i++){
             formData.append('file',input.files[i]);
@@ -57,6 +58,7 @@ function uploadMulter(editor){
             editor.setSelection(++range.index,0);
             
         }
+        editor.root.removeChild(input);
     }
     )
     
