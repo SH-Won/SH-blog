@@ -19,6 +19,7 @@ function uploadMulter(editor){
     const input = document.createElement('input');
     input.setAttribute('type','file');
     input.setAttribute('multiple','');
+    input.setAttribute('accept','image/*');
     input.click();
     input.onchange = async function() {
         const formData = new FormData();
