@@ -1,18 +1,109 @@
-import Quill from 'quill';
+
+import Quill from 'quill/core';
+import Toolbar from 'quill/modules/toolbar';
+import Image from 'quill/formats/image';
+import Blockquote from 'quill/formats/blockquote';
+import Underline from 'quill/formats/underline';
+import { AlignClass, AlignStyle } from 'quill/formats/align';
+import { DirectionAttribute,DirectionClass,DirectionStyle} from 'quill/formats/direction';
+import Icons from 'quill/ui/icons';
+import Picker from 'quill/ui/picker';
+import IconPicker from 'quill/ui/icon-picker';
+import ColorPicker from 'quill/ui/color-picker';
+import Tooltip from 'quill/ui/tooltip';
+import Link from 'quill/formats/link';
+import { IndentClass as Indent } from 'quill/formats/indent';
+import SnowTheme from 'quill/themes/snow';
+import CodeBlock, {Code as InlineCode} from 'quill/formats/code'
+import Bold from 'quill/formats/bold';
+import Italic from 'quill/formats/italic';
+
+import List,{ListItem} from 'quill/formats/list';
+import {FontClass,FontStyle} from 'quill/formats/font';
+import {SizeClass,SizeStyle} from 'quill/formats/size';
+import Header from 'quill/formats/header';
+
+
+
+Quill.register({
+    'attributors/attribute/direction': DirectionAttribute,
+  
+    'attributors/class/align': AlignClass,
+    // 'attributors/class/background': BackgroundClass,
+    // 'attributors/class/color': ColorClass,
+    'attributors/class/direction': DirectionClass,
+    'attributors/class/font': FontClass,
+    'attributors/class/size': SizeClass,
+  
+    'attributors/style/align': AlignStyle,
+    // 'attributors/style/background': BackgroundStyle,
+    // 'attributors/style/color': ColorStyle,
+    'attributors/style/direction': DirectionStyle,
+    'attributors/style/font': FontStyle,
+    'attributors/style/size': SizeStyle
+  });
+  Quill.register({
+    'formats/align': AlignClass,
+    'formats/direction': DirectionClass,
+    // 'formats/indent': Indent,
+  
+    // 'formats/background': BackgroundStyle,
+    // 'formats/color': ColorStyle,
+    'formats/font': FontClass,
+    'formats/size': SizeClass,
+  
+    'formats/blockquote': Blockquote,
+    'formats/code-block': CodeBlock,
+    'formats/header': Header,
+    'formats/list': List,
+  
+    'formats/bold': Bold,
+    'formats/code': InlineCode,
+    'formats/italic': Italic,
+    'formats/link': Link,
+    // 'formats/script': Script,
+    // 'formats/strike': Strike,
+    'formats/underline': Underline,
+  
+    'formats/image': Image,
+    // 'formats/video': Video,
+  
+    'formats/list/item': ListItem,
+  
+    // 'modules/formula': Formula,
+    // 'modules/syntax': Syntax,
+    'modules/toolbar': Toolbar,
+  
+    // 'themes/bubble': BubbleTheme,
+    'themes/snow': SnowTheme,
+  
+    // 'ui/icons': Icons,
+    'ui/picker': Picker,
+    'ui/icon-picker': IconPicker,
+    'ui/color-picker': ColorPicker,
+    'ui/tooltip': Tooltip
+  });
+
+
+
 // const ENDPOINT = `${window.origin}`;
 const ENDPOINT = 'https://shlog.herokuapp.com';
 const options = {
     // debug: 'info',
+    theme: 'snow',
     modules: {
-      toolbar: [
+        toolbar:{
+      container: [
           [{header : [1,2,false]}],
           ['bold','italic','underline'],
+          
           ['image','code-block']
       ]
+    }
     },
     placeholder: '내용을 입력 하세요',
     // readOnly: true,
-    theme: 'snow'
+
 };
 function uploadMulter(editor){
     // console.log(editor);
@@ -91,8 +182,20 @@ ImageBlot.tagName = 'figure';
 
 export const quillEditor = (element) =>{
      Quill.register(ImageBlot);
+     
+    //  Quill.import('modules/toolbar')
     //  const editor = new Quill(element,options);
     const editor = new Quill(element,options);
+    // const buttons = document.querySelectorAll('.ql-toolbar.ql-snow > .ql-formats > button')
+    // buttons.forEach(button => {
+    //     const className = button.className;
+    //     if(className.includes('ql-') === -1) return;
+    //     button.innerHTML = Icons[className.slice('ql-'.length)]
+    // })
+    // const Theme = editor.import('themes/snow');
+    // new Theme(editor,editor.options);
+    // editor.theme.addModule('toolbar');
+    
      editor.getModule('toolbar').addHandler('image',() =>{
         uploadMulter(editor);
     });

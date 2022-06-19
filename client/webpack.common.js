@@ -2,9 +2,10 @@ const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin =require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const ShrinkRay = require('shrink-ray-current');
+const BrotliPlugin = require('brotli-webpack-plugin');
 // CkEditor5 
 const {styles} = require('@ckeditor/ckeditor5-dev-utils');
-const { webpack } = require('webpack');
 
 module.exports={
     
@@ -24,7 +25,14 @@ module.exports={
         filename:"[name].[contenthash].js",
         path:path.join(__dirname,'build'),
         publicPath:'/',
+        clean:true,
     },
+    // render :{
+    //     compressor:ShrinkRay(BrotliPlugin)
+    // },
+    // optimization:{
+
+    // },
     optimization: {
         minimize:true,
         minimizer:[new TerserPlugin()],
@@ -42,18 +50,20 @@ module.exports={
       },
     
     resolve:{
-        extensions:['.js','.jsx','css','ts','svg'],
-        modules:['node_modules'],
+        extensions:['.js','.jsx','.css','.ts','.svg','*.svg'],
+        // modules:['node_modules'],
         alias:{
-            'quill$': require.resolve('quill')
+            // 'parchment': path.resolve(__dirname, 'node_modules/parchment/src/parchment.ts'),
+            'quill$': path.resolve(__dirname, 'node_modules/quill/quill.js'),
         }
     },
 
     module:{
         rules:[
+
             {
                 test:/\.(js|jsx)$/,
-                exclude:path.join(__dirname,'node_modules'),
+                exclude:[path.join(__dirname,'node_modules'),'/src/utills/ckeditor','/src/utills/Editor'],
                 
                use:[{
                     loader:'babel-loader',
@@ -83,6 +93,35 @@ module.exports={
                 
                 
             },
+            // {
+            //     test: /\.ts$/,
+            //     use: [{
+            //       loader: 'ts-loader',
+            //       options: {
+            //         compilerOptions: {
+            //           declaration: false,
+            //           target: 'es5',
+            //           module: 'commonjs'
+            //         },
+            //         transpileOnly: true
+            //       }
+            //     }]
+            //   }, 
+            {
+                test: /\.svg$/,
+                loader: 'svg-inline-loader'
+            },
+            //   {
+            //     test: /\.svg$/,
+            //     // test:/node_modules\/quill\/assets\/icons\/(.*)\.svg$/,
+            //     use: [{
+            //       loader: 'html-loader',
+            //       options: {
+            //         minimize: true
+            //       }
+            //     }]
+            //   },
+              
             
          
             {
@@ -102,10 +141,11 @@ module.exports={
                     /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css$/,
                 ],
             },
-            {
-                test: /ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/,
-                use: [ 'raw-loader' ]
-            },
+
+            // {
+            //     test: /ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/,
+            //     use: [ 'raw-loader' ]
+            // },
             {
                 test: /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css$/,
                 use: [
@@ -136,11 +176,13 @@ module.exports={
          
            
             {
-                test : /\.(png|svg|jpg|gif)$/,
+                // test : /\.(png|svg|jpe?g|gif)$/i, // i ??
+                test : /\.(png|jpe?g|gif)$/i,
                 use:['file-loader'],
                 exclude: [
-                    /ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/,
-                    /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css$/
+                    // /ckeditor5-[^/\\]+[/\\]theme[/\\]icons[/\\][^/\\]+\.svg$/,
+                    // /ckeditor5-[^/\\]+[/\\]theme[/\\].+\.css$/,
+                    // /node_modules\/quill\/assets\/icons\/(.*)\.svg$/,
                 ],    
             },
             {
@@ -160,16 +202,12 @@ module.exports={
                     
                 }]
             },
+            // {
+            //     test: /\.svg$/,
+            //     loader: "file-loader",
+            //     type: 'asset/resource'
+            //   },
          
-        {
-            test: /\.svg$/,
-            use: [{
-              loader: 'html-loader',
-              options: {
-                minimize: true
-              }
-            }]
-          }
         ]
     },
     
