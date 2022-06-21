@@ -1,4 +1,4 @@
-// import {request} from '../utills/api.js';
+import {request} from '../utills/api.js';
 import Posts from '../components/Posts.js';
 import Button from '../components/Button.js';
 import Loading from '../components/Loading.js';
@@ -142,6 +142,35 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
         if(e.target.className !=='loadMore-btn') return;
         this.fetchPosts();
     })
+}
+
+LandingPage.prototype.fetchPosts = async function(checkToggle = false){
+    try{
+    const params = {
+        skip:this.state.skip,
+        limit:this.state.limit,
+        category:this.state.checked,
+    }
+    console.log(params);
+    this.setState({
+        ...this.state,
+        isLoading:true,
+    })
+    const {posts,postSize} = await request("",params);
+    this.setState({
+        ...this.state,
+        posts : !this.state.skip ? posts : [...this.state.posts,...posts],
+        skip : this.state.skip + this.state.limit,
+        postSize,
+        isLoading:false,
+        checkToggle,
+    })
+    }catch(e){
+        throw new Error("서버가 이상합니다");
+
+    }finally{
+        
+    }
 }
 
 

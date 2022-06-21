@@ -1,5 +1,6 @@
-// const ENDPOINT =  `${window.origin}`;
-const ENDPOINT = 'https://shlog.herokuapp.com';
+const ENDPOINT =  `${window.origin}`;
+// const ENDPOINT = 'https://shlog.herokuapp.com';
+// const ENDPOINT = process.env.API_ENDPOINT;
 
 export const request  = async (url ="",params = {}) =>{
     try{
@@ -107,7 +108,8 @@ export const auth = async () =>{
     try{
         const fullUrl = `${ENDPOINT}/api/users/auth`;
         const res = await fetch(fullUrl,{
-            credentials:'include'
+            method:'GET',
+            credentials:'include',
         });
         if(res.ok) return await res.json();
     }catch(e){

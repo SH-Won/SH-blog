@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin =require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const  {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const ShrinkRay = require('shrink-ray-current');
 const BrotliPlugin = require('brotli-webpack-plugin');
 // CkEditor5 
@@ -16,9 +17,15 @@ module.exports={
             template:path.join(__dirname,'public/index.html'),
             filename:'index.html'
         }),
+        // new MiniCssExtractPlugin({
+        //     filename:'style.css'
+        // }),
         new MiniCssExtractPlugin({
-            filename:'style.css'
+            linkType:false,
+            filename:'[name].[contenthash].css',
+            chunkFilename:'[id].[contenthash].css'
         }),
+        new CleanWebpackPlugin(),
         
     ],
     output:{
@@ -35,7 +42,12 @@ module.exports={
     // },
     optimization: {
         minimize:true,
-        minimizer:[new TerserPlugin()],
+        minimizer:[new TerserPlugin({
+            terserOptions: {
+                compress: {
+                  drop_console: true, // 콘솔 로그를 제거한다
+                },
+        }})],
         moduleIds: 'deterministic',
         runtimeChunk: 'single',
        splitChunks: {
@@ -63,7 +75,7 @@ module.exports={
 
             {
                 test:/\.(js|jsx)$/,
-                exclude:[path.join(__dirname,'node_modules'),'/src/utills/ckeditor','/src/utills/Editor'],
+                exclude:[path.join(__dirname,'node_modules'),'/src/page/EditPage.js','/src/utills/ckeditor.js','/src/utills/Editor.js'],
                 
                use:[{
                     loader:'babel-loader',

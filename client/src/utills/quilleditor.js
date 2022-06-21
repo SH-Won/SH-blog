@@ -86,8 +86,9 @@ Quill.register({
 
 
 
-// const ENDPOINT = `${window.origin}`;
-const ENDPOINT = 'https://shlog.herokuapp.com';
+const ENDPOINT = `${window.origin}`;
+// const ENDPOINT = 'https://shlog.herokuapp.com';
+// const ENDPOINT = process.env.API_ENDPOINT;
 const options = {
     // debug: 'info',
     theme: 'snow',
