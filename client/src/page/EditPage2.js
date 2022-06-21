@@ -28,7 +28,7 @@ export default function EditPage2({$target,isModify,initialState = {},user}){
     this.$page.appendChild($btnContainer);
     $target.appendChild(this.$page);
     // selector(null,'userId',user._id);
-    console.log(user);
+    // console.log(user);
     this.state = {
         title:'',
         data:'',
@@ -94,17 +94,17 @@ export default function EditPage2({$target,isModify,initialState = {},user}){
         onClick : () => this.uploadItem(user,isModify),
         
     })
-    const testBtn = new ClickButton({
-        $target:$btnContainer,
-        initialState : {
-            className : '',
-            name:'테스트'
-        },
-        onClick : () =>{
-            const delta = this.editor.clipboard.convert(this.editor.root.innerHTML);
-            console.log(delta);
-        }
-    })
+    // const testBtn = new ClickButton({
+    //     $target:$btnContainer,
+    //     initialState : {
+    //         className : '',
+    //         name:'테스트'
+    //     },
+    //     onClick : () =>{
+    //         const delta = this.editor.clipboard.convert(this.editor.root.innerHTML);
+    //         console.log(delta);
+    //     }
+    // })
     
     this.render = () =>{
         
@@ -112,13 +112,13 @@ export default function EditPage2({$target,isModify,initialState = {},user}){
         console.log(this.editor);
         const delta = this.editor.clipboard.convert(this.state.data);
         this.editor.setContents(delta);
-        testBtn.render();
+        // testBtn.render();
         cancelBtn.render();
         uploadBtn.render();
         
     }
     this.render();
-    console.log('edit page loaded');
+    // console.log('edit page loaded');
     
     // console.log(history.state);
 }
