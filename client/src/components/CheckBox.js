@@ -1,4 +1,3 @@
-
 import style from '../styles/CheckBox.module.css';
 export default function CheckBox({$target,initialState,callback = null}){
     this.state = initialState;

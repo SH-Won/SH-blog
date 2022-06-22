@@ -31,16 +31,24 @@ router.post('/login',(req,res) =>{
             user.generateToken((err,user) =>{
                 if(err) return res.status(400).send(err);
                 
-                res.cookie("w_authExp" ,user.tokenExp);
-                res.cookie('w_auth',user.token,{
-                    httpOnly:true,
-                    sameSite:'none',
-                    secure:true,
-                    // domain:process.env.WHITE_URL || 'http://localhost:3000',
-                })
+                // res.cookie("w_authExp" ,user.tokenExp);
+                // res.cookie('w_auth',user.token,{
+                //     httpOnly:true,
+                //     sameSite:'none',
+                //     secure:true,
+                //     // domain:process.env.WHITE_URL || 'http://localhost:3000',
+                // })
+                // .status(200)
+                // .json({
+                //     loginSuccess: true, userId : user._id,
+                // })
+                res.header("Access-Control-Allow-Origin",process.env.WHITE_URL);
+                res.header("Access-Control-Allow-Credentials",true);
+                res.setHeader("Set-Cookie",`w_auth=${user.token}; HttpOnly; SameSite=None; secure=true`)
+                res
                 .status(200)
                 .json({
-                    loginSuccess: true, userId : user._id,
+                    loginSuccess:true, userId: user.id,
                 })
             })
         })

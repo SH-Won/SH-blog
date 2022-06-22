@@ -7,7 +7,7 @@ const ShrinkRay = require('shrink-ray-current');
 const BrotliPlugin = require('brotli-webpack-plugin');
 // CkEditor5 
 const {styles} = require('@ckeditor/ckeditor5-dev-utils');
-
+const webpack = require('webpack');
 module.exports={
     
     entry:["./src/index.js"],
@@ -26,6 +26,13 @@ module.exports={
             chunkFilename:'[id].[contenthash].css'
         }),
         new CleanWebpackPlugin(),
+        new webpack.LoaderOptionsPlugin({
+            options:{
+                render :{
+                    compressor:ShrinkRay(BrotliPlugin)
+                },
+            }
+        })
         
     ],
     output:{
@@ -34,12 +41,7 @@ module.exports={
         publicPath:'/',
         clean:true,
     },
-    // render :{
-    //     compressor:ShrinkRay(BrotliPlugin)
-    // },
-    // optimization:{
-
-    // },
+    
     optimization: {
         minimize:true,
         minimizer:[new TerserPlugin({
@@ -48,17 +50,23 @@ module.exports={
                   drop_console: true, // 콘솔 로그를 제거한다
                 },
         }})],
-        moduleIds: 'deterministic',
-        runtimeChunk: 'single',
-       splitChunks: {
-         cacheGroups: {
-           vendor: {
-             test: /[\\/]node_modules[\\/]/,
-             name: 'vendors',
-             chunks: 'all',
-           },
-         },
-       },
+    //     moduleIds: 'deterministic',
+    //     runtimeChunk: 'single',
+    //    splitChunks: {
+    //      cacheGroups: {
+    //        vendor: {
+    //          test: /[\\/]node_modules[\\/]/,
+    //          name: 'vendors',
+    //          chunks: 'all',
+    //        },
+    //      },
+    //    },
+         splitChunks:{
+             chunks:'all',
+             automaticNameDelimiter:'.',
+             name:'_chunk',
+             maxSize:712000
+         }
       },
     
     resolve:{
