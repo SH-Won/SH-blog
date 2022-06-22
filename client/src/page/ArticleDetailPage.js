@@ -37,12 +37,12 @@ export default function ArticleDetailPage({$target,articleId,user}){
         <h2>${article.title}</h2>
         <span class="${styles.writtenTime}">${this.state.createdAt}</span>
         </div>
-        <div class="ck-content .ql-content">
+        <div class="ck-content ql-content">
         </div>
         </div>
         `;
         $page.insertAdjacentHTML('beforeend',template);
-        const content = document.querySelector('.ck-content');
+        const content = document.querySelector('.ql-content');
         content.insertAdjacentHTML('beforeend',`${article.data}`);
         const buttonPosition = content.previousElementSibling;
         if(user._id === article.writer._id){
@@ -105,5 +105,6 @@ export default function ArticleDetailPage({$target,articleId,user}){
 
         }
     }
+    
     fetchArticle();
 }

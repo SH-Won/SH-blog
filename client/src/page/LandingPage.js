@@ -16,7 +16,9 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
     
     $page.className = 'page landing';
     $target.appendChild($page);
-    
+    // const oldPage = document.querySelector('.page');
+    // $target.replaceChild($page,$target.lastChild);
+    // $page.replaceChild()
     this.state = {
         isLoading:true,
         checked: [],

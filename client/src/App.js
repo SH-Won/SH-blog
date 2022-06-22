@@ -1,6 +1,6 @@
 import { init } from './utills/router.js';
 // import LandingPage from './page/LandingPage.js';
-// import NavBar from './components/NavBar.js';
+import NavBar from './components/NavBar.js';
 // import PostDetailPage from './page/PostDetailPage.js';
 // import BestPage  from './page/BestPage.js'
 // import EditPage from './page/EditPage.js';
@@ -13,6 +13,7 @@ import { init } from './utills/router.js';
 import { selector } from './utills/selector.js';
 import { destoryImage, logoutUser } from './utills/api.js';
 import './utills/prototype';
+import './styles/page.css'
 
 export default function App($target){
     const cache = {
@@ -26,14 +27,25 @@ export default function App($target){
     // const navBar = new NavBar({
     //     $target,
     // })
-
+    // const navBar = import('./components/NavBar.js')
+    // .then(({default : page}) =>{
+    //     return new page({
+    //         $target,
+    //     })
+    // })
+    
+    const navBar = new NavBar({
+        $target,
+    })
     const testCache = new Map();
     this.route = (params = {}) =>{
         const {pathname} = location;
-        this.removeAllChild($target);
+        
         // NavBar
+        const page = document.querySelector('nav').nextElementSibling;
         // $target.innerHTML = '';
-        console.log(params);
+        if(page)
+        $target.removeChild(page);
         // console.log('loginSuccess1',params.loginSuccess);
         const loginSuccess = params?.loginSuccess;
         // console.log('loginSuccess2',loginSuccess)
@@ -41,21 +53,14 @@ export default function App($target){
         //     ...navBar.state,
         //     loginSuccess
         // })
-        // new NavBar({
-        //     $target,
-        // })
-        import('./components/NavBar.js')
-        .then(({default : page}) =>{
-            new page({
-                $target,
-            })
-        })
+        
+        
 
         if(pathname === '/'){
             const initialState = testCache.has('pre') ? testCache.get('pre') : {
                 posts:[],
                 skip:0,
-                limit:2,
+                limit:8,
             };
             
             // Auth(LandingPage,false)({
@@ -64,16 +69,24 @@ export default function App($target){
             //     cache,
             //     testCache
             // })
-            import('./Auth.js').then( async ({default: Auth}) =>{
-                const landingPage = await import('./page/LandingPage.js')
-                                    .then(({default : page}) => page)
-                Auth(landingPage,false)({
-                    $target,
-                    initialState,
-                    cache,
-                    testCache,
-                })
-            })
+
+            // import('./Auth.js').then( async ({default: Auth}) =>{
+            //     const landingPage = await import('./page/LandingPage.js')
+            //                         .then(({default : page}) => page)
+            //     Auth(landingPage,false)({
+            //         $target,
+            //         initialState,
+            //         cache,
+            //         testCache,
+            //     })
+            // })
+            import('./page/LandingPage').then(({default:page}) => new page({
+                $target,
+                initialState,
+                cache,
+                testCache
+            }))
+
         }
         else if(pathname ==='/register'){
             // new RegisterPage({

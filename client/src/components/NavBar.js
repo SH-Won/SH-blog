@@ -12,11 +12,15 @@ export default function NavBar({$target,initialState={}}){
     const $navBar = document.createElement('nav');
     $navBar.className = `${style.navBar}`;
     $target.appendChild($navBar);
+
     const user = selector((state) => state?.loginSuccess);
-    
-    this.render = () =>{
+    this.checkLoginState = () =>{
         
-        console.log(user);
+        if(user){
+            
+        }
+    }
+    this.render = () =>{
         const template = `
         <ul class="${style.list}">
         <li data-route="/">BLOG</li>
