@@ -1,4 +1,4 @@
-
+import Quill from 'quill'
 import Quill from 'quill/core';
 import Toolbar from 'quill/modules/toolbar';
 import Image from 'quill/formats/image';
