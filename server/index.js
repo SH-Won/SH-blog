@@ -40,7 +40,6 @@ const connect = mongoose.connect(mongoURI,
 const origin = process.env.WHITE_URL || 'http://localhost:3000';
 app.use(cors({origin,
   credentials:true,
-  
 }));
 // app.use(express.json());
 // app.use(bodyParser.json());
