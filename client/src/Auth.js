@@ -31,7 +31,6 @@ export default function (page,option,prevRoute = null ,admin = null){
         
         // selector(null,'user',user);
         // console.log('after fetch auth');
-        console.log(user);
         if(!user.isAuth){
             if(option){
                 changeRoute('/login',{detail : { route : prevRoute} });

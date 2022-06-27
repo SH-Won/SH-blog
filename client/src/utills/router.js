@@ -10,14 +10,10 @@ export const init = (onRouteChange) =>{
             destoryImage();
             return onRouteChange();   
         }
-        
         onRouteChange(e.detail);
     });
-    
-    
 }
 export const changeRoute = (url,params=null) =>{
-    
     window.history.replaceState({from:url},null);
     if(location.pathname === '/edit'){
         const loginSuccess = selector(state => state?.loginSuccess);
@@ -25,7 +21,6 @@ export const changeRoute = (url,params=null) =>{
         destoryImage();
         }
     }
-    console.log('url : ',url, 'current :' , location.pathname );
     window.history.pushState(params,null,url);
     window.dispatchEvent(new CustomEvent(ROUTE_EVENT,params));
 }

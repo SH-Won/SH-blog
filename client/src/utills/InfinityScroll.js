@@ -30,14 +30,6 @@ export const InfinityScroll = (element,callback,hasMore,loading) =>{
             ob.unobserve(entry.target);
         }
     })
-    // const loadMore = (element) =>{
-    //     if(loading) return;
-    //     console.log(observer);
-    //     // if(observer) observer.disconnect();
-    //     observer = new IntersectionObserver(handleScroll,{threshold:0.8});
-    //     if(element) observer.observe(element);
-    // }
-    // return loadMore;
     if(loading) return;
     observer = new IntersectionObserver(handleScroll,{threshold:0.8});
     if(element) observer.observe(element);

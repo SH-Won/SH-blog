@@ -1,5 +1,4 @@
 import { changeRoute } from '../utills/router.js';
-import { getItem,removeItem } from '../utills/storage.js';
 import style from '../styles/NavBar.module.css';
 import { logoutUser } from '../utills/api.js';
 import { selector } from '../utills/selector.js';

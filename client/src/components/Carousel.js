@@ -100,7 +100,7 @@ export default function Carousel({$target,initialState}){
         $slider.style.transition='none';
         $slider.style.transform=''
         if(changeDirection){
-            console.log(changeDirection);
+            
             this.setState({
                 ...this.state,
                 changeDirection:false,

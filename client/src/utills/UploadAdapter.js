@@ -3,14 +3,10 @@ const ENDPOINT = `${window.origin}/api/posts/uploadfiles`;
 class UploadAdapter{
     constructor(loader){
         this.loader = loader;
-        // this.userId = selector(state => state?.userId);
     }
     upload = () =>{
         return this.loader.file.then(async file => {
            let formData = new FormData();
-        //    const user = await auth();
-           
-        //    formData.append('id',this.userId)
            formData.append('file',file);
             const res = await fetch(ENDPOINT,{
                 method:'POST',
@@ -22,10 +18,7 @@ class UploadAdapter{
             });
             return await res.json();
         }).then(({data}) => {
-            // console.log(data);
-            
             return Promise.resolve({
-                // default:`http://localhost:5000${data.url}`,
                 default:`${window.origin}${data[0].url}`,
                 attributes : {
                     'data-id' : 'image',
@@ -33,22 +26,6 @@ class UploadAdapter{
             }) 
             
         })
-
-        // return this.loader.file.then(file =>  new Promise(async (resolve,reject) =>{
-        //     let formData = new FormData();
-        //     formData.append('file',file);
-        //     const res = await fetch(ENDPOINT,{
-        //         method:'POST',
-        //         header:{
-
-        //         },
-        //         body:formData
-        //     });
-        //     if(res.ok){
-        //         const response = await res.json();
-        //         resolve({default:response.url});
-        //     }
-        // }))
     }
 }
 export default function CustomUploadAdapterPlugin(editor){

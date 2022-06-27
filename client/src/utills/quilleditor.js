@@ -89,7 +89,6 @@ Quill.register({
 const ENDPOINT = 'https://shlog.herokuapp.com';
 // const ENDPOINT = process.env.API_ENDPOINT;
 const options = {
-    // debug: 'info',
     theme: 'snow',
     modules: {
         toolbar:{
@@ -102,11 +101,8 @@ const options = {
     }
     },
     placeholder: '내용을 입력 하세요',
-    // readOnly: true,
-
 };
 function uploadMulter(editor){
-    // console.log(editor);
     const input = document.createElement('input');
     input.setAttribute('type','file');
     input.setAttribute('multiple','');
@@ -182,45 +178,9 @@ ImageBlot.tagName = 'figure';
 
 export const quillEditor = (element) =>{
      Quill.register(ImageBlot);
-     
-    //  Quill.import('modules/toolbar')
-    //  const editor = new Quill(element,options);
-    const editor = new Quill(element,options);
-    // const buttons = document.querySelectorAll('.ql-toolbar.ql-snow > .ql-formats > button')
-    // buttons.forEach(button => {
-    //     const className = button.className;
-    //     if(className.includes('ql-') === -1) return;
-    //     button.innerHTML = Icons[className.slice('ql-'.length)]
-    // })
-    // const Theme = editor.import('themes/snow');
-    // new Theme(editor,editor.options);
-    // editor.theme.addModule('toolbar');
-    
+     const editor = new Quill(element,options);   
      editor.getModule('toolbar').addHandler('image',() =>{
         uploadMulter(editor);
     });
     return editor;
 }
-
-
-
-
-
-// export const toolbar = `
-// <div id="toolbar">
-//   <!-- Add font size dropdown -->
-//   <select class="ql-size">
-//     <option value="small"></option>
-//     <!-- Note a missing, thus falsy value, is used to reset to default -->
-//     <option selected></option>
-//     <option value="large"></option>
-//     <option value="huge"></option>
-//   </select>
-//   <!-- Add a bold button -->
-//   <button class="ql-bold"></button>
-//   <!-- Add subscript and superscript buttons -->
-//   <button class="ql-script" value="sub"></button>
-//   <button class="ql-script" value="super"></button>
-// </div>
-// `
-

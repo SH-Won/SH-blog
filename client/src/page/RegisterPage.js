@@ -68,7 +68,6 @@ export default function RegisterPage({$target}){
                 return alert("회원가입을 실패했습니다");
             }
             else{
-                console.log('회원가입 완료');
                 changeRoute('/login');
             }
         })

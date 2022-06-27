@@ -1,12 +1,9 @@
 import Loading from '../components/Loading';
-// import EditPage from '../page/EditPage';
-// import LandingPage from '../page/LandingPage';
 import { updateArticle, uploadArticle, uploadCloudinary } from './api';
 import { getImageURL } from './languages';
 import { changeRoute } from './router';
-// import { request } from './api';
 import EditPage2 from '../page/EditPage2';
-// Edit Page
+
 (() => {
 
 EditPage2.prototype.uploadItem = async function(user,isModify){
@@ -67,7 +64,6 @@ EditPage2.prototype.uploadItem = async function(user,isModify){
             imageIds,
             removeIds,
         }
-        console.log(data.data);
         if(isModify){
             data['_id'] = this.state._id;
             return updateArticle(data);
@@ -75,9 +71,6 @@ EditPage2.prototype.uploadItem = async function(user,isModify){
         return uploadArticle(data);
     })
     .then(response =>{
-        // const haveToDelete = addImgElement.length ? true : false;
-        // loading.setState(false);
-        // changeRoute('/article');
         loading.setState(false);
         changeRoute('/article');
     })

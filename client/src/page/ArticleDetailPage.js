@@ -12,7 +12,6 @@ export default function ArticleDetailPage({$target,articleId,user}){
     $target.appendChild($page);
     // const userId = selector(state => state?.userId);
     // console.log('user',userId);
-    console.log('user',user);
     this.state = {
         article:null,
         createdAt:null,
@@ -26,7 +25,6 @@ export default function ArticleDetailPage({$target,articleId,user}){
     this.render = () =>{
         if(this.state.isLoading) return;
         const {article} = this.state;
-        console.log(article);
         if(!this.state.createdAt){
             const date = new Date(article.createdAt).toLocaleString('ko-KR').split('. ');
             this.state.createdAt = `${date[0]}년 ${date[1]}월 ${date[2]}일 ${date[3]}`

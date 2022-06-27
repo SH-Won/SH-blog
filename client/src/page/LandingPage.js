@@ -139,7 +139,6 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
     if(!testCache.has('pre')){
         this.fetchPosts();
     }
-     console.log('landing page loaded')
     this.init();
     $page.addEventListener('click',e=>{
         if(e.target.className !=='loadMore-btn') return;
@@ -154,7 +153,6 @@ LandingPage.prototype.fetchPosts = async function(checkToggle = false){
         limit:this.state.limit,
         category:this.state.checked,
     }
-    console.log(params);
     this.setState({
         ...this.state,
         isLoading:true,

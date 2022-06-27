@@ -11,7 +11,7 @@ import NavBar from './components/NavBar.js';
 // import LoginPage from './page/LoginPage.js';
 // import Auth from './Auth.js';
 import { selector } from './utills/selector.js';
-import { destoryImage, logoutUser } from './utills/api.js';
+import { destoryImage } from './utills/api.js';
 import './utills/prototype';
 import './styles/page.css'
 
@@ -206,7 +206,6 @@ export default function App($target){
     init(this.route);
     this.route();
     window.addEventListener('popstate',(e) =>{
-        console.log(e.state);
         if(e.state && e.state.from === '/edit'){
             const loginSuccess = selector(state => state?.loginSuccess);
             if(loginSuccess)

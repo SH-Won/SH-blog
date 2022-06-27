@@ -12,7 +12,6 @@ import { quillEditor } from '../utills/quilleditor';
 
 
 export default function EditPage2({$target,isModify,initialState = {},user}){
-    console.log('history.state',history.state);
     this.$page = document.createElement('div');
     const editor = document.createElement('div');
     const $infoContainer = document.createElement('div');
@@ -20,15 +19,12 @@ export default function EditPage2({$target,isModify,initialState = {},user}){
     $infoContainer.className = `${styles.infoContainer}`
     this.$page.className = `${styles.EditPage}`;
     $btnContainer.className = `${styles.btnContainer}`;
-    // $target.appendChild($page);
-    // $target.appendChild(editor);
-    // $target.appendChild($btnContainer);
+
     this.$page.appendChild($infoContainer);
     this.$page.appendChild(editor);
     this.$page.appendChild($btnContainer);
     $target.appendChild(this.$page);
-    // selector(null,'userId',user._id);
-    // console.log(user);
+
     this.state = {
         title:'',
         data:'',
@@ -107,20 +103,14 @@ export default function EditPage2({$target,isModify,initialState = {},user}){
     // })
     
     this.render = () =>{
-        
         this.editor = quillEditor(editor);
-        console.log(this.editor);
         const delta = this.editor.clipboard.convert(this.state.data);
         this.editor.setContents(delta);
         // testBtn.render();
         cancelBtn.render();
         uploadBtn.render();
-        
     }
     this.render();
-    // console.log('edit page loaded');
-    
-    // console.log(history.state);
 }
 
 

@@ -27,10 +27,8 @@ export default function ListView({$target,maxSize}){
     $ListView.addEventListener('click', e=>{
         if(e.target.tagName !== 'BUTTON') return;
         const posts = document.querySelector('.page > article');
-        console.log(posts);
         const selectedIndex = +e.target.parentNode.dataset.index;
         const {currentIndex}  = this.state;
-        // const posts = $target.children[2];
          if(selectedIndex === currentIndex){
             posts.style.display = 'flex';
             $ListView.children[0].children[currentIndex].children[0].style.border = `0.5px gray solid`; 
@@ -47,8 +45,7 @@ export default function ListView({$target,maxSize}){
          $ListView.children[0].children[currentIndex].children[0].style.border = `0.5px gray solid`;
          $ListView.children[0].children[currentIndex].children[0].style.backgroundColor = 'white';
          }
-        //  e.target.style.border = `1px black solid`;
-        e.target.style.border = 'transparent'
+         e.target.style.border = "transparent";
          e.target.style.backgroundColor = '#d5f7e7';
          this.setState({
              ...this.state,
