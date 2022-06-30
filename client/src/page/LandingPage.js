@@ -34,10 +34,10 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
             postSize : this.state.postSize,
         })
         loading.setState(this.state.isLoading);
-        loadMoreBtn.setState({
-            ...loadMoreBtn.state,
-            visible: this.state.postSize < this.state.limit ? false : true,
-        })
+        // loadMoreBtn.setState({
+        //     ...loadMoreBtn.state,
+        //     visible: this.state.postSize < this.state.limit ? false : true,
+        // })
         this.init();
     }
     this.init = () =>{
@@ -117,33 +117,33 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
         $target:$page,
         initialState: this.state.isLoading,
     })
-    const loadMoreBtn = new Button({ 
-        $target : $page,
-        initialState:{
-            name:"더 보기",
-            className:"loadMore-btn",
-            visible : this.state.postSize < this.state.limit ? false : true,
-            style:{
-                width:'10%',
-                textAlign:'center',
-                border:'none',
-                background:'whitesmoke',
-                borderRadius:'4px',
-                boxShadow:'0 0 2px #2c87f0',
-                outline:'transparent',
-                color:'#4a96ee',
-                margin:'auto'
-            }
-        },
-    })
+    // const loadMoreBtn = new Button({ 
+    //     $target : $page,
+    //     initialState:{
+    //         name:"더 보기",
+    //         className:"loadMore-btn",
+    //         visible : this.state.postSize < this.state.limit ? false : true,
+    //         style:{
+    //             width:'10%',
+    //             textAlign:'center',
+    //             border:'none',
+    //             background:'whitesmoke',
+    //             borderRadius:'4px',
+    //             boxShadow:'0 0 2px #2c87f0',
+    //             outline:'transparent',
+    //             color:'#4a96ee',
+    //             margin:'auto'
+    //         }
+    //     },
+    // })
     if(!testCache.has('pre')){
         this.fetchPosts();
     }
     this.init();
-    $page.addEventListener('click',e=>{
-        if(e.target.className !=='loadMore-btn') return;
-        this.fetchPosts();
-    })
+    // $page.addEventListener('click',e=>{
+    //     if(e.target.className !=='loadMore-btn') return;
+    //     this.fetchPosts();
+    // })
 }
 
 LandingPage.prototype.fetchPosts = async function(checkToggle = false){
@@ -153,6 +153,7 @@ LandingPage.prototype.fetchPosts = async function(checkToggle = false){
         limit:this.state.limit,
         category:this.state.checked,
     }
+    
     this.setState({
         ...this.state,
         isLoading:true,

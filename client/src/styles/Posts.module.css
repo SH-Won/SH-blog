@@ -6,6 +6,9 @@
     box-sizing: border-box;
     justify-content: center;
 }
+.red{
+    color:red;
+}
 .post{
     margin:1rem;
     flex:0 0 calc( ( 100% - (1rem * 8) ) / 4);
@@ -18,6 +21,8 @@
     box-shadow: .2rem .2rem .3rem #aaebcb;
     box-sizing: border-box;
 }
+
+
 .post:hover{
     transform:  scale(1.05);
     transition: 500ms;

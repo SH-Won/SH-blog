@@ -1,3 +1,4 @@
+import hljs from 'highlight.js/lib/core'
 import Quill from 'quill/core';
 import Toolbar from 'quill/modules/toolbar';
 import Image from 'quill/formats/image';
@@ -16,11 +17,15 @@ import SnowTheme from 'quill/themes/snow';
 import CodeBlock, {Code as InlineCode} from 'quill/formats/code'
 import Bold from 'quill/formats/bold';
 import Italic from 'quill/formats/italic';
-
+import Syntax from 'quill/modules/syntax'
 import List,{ListItem} from 'quill/formats/list';
 import {FontClass,FontStyle} from 'quill/formats/font';
 import {SizeClass,SizeStyle} from 'quill/formats/size';
 import Header from 'quill/formats/header';
+
+import javascript from 'highlight.js/lib/languages/javascript';
+import css from 'highlight.js/lib/languages/css';
+import 'highlight.js/styles/github-dark.css'
 
 
 
@@ -70,7 +75,7 @@ Quill.register({
     'formats/list/item': ListItem,
   
     // 'modules/formula': Formula,
-    // 'modules/syntax': Syntax,
+    'modules/syntax': Syntax,
     'modules/toolbar': Toolbar,
   
     // 'themes/bubble': BubbleTheme,
@@ -88,20 +93,7 @@ Quill.register({
 // const ENDPOINT = `${window.origin}`;
 const ENDPOINT = 'https://shlog.herokuapp.com';
 // const ENDPOINT = process.env.API_ENDPOINT;
-const options = {
-    theme: 'snow',
-    modules: {
-        toolbar:{
-      container: [
-          [{header : [1,2,false]}],
-          ['bold','italic','underline'],
-          
-          ['image','code-block']
-      ]
-    }
-    },
-    placeholder: '내용을 입력 하세요',
-};
+
 function uploadMulter(editor){
     const input = document.createElement('input');
     input.setAttribute('type','file');
@@ -173,11 +165,63 @@ class ImageBlot extends BlockEmbed{
 
     }
 }
+class CustomCode extends BlockEmbed {
+    static create(value){
+        let {lang,content} = value;
+        let node = super.create(value);
+        // console.log(node);
+        const code = document.createElement('code');
+        // code.innerHTML = text => hljs.highlightAuto(text).value;
+        // code.innerText = ''
+        // code.setAttribute('class',lang);
+        // code.textContent = content;
+        node.appendChild(code);
+        return node;
+    }
+    static value(node){
+        return node.textContent
+    }
+}
 ImageBlot.blotName = 'image';
 ImageBlot.tagName = 'figure';
+CustomCode.blotName='code';
+CustomCode.tagName = 'pre';
+CustomCode.className = 'ql-syntax';
+CodeBlock.className = '';
 
+
+const options = {
+    theme: 'snow',
+    modules: {
+        
+        toolbar:{
+      container: [
+          [{header : [1,2,false]}],
+          ['bold','italic','underline'],
+          
+          ['image','code-block',]
+      ]
+    },
+    
+    syntax:{
+        highlight : text => hljs.highlightAuto(text).value
+    }
+    // syntax:{
+    //     highlight : hljs,
+    // }
+    },
+    placeholder: '내용을 입력 하세요',
+};
 export const quillEditor = (element) =>{
+     
+     const lang = [['javascript',javascript],['css',css]];
+     lang.forEach(([lang,module]) =>{
+         hljs.registerLanguage(lang,module);
+         
+     })
      Quill.register(ImageBlot);
+    //  Quill.register(CustomCode);
+    // Quill.register(NewCodeBlock);
      const editor = new Quill(element,options);   
      editor.getModule('toolbar').addHandler('image',() =>{
         uploadMulter(editor);

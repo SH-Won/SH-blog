@@ -11,6 +11,7 @@ const webpack = require('webpack');
 module.exports={
     
     entry:["./src/index.js"],
+   
     plugins:[
         new HtmlWebPackPlugin({
             title:'Caching',
@@ -32,7 +33,11 @@ module.exports={
                     compressor:ShrinkRay(BrotliPlugin)
                 },
             }
-        })
+        }),
+        new webpack.ContextReplacementPlugin(
+            /highlight\.js\/lib\/languages$/,
+            new RegExp(`^./(${['javascript','css'].join('|')})$`)
+        )
         
     ],
     output:{
@@ -75,6 +80,9 @@ module.exports={
         alias:{
             // 'parchment': path.resolve(__dirname, 'node_modules/parchment/src/parchment.ts'),
             'quill$': path.resolve(__dirname, 'node_modules/quill/quill.js'),
+        },
+        fallback:{
+            fs:false,
         }
     },
 

@@ -53,3 +53,12 @@ body{
     color:#015834;
     background-color: #d5f7e7;
 }
+.ql-syntax{
+    background-color: #23241f;
+    color: #f8f8f2;
+    white-space: pre-wrap;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding: 5px 10px;
+    border-radius: 4px;
+}

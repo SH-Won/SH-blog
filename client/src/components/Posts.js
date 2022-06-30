@@ -1,10 +1,12 @@
 import style from "../styles/Posts.module.css";
+
 export default function Posts({ $target, initialState, callback = null }) {
   this.state = initialState;
   const $postContainer = document.createElement("article");
   $postContainer.className = `${style.postContainer}`;
+  // $postContainer.className = 'page--article';
   $target.appendChild($postContainer);
-
+  
   this.setState = (nextState) => {
     this.state = nextState;
     this.render();

@@ -4,6 +4,7 @@ import SelectOptions from '../components/SelectOptions';
 import Input from '../components/Input';
 import ClickButton from '../components/ClickButton';
 import {changeRoute} from '../utills/router'
+import 'highlight.js/styles/dark.css';
 // import { options,uploadMulter } from '../utills/quilleditor';
 // import Quill from 'quill';
 
