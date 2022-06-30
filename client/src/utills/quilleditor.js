@@ -26,6 +26,14 @@ import Header from 'quill/formats/header';
 import javascript from 'highlight.js/lib/languages/javascript';
 import css from 'highlight.js/lib/languages/css';
 import 'highlight.js/styles/github-dark.css'
+// import 'highlight.js/styles/tomorrow-night-bright.css'
+// import 'highlight.js/styles/xcode.css';
+// import 'highlight.js/styles/tomorrow-night-blue.css';
+// import 'highlight.js/styles/tokyo-night-light.css';
+// import 'highlight.js/styles/atom-one-dark.css';
+// import 'highlight.js/styles/github-dark-dimmed.css';
+// import 'highlight.js/styles/a11y-dark.css';
+
 
 
 
@@ -187,7 +195,7 @@ ImageBlot.tagName = 'figure';
 CustomCode.blotName='code';
 CustomCode.tagName = 'pre';
 CustomCode.className = 'ql-syntax';
-CodeBlock.className = '';
+
 
 
 const options = {
@@ -197,7 +205,7 @@ const options = {
         toolbar:{
       container: [
           [{header : [1,2,false]}],
-          ['bold','italic','underline'],
+          ['bold','italic','underline',],
           
           ['image','code-block',]
       ]
@@ -219,12 +227,20 @@ export const quillEditor = (element) =>{
          hljs.registerLanguage(lang,module);
          
      })
+     hljs.configure()
      Quill.register(ImageBlot);
-    //  Quill.register(CustomCode);
+     Quill.register(CustomCode);
+     Quill.register('formats/code',CustomCode,true);
     // Quill.register(NewCodeBlock);
      const editor = new Quill(element,options);   
      editor.getModule('toolbar').addHandler('image',() =>{
         uploadMulter(editor);
     });
+    // editor.getModule('toolbar').addHandler('code-block',()=>{
+
+    // })
+    editor.getModule('toolbar').addHandler('code',() =>{
+        
+    })
     return editor;
 }

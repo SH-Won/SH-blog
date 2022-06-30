@@ -22,7 +22,9 @@
 }
 .covered{
     position:absolute;
-    top:0;
+    transform: translate(-50%, -53%);
+    top: 50%;
+    left: 50%;
     z-index: 100;
     width:100%;
     height:100%;
