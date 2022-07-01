@@ -99,7 +99,7 @@ Quill.register({
 
 
 // const ENDPOINT = `${window.origin}`;
-const ENDPOINT = 'https://shlog.herokuapp.com';
+const ENDPOINT = 'https://blog-sh.heroku.com';
 // const ENDPOINT = process.env.API_ENDPOINT;
 
 function uploadMulter(editor){
