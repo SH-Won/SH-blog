@@ -42,8 +42,7 @@ const Storage = new CloudinaryStorage({
 })
 const storage = multer.diskStorage({
     destination : function (req,file,cb) {
-        
-        console.log(__dirname);
+
         if(!fs.existsSync(`${path.join(__dirname,'..')}/uploads/${req.user.id}`))
         fs.mkdirSync(`${path.join(__dirname,'..')}/uploads/${req.user.id}`)
         cb(null,`${path.join(__dirname,'..')}/uploads/${req.user.id}`)
@@ -108,7 +107,6 @@ router.post('/upload', async (req,res) =>{
         return new Promise((resolve,reject) => {
             cloudinary.uploader.upload(filePath,{folder:'Article-Images'},(err,result) => {
                 if(err) reject(err);
-                console.log(result);
                 resolve({
                     id:result.public_id,
                     url:result.secure_url,
@@ -121,8 +119,7 @@ router.post('/upload', async (req,res) =>{
 })
 
 router.post('/uploadfiles',cors({origin,credentials:true}),auth,upload ,(req,res)=>{
-    console.log('upload');
-    console.log(req.files.map(file => file.path));
+
     // fs.mkdirSync(`../uploads/${req.body.id}`);
     let dataUrl = [];
     req.files.forEach(file => {
@@ -160,7 +157,6 @@ router.post('/uploadPost',(req,res)=>{
 })
 router.get('/destory', auth,(req,res) =>{
     const writer = req.user._id;
-    console.log(writer);
     const dir = `${path.join(__dirname,'..','uploads',`${writer}`)}`
     if(fs.existsSync(dir)) fs.rmdirSync(dir,{recursive:true});
     res.status(200).json({success:true});
@@ -173,8 +169,7 @@ router.get('/', (req,res) =>{
     if(category){
         findArg['category'] = category.split(',').map(Number);
     }
-    console.log(findArg);
-    
+
     Post.find(findArg)
     .skip(skip)
     .limit(limit)

@@ -12,7 +12,7 @@ export default function NavBar({$target,initialState={}}){
     $navBar.className = `${style.navBar}`;
     $target.appendChild($navBar);
 
-    const user = selector((state) => state?.loginSuccess);
+    const user = getItem('userId');
     this.checkLoginState = () =>{
         
         if(user){

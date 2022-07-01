@@ -1,3 +1,5 @@
+import { getItem } from './storage';
+
 // const ENDPOINT =  `${window.origin}`;
 const ENDPOINT = 'https://blog-sh.herokuapp.com';
 // const ENDPOINT = process.env.API_ENDPOINT;
@@ -97,6 +99,7 @@ export const loginUser = async (data = {}) =>{
             credentials:'include',
             body:JSON.stringify(data),
         });
+        console.log(res.headers);
         if(res.ok) return await res.json(); 
 
     }catch(e){
@@ -104,10 +107,14 @@ export const loginUser = async (data = {}) =>{
     }
 }
 export const auth = async () =>{
+    const token = getItem('authorization');
     try{
         const fullUrl = `${ENDPOINT}/api/users/auth`;
         const res = await fetch(fullUrl,{
             method:'GET',
+            headers:{
+                'authorization':token,
+            },
             credentials:'include',
         });
         if(res.ok) return await res.json();

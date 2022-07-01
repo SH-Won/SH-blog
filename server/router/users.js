@@ -21,7 +21,6 @@ router.post('/register',(req,res) =>{
     })
 })
 router.post('/login',(req,res) =>{
-    console.log(req.body);
     User.findOne({ email:req.body.email}, (err,user) =>{
         if(!user) return res.json({loginSuccess:false, message : "가입한 이메일이 없습니다"});
         
@@ -43,6 +42,9 @@ router.post('/login',(req,res) =>{
                 //     secure:true,
                 //     // domain:'sh-blog-sh-won.vercel.app'
                 //     // domain:process.env.WHITE_URL || 'http://localhost:3000',
+                // })
+                // res.header({
+                //     'authorization':user.token,
                 // })
                 res
                 .status(200)
