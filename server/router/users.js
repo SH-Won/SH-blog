@@ -31,11 +31,17 @@ router.post('/login',(req,res) =>{
             user.generateToken((err,user) =>{
                 if(err) return res.status(400).send(err);
                 
-                res.cookie("w_authExp" ,user.tokenExp);
+                res.cookie("w_authExp" ,user.tokenExp,{
+                    httpOnly:true,
+                    sameSite:'none',
+                    secure:true,
+                    domain:process.env.WHITE_URL,
+                });
                 res.cookie('w_auth',user.token,{
                     httpOnly:true,
                     sameSite:'none',
                     secure:true,
+                    domain:process.env.WHITE_URL,
                     // domain:process.env.WHITE_URL || 'http://localhost:3000',
                 })
                 .status(200)

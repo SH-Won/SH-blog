@@ -33,6 +33,7 @@
     padding:4rem;
     background-color: gray ;
     opacity: 0.6;
+    box-sizing: border-box;
     
 }
 .loadingItem:nth-child(1){
