@@ -2,6 +2,7 @@ import { changeRoute } from '../utills/router.js';
 import style from '../styles/NavBar.module.css';
 import { logoutUser } from '../utills/api.js';
 import { selector } from '../utills/selector.js';
+import { getItem } from '../utills/storage.js';
 export default function NavBar({$target,initialState={}}){
     this.state = initialState;
     this.setState = (nextState) =>{
