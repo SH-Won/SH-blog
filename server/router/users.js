@@ -35,13 +35,13 @@ router.post('/login',(req,res) =>{
                     httpOnly:true,
                     sameSite:'none',
                     secure:true,
-                    domain:'sh-blog-sh-won.vercel.app',
+                    // domain:'sh-blog-sh-won.vercel.app',
                 });
                 res.cookie('w_auth',user.token,{
                     httpOnly:true,
                     sameSite:'none',
                     secure:true,
-                    domain:'sh-blog-sh-won.vercel.app'
+                    // domain:'sh-blog-sh-won.vercel.app'
                     // domain:process.env.WHITE_URL || 'http://localhost:3000',
                 })
                 .status(200)
