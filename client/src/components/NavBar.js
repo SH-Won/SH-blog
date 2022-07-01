@@ -22,16 +22,16 @@ export default function NavBar({$target,initialState={}}){
     this.render = () =>{
         const template = `
         <ul class="${style.list}">
-        <li data-route="/">BLOG</li>
+        <li data-route="/">sh blog</li>
         <li data-route="/article">게시글</li>
         </ul>
         ${!user ? `
-        <ul class="${style.list}">
+        <ul class="${style.userList}">
         <li data-route="/login">로그인</li>
         <li data-route="/register">회원가입</li>
         </ul>
         ` :
-        `<ul class="${style.list}">
+        `<ul class="${style.userList}">
         <li data-route="/logout">로그아웃</li>
         </ul>
         `

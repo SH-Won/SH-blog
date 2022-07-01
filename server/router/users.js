@@ -31,22 +31,23 @@ router.post('/login',(req,res) =>{
             user.generateToken((err,user) =>{
                 if(err) return res.status(400).send(err);
                 
-                res.cookie("w_authExp" ,user.tokenExp,{
-                    httpOnly:true,
-                    sameSite:'none',
-                    secure:true,
-                    // domain:'sh-blog-sh-won.vercel.app',
-                });
-                res.cookie('w_auth',user.token,{
-                    httpOnly:true,
-                    sameSite:'none',
-                    secure:true,
-                    // domain:'sh-blog-sh-won.vercel.app'
-                    // domain:process.env.WHITE_URL || 'http://localhost:3000',
-                })
+                // res.cookie("w_authExp" ,user.tokenExp,{
+                //     httpOnly:true,
+                //     sameSite:'none',
+                //     secure:true,
+                //     // domain:'sh-blog-sh-won.vercel.app',
+                // });
+                // res.cookie('w_auth',user.token,{
+                //     httpOnly:true,
+                //     sameSite:'none',
+                //     secure:true,
+                //     // domain:'sh-blog-sh-won.vercel.app'
+                //     // domain:process.env.WHITE_URL || 'http://localhost:3000',
+                // })
+                res
                 .status(200)
                 .json({
-                    loginSuccess: true, userId : user._id,
+                    loginSuccess: true, userId : user._id, userToken:user.token,
                 })
                 // res.header("Access-Control-Allow-Origin",process.env.WHITE_URL);
                 // res.header("Access-Control-Allow-Credentials",true);
