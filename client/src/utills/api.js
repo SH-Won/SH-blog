@@ -1,5 +1,5 @@
 // const ENDPOINT =  `${window.origin}`;
-const ENDPOINT = 'https://blog-sh.heroku.com';
+const ENDPOINT = 'https://blog-sh.herokuapp.com';
 // const ENDPOINT = process.env.API_ENDPOINT;
 
 export const request  = async (url ="",params = {}) =>{
