@@ -118,6 +118,7 @@ function uploadMulter(editor){
     input.addEventListener('change',async () => {
         const formData = new FormData();
         const token = getItem('authorization');
+        const refreshToken = getItem('refreshToken');
         for(let i=0; i<input.files.length; i++){
             formData.append('file',input.files[i]);
         }
@@ -128,6 +129,7 @@ function uploadMulter(editor){
                 // 'Content-Type':'multipart/form-data'
                 // 'Content-Type':'multipart/x-www-form-urlencoded'
                 'authorization':token,
+                refreshToken,
             },
             credentials:'include',
             body:formData,

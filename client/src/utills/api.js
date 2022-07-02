@@ -108,12 +108,14 @@ export const loginUser = async (data = {}) =>{
 }
 export const auth = async () =>{
     const token = getItem('authorization');
+    const refreshToken = getItem('refreshToken');
     try{
         const fullUrl = `${ENDPOINT}/api/users/auth`;
         const res = await fetch(fullUrl,{
             method:'GET',
             headers:{
                 'authorization':token,
+                'refreshtoken':refreshToken,
             },
             credentials:'include',
         });
@@ -134,9 +136,15 @@ export const logoutUser = async () =>{
     }
 }
 export const destoryImage = async (data = {}) =>{
+    const token = getItem('authorization');
+    const refreshToken = getItem('refreshToken');
     try{
         const fullUrl = `${ENDPOINT}/api/posts/destory`;
         const res = await fetch(fullUrl,{
+            headers:{
+                'authorization':token,
+                'refreshtoken':refreshToken,
+            },
             credentials:'include',
         });
         const {success} = await res.json();

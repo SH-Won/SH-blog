@@ -155,7 +155,7 @@ router.post('/uploadPost',(req,res)=>{
         // console.log(result);
     })
 })
-router.get('/destory', auth,(req,res) =>{
+router.get('/destory',auth,(req,res) =>{
     const writer = req.user._id;
     const dir = `${path.join(__dirname,'..','uploads',`${writer}`)}`
     if(fs.existsSync(dir)) fs.rmdirSync(dir,{recursive:true});

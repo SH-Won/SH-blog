@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const jwt = require('jsonwebtoken');
 const moment = require("moment");
+const { verify, refreshVerify ,refresh,sign } = require('../middleware/jwt');
 
 const userSchema = mongoose.Schema({
     name: {
@@ -28,6 +29,9 @@ const userSchema = mongoose.Schema({
     },
     token : {
         type: String,
+    },
+    refreshToken:{
+        type:String,
     },
     tokenExp :{
         type: Number
@@ -74,16 +78,49 @@ userSchema.methods.generateToken = function(cb) {
     })
 }
 
-userSchema.statics.findByToken = function (token, cb) {
-    var user = this;
+// userSchema.statics.findByToken = function (token, cb) {
+//     var user = this;
 
-    jwt.verify(token,'secret',function(err, decode){
+//     jwt.verify(token,'secret',function(err, decode){
         
-        user.findOne({"_id":decode, "token":token}, function(err, user){
+//         user.findOne({"_id":decode, "token":token}, function(err, user){
+//             if(err) return cb(err);
+//             cb(null, user);
+//         })
+//     })
+// }
+userSchema.statics.findByToken = function (token,refreshToken,cb){
+    var user = this;
+    const result = verify(token);
+    // console.log(result);
+    if(!token && !refreshToken) return cb();
+
+    if(result.success){
+        user.findOne({_id:result.id},(err,user) =>{
             if(err) return cb(err);
-            cb(null, user);
+            cb(null,user,token);
         })
-    })
+    }else{
+        const userInfo = jwt.decode(token);
+        const refreshResult = refreshVerify(refreshToken);
+        // if(result.success === false && result.message === 'jwt expired'){
+            if(!refreshResult) cb();
+            else{
+                // console.log('new Token');
+                user.findOne({_id:userInfo.id},(err,user) =>{
+                    if(err) cb();
+                    console.log(user);
+                    if(user.refreshToken === refreshToken){
+                        const newToken = sign(user);
+                        return cb(null,user,newToken);
+                    }
+                })
+            }
+        // }
+    }
+}
+userSchema.statics.refresh = function(){
+
 }
 
 const User = mongoose.model('User', userSchema);
