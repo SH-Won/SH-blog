@@ -40,42 +40,42 @@ export default function Posts({ $target, initialState, callback = null }) {
     // $postContainer.insertAdjacentHTML('beforeend',template);
     // console.timeEnd('post render');
 
-    const template = posts
-      .map(
-        (post, index) => `
-        <div class="${style.post}" data-post-id="${post._id}">
-        <div class="${style.imageContainer}">
-        <img src="${post.imageUrls ? post.imageUrls[0] : post.thumbnail}" />
-        </div>
-        <ul class="${style.info}">
-        <li>${post.title}</li>
-        </ul>
-        </div>
-        `
-      )
-      .join("");
-    console.time("posts render");
-    $postContainer.innerHTML = template;
-    console.timeEnd("posts render");
-
-    // posts.forEach((post,index) =>{
-    //     const postDiv = document.createElement('div');
-    //     postDiv.setAttribute('data-post-id',`${post._id}`);
-    //     postDiv.className = `${style.post}`
-    //     const postImg = document.createElement('div');
-    //     postImg.className = `${style.imageContainer}`;
-    //     const img = document.createElement('img');
-    //     img.src = `${post.imageUrls ? post.imageUrls[0] : post.thumbnail}`;
-    //     postImg.insertAdjacentElement('beforeend',img);
-    //     const ulist = document.createElement('ul');
-    //     ulist.className = `${style.info}`;
-    //     const li = document.createElement('li');
-    //     li.innerText = `${post.title}`;
-    //     ulist.insertAdjacentElement('beforeend',li);
-    //     postDiv.insertAdjacentElement('beforeend',postImg);
-    //     postDiv.insertAdjacentElement('beforeend',ulist);
-    //     $postContainer.insertAdjacentElement('beforeend',postDiv);
-    // })
+    // const template = posts
+    //   .map(
+    //     (post, index) => `
+    //     <div class="${style.post}" data-post-id="${post._id}">
+    //     <div class="${style.imageContainer}">
+    //     <img src="${post.imageUrls ? post.imageUrls[0] : post.thumbnail}" />
+    //     </div>
+    //     <ul class="${style.info}">
+    //     <li>${post.title}</li>
+    //     </ul>
+    //     </div>
+    //     `
+    //   )
+    //   .join("");
+    // console.time("posts render");
+    // $postContainer.innerHTML = template;
+    // console.timeEnd("posts render");
+    $postContainer.innerHTML = '';
+    posts.forEach((post,index) =>{
+        const postDiv = document.createElement('div');
+        postDiv.setAttribute('data-post-id',`${post._id}`);
+        postDiv.className = `${style.post}`
+        const postImg = document.createElement('div');
+        postImg.className = `${style.imageContainer}`;
+        const img = document.createElement('img');
+        img.src = `${post.imageUrls ? post.imageUrls[0] : post.thumbnail}`;
+        postImg.insertAdjacentElement('beforeend',img);
+        const ulist = document.createElement('ul');
+        ulist.className = `${style.info}`;
+        const li = document.createElement('li');
+        li.innerText = `${post.title}`;
+        ulist.insertAdjacentElement('beforeend',li);
+        postDiv.insertAdjacentElement('beforeend',postImg);
+        postDiv.insertAdjacentElement('beforeend',ulist);
+        $postContainer.insertAdjacentElement('beforeend',postDiv);
+    })
   };
   this.render();
 

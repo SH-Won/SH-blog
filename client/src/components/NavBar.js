@@ -2,7 +2,7 @@ import { changeRoute } from '../utills/router.js';
 import style from '../styles/NavBar.module.css';
 import { logoutUser } from '../utills/api.js';
 import { selector } from '../utills/selector.js';
-import { getItem } from '../utills/storage.js';
+import { getItem, removeItem } from '../utills/storage.js';
 export default function NavBar({$target,initialState={}}){
     this.state = initialState;
     this.setState = (nextState) =>{
@@ -13,20 +13,15 @@ export default function NavBar({$target,initialState={}}){
     $navBar.className = `${style.navBar}`;
     $target.appendChild($navBar);
 
-    const user = getItem('userId');
-    this.checkLoginState = () =>{
-        
-        if(user){
-            
-        }
-    }
+    const loginState = getItem('loginSuccess');
+    
     this.render = () =>{
         const template = `
         <ul class="${style.list}">
         <li data-route="/">sh blog</li>
         <li data-route="/article">게시글</li>
         </ul>
-        ${!user ? `
+        ${!loginState ? `
         <ul class="${style.userList}">
         <li data-route="/login">로그인</li>
         <li data-route="/register">회원가입</li>
@@ -38,10 +33,10 @@ export default function NavBar({$target,initialState={}}){
         `
         }
         `;
-        // $navBar.innerHTML = template;
-        $navBar.insertAdjacentHTML('beforeend',template); 
+        $navBar.innerHTML = template;
+        // $navBar.insertAdjacentHTML('beforeend',template); 
     }
-    this.render();
+
     $navBar.addEventListener('click',e=>{
         const $li = e.target.closest('li');
         e.preventDefault();
@@ -54,6 +49,9 @@ export default function NavBar({$target,initialState={}}){
                         alert("로그아웃에 실패했습니다");
                     }else{
                         selector(null,'loginSuccess',false);
+                        removeItem('loginSuccess');
+                        removeItem('authorization');
+                        removeItem('refreshToken')
                         return changeRoute('/');
                     }
                 })

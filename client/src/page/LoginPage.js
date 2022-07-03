@@ -88,6 +88,7 @@ export default function LoginPage({$target,connect}){
                 console.log('response',response);
                 setItem('authorization',response.token);
                 setItem('refreshToken',response.refreshToken);
+                setItem('loginSuccess',true);
                 // document.cookie = `w_auth=${response.userToken}`;
                 changeRoute(connect,{detail : {loginSuccess:true}});
 

@@ -1,7 +1,7 @@
 import {auth} from './utills/api';
 import {changeRoute} from './utills/router';
 import { selector } from './utills/selector';
-import { setItem } from './utills/storage';
+import { removeItem, setItem } from './utills/storage';
 export default function (page,option,prevRoute = null ,admin = null){
     // option ( true = need login , false = not to need)
     async function Authentication(arg){
@@ -34,7 +34,9 @@ export default function (page,option,prevRoute = null ,admin = null){
         // selector(null,'user',user);
         // console.log('after fetch auth');
         if(!result.user.isAuth){
+            removeItem('loginSuccess');
             if(option){
+                
                 changeRoute('/login',{detail : { route : prevRoute} });
             }
             else{
@@ -48,6 +50,7 @@ export default function (page,option,prevRoute = null ,admin = null){
             const {token,refreshToken} = result;
             setItem('authorization',token);
             setItem('refreshToken',refreshToken);
+            setItem('loginSuccess',true);
             return new page({
                 ...arg,
                 user:result.user,

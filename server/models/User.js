@@ -96,9 +96,10 @@ userSchema.statics.findByToken = function (token,refreshToken,cb){
     if(!token && !refreshToken) return cb();
 
     if(result.success){
+        console.log('token exist');
         user.findOne({_id:result.id},(err,user) =>{
             if(err) return cb(err);
-            cb(null,user,token);
+            return cb(null,user,token);
         })
     }else{
         const userInfo = jwt.decode(token);
@@ -107,13 +108,15 @@ userSchema.statics.findByToken = function (token,refreshToken,cb){
             if(!refreshResult) cb();
             else{
                 // console.log('new Token');
+
                 user.findOne({_id:userInfo.id},(err,user) =>{
-                    if(err) cb();
-                    console.log(user);
+                    if(err) return cb();
+                    
                     if(user.refreshToken === refreshToken){
                         const newToken = sign(user);
                         return cb(null,user,newToken);
                     }
+                    return cb();
                 })
             }
         // }

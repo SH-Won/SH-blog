@@ -125,9 +125,15 @@ export const auth = async () =>{
     }
 }
 export const logoutUser = async () =>{
+    const token = getItem('authorization');
+    const refreshToken = getItem('refreshToken');
     try{
         const fullUrl =`${ENDPOINT}/api/users/logout`;
         const res = await fetch(fullUrl,{
+            headers:{
+                'authorization':token,
+                'refreshtoken':refreshToken,
+            },
             credentials:'include',
         });
         if(res.ok) return await res.json();

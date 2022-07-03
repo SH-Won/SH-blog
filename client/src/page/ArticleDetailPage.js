@@ -32,17 +32,22 @@ export default function ArticleDetailPage({$target,articleId,user}){
         const template = `
         <div class="${styles.container}">
         <div class="${styles.info}">
-        <h2>${article.title}</h2>
+        <h2 class="title"></h2>
         <span class="${styles.writtenTime}">${this.state.createdAt}</span>
         </div>
         <div class="ck-content ql-content">
         </div>
         </div>
         `;
+        
+
         $page.insertAdjacentHTML('beforeend',template);
         const content = document.querySelector('.ql-content');
+        const title = document.querySelector('.title');
+        title.textContent = article.title;
         content.insertAdjacentHTML('beforeend',`${article.data}`);
         const buttonPosition = content.previousElementSibling;
+        
         if(user._id === article.writer._id){
         new ClickButton({
             $target : buttonPosition,

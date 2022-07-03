@@ -119,6 +119,48 @@ toolbarUploadBtn.innerHTML = require('quill/asset/image.svg');
 // 위와 같은 형식으로 svg 를 가져오기 때문에
 // svg-inline-loader 를 통해 webpack 으로 build 해야한다.
 ```
+
+### <span style="color:red">**CORS**</span>
+<u>Client -> Vercel  
+Server -> Heroku</u> 로 배포   
+Origin 이 다르기 때문에 당연히 교차 출처 리소스 공유 문제가 발생 할것이라고 이전 프로젝트 에서 경험.  
+
+**해결**  
+
+*현재 프로젝트에선 fetch 함수를 사용하고 있으므로, 먼저 fetch 함수의 option 을 수정 하였다.*
+
+```js
+const res = await fetch(fullUrl,{
+            method:'GET',
+            credentials : 'include', // 변경 옵션
+        })
+
+```  
+*서버 쪽의 express cors 옵션 설정*
+
+```js
+const express = require('express');
+const app = express();
+const cors = require('cors');
+
+// origin 을 반드시 Client origin 주소를 명시 해야 한다.
+app.use(cors({origin,
+  credentials:true,
+}));
+
+```  
+### <span style="color:red">**JWT 토큰**</span>
+<u>토큰을 어디에 저장 해야 좋은 것일까?</u> 라는 생각을 계속하게 되면서, 관련 글을 많이 읽게 되었다.  
+만약 **Cookie**를 사용한다고 하면, **CSRF** 공격을 당할 수도 있다.   
+**Cookie**는 자동으로 요청헤더에 담겨서 전송되므로, 사용자가 의도하지 않았지만, 공격자의 의도대로 행동하게 될 수 있다.  
+**Local Storage** 를 사용 하게 된다면, 공격자가 스크립트 한줄 만으로도 저장되어있는 토큰을 탈취해서 마치, 사용자인 마냥 행동 할 수 있다.  
+**Local Storage** 는 **XSS** 공격에 매우 취약하다.  
+
+사용자의 정보가 탈취 당할 수 있으므로, 이부분에 대해서 더 깊은 생각과 공부가 필요하다.
+
+- **Cookie**
+- **Local Storage**
+
 <br/>
 
 ## 😎 개선
