@@ -232,7 +232,6 @@ export const quillEditor = (element) =>{
          hljs.registerLanguage(lang,module);
          
      })
-     hljs.configure()
      Quill.register(ImageBlot);
      Quill.register(CustomCode);
      Quill.register('formats/code',CustomCode,true);

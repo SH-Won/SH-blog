@@ -41,18 +41,5 @@ module.exports = {
         }catch(err){
             return false;
         }
-        //  await new Promise((resolve,reject) =>{
-        //      User.findOne({_id : userId},(err,user) => {
-        //          if(err) return reject(false);
-        //         resolve(user.refreshToken);
-        //      })
-        //  }).then(refreshToken =>{
-        //      if(refreshToken === token) return true;
-        //      else return false;
-        //  })
-         
-        //  console.log(userRefreshToken);
-        //  if(userRefreshToken === token) return true;
-        //  else return false;
     }
 }

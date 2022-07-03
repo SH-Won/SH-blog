@@ -99,7 +99,6 @@ export const loginUser = async (data = {}) =>{
             credentials:'include',
             body:JSON.stringify(data),
         });
-        console.log(res.headers);
         if(res.ok) return await res.json(); 
 
     }catch(e){

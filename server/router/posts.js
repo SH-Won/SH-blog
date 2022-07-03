@@ -271,8 +271,6 @@ router.post('/deleteArticle',async (req,res) =>{
             })
         })
     }))
-    console.log('delete Article');
-
 })
 
 module.exports = router;

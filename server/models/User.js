@@ -107,12 +107,11 @@ userSchema.statics.findByToken = function (token,refreshToken,cb){
         // if(result.success === false && result.message === 'jwt expired'){
             if(!refreshResult) cb();
             else{
-                // console.log('new Token');
-
                 user.findOne({_id:userInfo.id},(err,user) =>{
                     if(err) return cb();
                     
                     if(user.refreshToken === refreshToken){
+                        console.log('new Token');
                         const newToken = sign(user);
                         return cb(null,user,newToken);
                     }

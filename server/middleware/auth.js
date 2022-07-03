@@ -1,5 +1,5 @@
 const {User}  = require('../models/User');
-const { verify } = require('./jwt');
+
 // const auth = (req,res,next) =>{
 //     // let token = req.cookies.w_auth;
 //     let token = req.headers.authorization;
@@ -20,7 +20,6 @@ const { verify } = require('./jwt');
 const auth = (req,res,next) =>{
     const token = req.headers.authorization;
     const refreshToken = req.headers.refreshtoken;
-    // console.log('server refresh',refreshToken);
     User.findByToken(token,refreshToken,(err,user,newToken) =>{
         if(err) throw err;
         if(!user){

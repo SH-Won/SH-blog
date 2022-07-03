@@ -84,8 +84,6 @@ export default function LoginPage({$target,connect}){
         .then(async response =>{
             if(response.loginSuccess){
                 selector(null,'loginSuccess',true);
-                // document.cookie('w_auth',response.userToken);
-                console.log('response',response);
                 setItem('authorization',response.token);
                 setItem('refreshToken',response.refreshToken);
                 setItem('loginSuccess',true);
