@@ -227,7 +227,7 @@ router.post('/uploadArticle', (req,res)=>{
     new Article(req.body)
     .save((err,result)=>{
         if(err) res.status(400).json({success:false,err});
-        res.status(200).json({success:true});
+        res.status(200).json({success:true, article:result});
     })
     const {writer,removeIds} = req.body;
     const remove = Promise.all(removeIds.map(async id => {

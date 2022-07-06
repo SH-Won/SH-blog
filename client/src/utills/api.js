@@ -28,8 +28,9 @@ export const uploadArticle = async (data = {} , category ='article') =>{
             credentials : 'include',
             body:JSON.stringify(data)
         })
-        const {success} = await res.json();
-        if(success) return success;
+        if(res.ok){
+            return await res.json();
+        }
 
     }catch(e){
         throw new Error("무언가 이상합니다");

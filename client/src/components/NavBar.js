@@ -35,7 +35,6 @@ export default function NavBar({$target,initialState={}}){
         const template = `
         <ul class="${style.list}">
         <li data-route="/">sh blog</li>
-        <li data-route="/article">게시글</li>
         </ul>
         ${!loginSuccess ? 
           loginFailTemplate :

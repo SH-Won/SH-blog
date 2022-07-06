@@ -80,7 +80,7 @@ export default function ArticleDetailPage({$target,articleId,user}){
                 deleteArticle(data)
                 .then(response => {
                     alert('삭제 하였습니다');
-                    if(response) changeRoute('/article');
+                    if(response) changeRoute('/issue',{detail:{deleteArticleId : data._id}});
                 })
             }
         }).render();

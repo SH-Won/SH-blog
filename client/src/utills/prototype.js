@@ -20,7 +20,6 @@ EditPage2.prototype.uploadItem = async function(user,isModify){
     imgElements.forEach(element => {
         const {id} = element.dataset;
         if(!id){
-            
             const path = element.src.split('/').pop();
             paths.push(path);
             addImgElements.push(element);
@@ -70,14 +69,9 @@ EditPage2.prototype.uploadItem = async function(user,isModify){
         }
         return uploadArticle(data);
     })
-    .then(async response =>{
-        // await new Promise((res,rej)=>{
-        //     setTimeout(()=>{
-        //         res(true);
-        //     },5000);
-        // })
+    .then(async response =>{   
         loading.setState(false);
-        changeRoute('/article');
+        changeRoute('/issue');
     })
 }
 

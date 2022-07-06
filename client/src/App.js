@@ -12,6 +12,12 @@ export default function App($target){
     const testCache = new Map();
     const issueCache = new Map();
     
+    this.removeChild = (parent) =>{
+        while(parent.children.length > 1){
+            parent.removeChild(parent.lastElementChild);
+        }
+    }
+
     const navBar = new NavBar({
         $target,
     });
@@ -25,12 +31,7 @@ export default function App($target){
     });
     navBar.render();
     tab.render();
-    this.removeChild = (parent) =>{
-        
-        while(parent.children.length > 1){
-            parent.removeChild(parent.lastElementChild);
-        }
-    }
+
     this.route = (params = {}) =>{
         const {pathname} = location;
         const loginSuccess = getItem('loginSuccess');
@@ -41,17 +42,6 @@ export default function App($target){
             loginSuccess,
         })
         
-        // if( (pathname ==='/' || pathname ==='/issue') ){
-        //     const isExist = Array.prototype.includes.call($target.childNodes,tab.$tab);
-        //     // $target.appendChild(tab.$tab);
-        //     if(!isExist){
-        //         $target.appendChild(tab.$tab);
-        //     }
-        // }
-        // if(params?.style) tab.setState({
-        //     ...tab.state,
-        //     style:params.style,
-        // })
         
         if(pathname === '/'){
             const initialState = testCache.has('pre') ? testCache.get('pre') : {
@@ -76,7 +66,24 @@ export default function App($target){
 
         }
         else if(pathname === '/issue'){
-
+            // if(params?.article){
+            //     const cacheState = issueCache.get('pre');
+            //     console.log('add',cacheState);
+            //     if(cacheState.posts.length < cacheState.skip){
+            //         console.log('add??');
+            //         cacheState.posts.push(params.article);
+            //         cacheState.postSize++;
+            //         issueCache.set('pre',cacheState);
+            //     }
+            // }
+            if(params?.deleteArticleId){
+                const cacheState = issueCache.get('pre');
+                console.log('delete',cacheState)
+                const deleteIdx = cacheState.posts.findIndex(post => post._id === params.deleteArticleId );
+                cacheState.posts.splice(deleteIdx,1);
+                cacheState.skip--;
+                issueCache.set('pre',cacheState);
+            }
             const initialState = issueCache.has('pre') ? issueCache.get('pre') : {
                 posts:[],
                 skip:0,

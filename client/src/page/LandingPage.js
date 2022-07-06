@@ -43,7 +43,8 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
        const stateKey = this.state.checked.sort().join(',');
        testCache.set(stateKey,this.state);
        testCache.set('pre',this.state);
-       const hasMore = this.state.postSize >= this.state.limit;
+    //    const hasMore = this.state.postSize >= this.state.limit;
+       const hasMore = this.state.postSize > 0 ;
        const loading = this.state.isLoading;
        const posts = document.querySelector('.page > article');
        const length = posts.children.length - Math.floor(this.state.limit * 0.5);
@@ -138,12 +139,11 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
     //         }
     //     },
     // })
-    console.log('error');
-    console.log(testCache);
-    if(!testCache.has('pre')){
-        
-        this.fetchPosts();
-    }
+
+    // if(!testCache.has('pre')){
+    //     this.fetchPosts();
+    // }
+    this.fetchPosts();
     this.init();
     // $page.addEventListener('click',e=>{
     //     if(e.target.className !=='loadMore-btn') return;
@@ -167,7 +167,8 @@ LandingPage.prototype.fetchPosts = async function(checkToggle = false){
     this.setState({
         ...this.state,
         posts : !this.state.skip ? posts : [...this.state.posts,...posts],
-        skip : this.state.skip + this.state.limit,
+        // skip : postSize === 0 ? this.state.skip : this.state.skip + this.state.limit,
+        skip:this.state.skip + postSize,
         postSize,
         isLoading:false,
         checkToggle,
@@ -179,32 +180,3 @@ LandingPage.prototype.fetchPosts = async function(checkToggle = false){
         
     }
 }
-
-
-
-// this.fetchPosts = async () =>{
-    //     try{
-    //     const params = {
-    //         skip:this.state.skip,
-    //         limit:this.state.limit,
-    //         category:this.state.checked,
-    //     }
-    //     this.setState({
-    //         ...this.state,
-    //         isLoading:true,
-    //     })
-    //     const {posts,postSize} = await request("",params);
-    //     this.setState({
-    //         ...this.state,
-    //         posts : !this.state.skip ? posts : [...this.state.posts,...posts],
-    //         skip : this.state.skip + this.state.limit,
-    //         postSize,
-    //         isLoading:false,
-    //     })
-    //     }catch(e){
-    //         throw new Error("서버가 이상합니다");
-
-    //     }finally{
-            
-    //     }
-    // }
