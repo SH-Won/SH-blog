@@ -7,7 +7,7 @@ const ENDPOINT = 'https://blog-sh.herokuapp.com';
 export const request  = async (url ="",params = {}) =>{
     try{
         let query = Object.keys(params).map(key => key + '=' + params[key]).join('&');
-        const fullUrl = `${ENDPOINT}/api/posts${url !== "" ? url : ""}${query === '' ? '' : `?${query}`}`;
+        const fullUrl = `${ENDPOINT}/api/posts${url !== "" ? '/'+url : ""}${query === '' ? '' : `?${query}`}`;
         const res = await fetch(fullUrl);
         if(!res.ok) throw new Error("서버가 이상해요");
         return await res.json();

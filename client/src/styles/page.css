@@ -30,3 +30,17 @@
     max-width: 100%;
     min-width: 100%;
 }
+.ql-content blockquote {
+    margin:0;
+    border-left: 4px solid #ccc;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding-left: 16px;
+    word-break: break-word;
+}
+.ql-content p{
+    margin:0;
+    word-break: break-all;
+    font-weight: 400;
+}
+

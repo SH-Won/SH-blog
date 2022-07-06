@@ -4,33 +4,69 @@ import { selector } from './utills/selector.js';
 import { destoryImage } from './utills/api.js';
 import './utills/prototype';
 import './styles/page.css'
+import Tab from './components/Tab.js';
+import { getItem } from './utills/storage.js';
 
 export default function App($target){
-    const cache = {
-
-    }
-    
+    const cache = {};
     const testCache = new Map();
+    const issueCache = new Map();
+    
+    const navBar = new NavBar({
+        $target,
+    });
+    
+    const tab = new Tab({
+        $target,
+        initialState:{
+            prev:0,
+            current:0,
+        }
+    });
+    navBar.render();
+    tab.render();
+    this.removeChild = (parent) =>{
+        
+        while(parent.children.length > 1){
+            parent.removeChild(parent.lastElementChild);
+        }
+    }
     this.route = (params = {}) =>{
         const {pathname} = location;
+        const loginSuccess = getItem('loginSuccess');
         
-        // NavBar
-        // const page = document.querySelector('nav').nextElementSibling;
-        $target.innerHTML = '';
-        // if(page)
-        // $target.removeChild(page);
-        // const loginSuccess = params?.loginSuccess;
-        const navBar = new NavBar({
-            $target,
-        }).render();
+        this.removeChild($target);
 
+        navBar.setState({
+            loginSuccess,
+        })
+        
+        // if( (pathname ==='/' || pathname ==='/issue') ){
+        //     const isExist = Array.prototype.includes.call($target.childNodes,tab.$tab);
+        //     // $target.appendChild(tab.$tab);
+        //     if(!isExist){
+        //         $target.appendChild(tab.$tab);
+        //     }
+        // }
+        // if(params?.style) tab.setState({
+        //     ...tab.state,
+        //     style:params.style,
+        // })
+        
         if(pathname === '/'){
             const initialState = testCache.has('pre') ? testCache.get('pre') : {
                 posts:[],
                 skip:0,
                 limit:8,
+                tab:''
             };
-            
+            $target.appendChild(tab.$tab);
+            tab.setState({
+                prev: tab.state.current,
+                current:0,
+                
+            })
+
             import('./page/LandingPage').then(({default:page}) => new page({
                 $target,
                 initialState,
@@ -38,6 +74,26 @@ export default function App($target){
                 testCache
             }))
 
+        }
+        else if(pathname === '/issue'){
+
+            const initialState = issueCache.has('pre') ? issueCache.get('pre') : {
+                posts:[],
+                skip:0,
+                limit:8,
+                tab:'article'
+            }
+            $target.appendChild(tab.$tab);
+            tab.setState({
+                prev:tab.state.current,
+                current:1,
+            })
+            import('./page/LandingPage').then(({default:page}) => new page({
+                $target,
+                initialState,
+                cache,
+                testCache : issueCache,
+            }))
         }
         else if(pathname ==='/register'){
         

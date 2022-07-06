@@ -16,9 +16,7 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
     
     $page.className = 'page landing';
     $target.appendChild($page);
-    // const oldPage = document.querySelector('.page');
-    // $target.replaceChild($page,$target.lastChild);
-    // $page.replaceChild()
+    
     this.state = {
         isLoading:true,
         checked: [],
@@ -53,11 +51,13 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
        InfinityScroll(element,this.fetchPosts.bind(this),hasMore,loading);
     }
     
-    const listView = new ListView({
-        $target:$page,
-        maxSize:4,
-    })
-    const checkBox = new CheckBox({
+    // const listView = new ListView({
+    //     $target:$page,
+    //     maxSize:4,
+    // })
+    let checkBox = null;
+    if(this.state.tab === ''){
+    checkBox = new CheckBox({
         $target:$page,
         initialState:{
             items:category,
@@ -89,6 +89,7 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
             this.fetchPosts(true);
         }
     })
+   }
     const writeBtn = new ClickButton({
         $target:$page,
         initialState:{
@@ -110,7 +111,8 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
             checkToggle:false,
         },
         callback : (id) => {
-            changeRoute(`/post/${id}`);
+            const path = this.state.tab === '' ? '/post' : '/article' 
+            changeRoute(`${path}/${id}`);
         }
     })
     const loading = new Loading({
@@ -136,7 +138,10 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
     //         }
     //     },
     // })
+    console.log('error');
+    console.log(testCache);
     if(!testCache.has('pre')){
+        
         this.fetchPosts();
     }
     this.init();
@@ -158,7 +163,7 @@ LandingPage.prototype.fetchPosts = async function(checkToggle = false){
         ...this.state,
         isLoading:true,
     })
-    const {posts,postSize} = await request("",params);
+    const {posts,postSize} = await request(this.state.tab,params);
     this.setState({
         ...this.state,
         posts : !this.state.skip ? posts : [...this.state.posts,...posts],

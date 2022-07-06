@@ -29,10 +29,10 @@ export default function ArticlePage({$target,initialState}){
         $target:$page,
         initialState:this.state.isLoading,
     })
-    const listView = new ListView({
-        $target:$page,
-        maxSize:4,
-    })
+    // const listView = new ListView({
+    //     $target:$page,
+    //     maxSize:4,
+    // })
     const writeBtn = new ClickButton({
         $target:$page,
         initialState:{

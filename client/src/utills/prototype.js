@@ -70,7 +70,12 @@ EditPage2.prototype.uploadItem = async function(user,isModify){
         }
         return uploadArticle(data);
     })
-    .then(response =>{
+    .then(async response =>{
+        // await new Promise((res,rej)=>{
+        //     setTimeout(()=>{
+        //         res(true);
+        //     },5000);
+        // })
         loading.setState(false);
         changeRoute('/article');
     })

@@ -9,8 +9,9 @@ export default function Loading ({$target,initialState,covered = false}){
     this.state = nextState;
     this.render();
   };
-
+  
   this.render = () => {
+    console.dir($target);
     if (!this.state) {
       if ([...$target.children].includes($loading))
         $target.removeChild($loading);

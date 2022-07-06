@@ -191,12 +191,20 @@ router.get('/detail',(req,res)=>{
 
 // article
 router.get('/article',(req,res) =>{
-    Article
-    .find()
-    .populate('writer')
-    .exec((err,articles)=>{
-        if(err) res.status(400).json({success:false,err});
-        res.status(200).json({articles,success:true});
+    let skip = req.query.skip ? parseInt(req.query.skip) : Number(0);
+    let limit = req.query.limit ? parseInt(req.query.limit) : 100;
+    let category = req.query.category ? req.query.category : null;
+    let findArg = {};
+    if(category){
+        findArg['category'] = category.split(',').map(Number);
+    }
+
+    Article.find(findArg)
+    .skip(skip)
+    .limit(limit)
+    .exec((err,posts) =>{
+        if(err) res.json({success:false,err});
+        res.json({posts,postSize:posts.length});
     })
 })
 router.get('/detailArticle',(req,res)=>{

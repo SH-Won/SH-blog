@@ -9,35 +9,44 @@ export default function NavBar({$target,initialState={}}){
         this.state = nextState;
         this.render();
     }
-    const $navBar = document.createElement('nav');
-    $navBar.className = `${style.navBar}`;
-    $target.appendChild($navBar);
+    this.$navBar = document.createElement('nav');
+    this.$navBar.className = `${style.navBar}`;
+    $target.appendChild(this.$navBar);
 
-    const loginState = getItem('loginSuccess');
-    
+    const loginFailTemplate = `
+    <ul class="${style.userList}">
+    <li data-route="/login">로그인</li>
+    <li data-route="/register">회원가입</li>
+    </ul>
+    `;
+    const loginSuccessTemplate = `
+    <ul class="${style.userList}">
+    <li data-route="/logout">로그아웃</li>
+    </ul>
+    `;
+
+    this.checkLoginState = () =>{
+        const loginSuccess = getItem('loginSuccess');
+        if(this.state.loginSuccess === loginSuccess) return;
+        
+    }
     this.render = () =>{
+        const {loginSuccess} = this.state;
         const template = `
         <ul class="${style.list}">
         <li data-route="/">sh blog</li>
         <li data-route="/article">게시글</li>
         </ul>
-        ${!loginState ? `
-        <ul class="${style.userList}">
-        <li data-route="/login">로그인</li>
-        <li data-route="/register">회원가입</li>
-        </ul>
-        ` :
-        `<ul class="${style.userList}">
-        <li data-route="/logout">로그아웃</li>
-        </ul>
-        `
-        }
+        ${!loginSuccess ? 
+          loginFailTemplate :
+          loginSuccessTemplate
+         }
         `;
-        $navBar.innerHTML = template;
+        this.$navBar.innerHTML = template;
         // $navBar.insertAdjacentHTML('beforeend',template); 
     }
 
-    $navBar.addEventListener('click',e=>{
+    this.$navBar.addEventListener('click',e=>{
         const $li = e.target.closest('li');
         e.preventDefault();
         if($li){

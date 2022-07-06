@@ -2,9 +2,8 @@
 
 }
 .container{
-    width:100%;
     padding:1rem;
-    margin:0 auto;
+    margin:0 .5rem;
     display:flex;
     flex-direction: column;
     box-sizing: border-box;

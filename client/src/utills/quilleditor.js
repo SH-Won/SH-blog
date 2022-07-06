@@ -210,7 +210,7 @@ const options = {
         toolbar:{
       container: [
           [{header : [1,2,false]}],
-          ['bold','italic','underline',],
+          ['bold','italic','underline','blockquote'],
           
           ['image','code-block',]
       ]
@@ -233,8 +233,8 @@ export const quillEditor = (element) =>{
          
      })
      Quill.register(ImageBlot);
-     Quill.register(CustomCode);
-     Quill.register('formats/code',CustomCode,true);
+    //  Quill.register(CustomCode);
+    //  Quill.register('formats/code',CustomCode,true);
     // Quill.register(NewCodeBlock);
      const editor = new Quill(element,options);   
      editor.getModule('toolbar').addHandler('image',() =>{
