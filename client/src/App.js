@@ -33,17 +33,24 @@ export default function App($target){
     tab.render();
 
     this.route = (params = {}) =>{
+        console.log(params);
         const {pathname} = location;
-        const loginSuccess = getItem('loginSuccess');
+        // const loginSuccess = getItem('loginSuccess');
         
         this.removeChild($target);
 
-        navBar.setState({
-            loginSuccess,
-        })
+        navBar.checkLoginState();
         
         
         if(pathname === '/'){
+            
+            if(params?.deleteArticleId){
+                const cacheState = testCache.get('pre');
+                const deleteIdx = cacheState.posts.findIndex(post => post._id === params.deleteArticleId );
+                cacheState.posts.splice(deleteIdx,1);
+                cacheState.skip--;
+                testCache.set('pre',cacheState);
+            }
             const initialState = testCache.has('pre') ? testCache.get('pre') : {
                 posts:[],
                 skip:0,
@@ -67,12 +74,6 @@ export default function App($target){
         }
         else if(pathname === '/issue'){
             
-            if(params?.deleteArticleId){
-                const cacheState = issueCache.get('pre');
-                const deleteIdx = cacheState.posts.findIndex(post => post._id === params.deleteArticleId );
-                cacheState.posts.splice(deleteIdx,1);
-                cacheState.skip--;
-            }
 
             const initialState = issueCache.has('pre') ? issueCache.get('pre') : {
                 posts:[],

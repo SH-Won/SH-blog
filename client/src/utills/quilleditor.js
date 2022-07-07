@@ -211,8 +211,8 @@ class ImageBlot extends BlockEmbed{
 //         return node.textContent;
 //     }
 // }
-// ImageBlot.blotName = 'image';
-// ImageBlot.tagName = 'figure';
+ImageBlot.blotName = 'image';
+ImageBlot.tagName = 'figure';
 // CustomCode.blotName='customCode';
 // CustomCode.tagName = 'pre';
 // CustomCode.className = 'ql-syntax';

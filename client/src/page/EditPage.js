@@ -117,6 +117,15 @@ export default function EditPage({$target,isModify,initialState = {},user}){
 
 // prototype 
 EditPage.prototype.uploadItem = async function(user,isModify){
+    // !this.state.title.trim().match(/\s/g)
+    if(this.state.title.trim() === ""){
+        alert('제목을 입력해주세요');
+        return;
+    }
+    if(this.state.selectedLanguage === 0){
+        alert('카테고리를 선택해주세요');
+        return;
+    }
     const loading = new Loading({
         $target:this.$page,
         initialState:false,
@@ -181,7 +190,7 @@ EditPage.prototype.uploadItem = async function(user,isModify){
     })
     .then(async response =>{   
         loading.setState(false);
-        changeRoute('/issue');
+        changeRoute('/');
     })
 }
 

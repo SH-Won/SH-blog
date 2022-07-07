@@ -7,12 +7,11 @@ export default function NavBar({$target,initialState={}}){
     this.state = initialState;
     this.setState = (nextState) =>{
         this.state = nextState;
-        this.render();
     }
     this.$navBar = document.createElement('nav');
     this.$navBar.className = `${style.navBar}`;
     $target.appendChild(this.$navBar);
-
+    
     const loginFailTemplate = `
     <ul class="${style.userList}">
     <li data-route="/login">로그인</li>
@@ -28,7 +27,8 @@ export default function NavBar({$target,initialState={}}){
     this.checkLoginState = () =>{
         const loginSuccess = getItem('loginSuccess');
         if(this.state.loginSuccess === loginSuccess) return;
-        
+        this.$navBar.removeChild(this.$navBar.lastElementChild);
+        this.$navBar.insertAdjacentHTML('beforeend',loginSuccess ? loginSuccessTemplate : loginFailTemplate);
     }
     this.render = () =>{
         const {loginSuccess} = this.state;
