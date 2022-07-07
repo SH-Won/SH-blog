@@ -72,15 +72,15 @@ ul{
     width:fit-content;
     position:relative;
     list-style: none;
-    margin-left:1rem;
     padding-bottom: .4rem;
+    margin: 0.8rem 0 0 1.8rem;
 }
 .nav__link {
     text-decoration: none;
     cursor: pointer;
     color:darkgray;
     font-weight: 400;
-    font-size: 1.3rem;
+    font-size: 1.5rem;
     transform: rotateZ(-3deg);
     text-align: center;
     
@@ -93,8 +93,8 @@ ul{
     width:50%;
     position:absolute;
     bottom:0;
-    height:1.7px;
-    background:  #91f0c3;
+    height:2.5px;
+    background:  #7aebb6;
     /* transition: left 1s cubic-bezier(0.6, 0.35, 0, 1.04); */
     /* transition: left 1s cubic-bezier(0.08, 0.9, 0, 1.04); */
     transition: left 1s cubic-bezier(0.08, 0.9, 0.48, 1.22);

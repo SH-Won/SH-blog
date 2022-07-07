@@ -11,6 +11,7 @@ export default function PostDetailPage({$target,postId}){
     const $page = document.createElement('div');
     const $info = document.createElement('div');
     $page.className = 'postDetailPage';
+    $target.appendChild($page);
 
     this.setState = (nextState) =>{
         this.state = nextState;
@@ -22,13 +23,7 @@ export default function PostDetailPage({$target,postId}){
     })
     this.render = () =>{
         const {post} = this.state;
-        $target.appendChild($page);
-        if(!post) {
-            loading.render();
-            return;
-        }
-        
-        loading.setState(this.state.isLoading);
+        if(this.state.isLoading) return;
         new PostDetail_Image({
             $target:$page,
             initialState:{

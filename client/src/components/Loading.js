@@ -13,7 +13,8 @@ export default function Loading ({$target,initialState,covered = false}){
   this.render = () => {
     
     if (!this.state) {
-      if ([...$target.children].includes($loading))
+      const isExist = Array.prototype.includes.call($target.children,$loading);
+      if (isExist)
         $target.removeChild($loading);
       return;
     }

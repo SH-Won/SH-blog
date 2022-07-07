@@ -1,11 +1,9 @@
 import {request} from '../utills/api.js';
 import Posts from '../components/Posts.js';
-import Button from '../components/Button.js';
 import Loading from '../components/Loading.js';
 import  {InfinityScroll}  from '../utills/InfinityScroll.js';
-import ListView from '../components/ListView.js';
 import CheckBox from '../components/CheckBox.js';
-import { category } from '../utills/category.js';
+import { languages } from '../utills/languages.js';
 import { changeRoute } from '../utills/router.js';
 import ClickButton from '../components/ClickButton.js';
 import '../styles/page.css';
@@ -32,10 +30,6 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
             postSize : this.state.postSize,
         })
         loading.setState(this.state.isLoading);
-        // loadMoreBtn.setState({
-        //     ...loadMoreBtn.state,
-        //     visible: this.state.postSize < this.state.limit ? false : true,
-        // })
         this.init();
     }
     this.init = () =>{
@@ -51,17 +45,13 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
        const element = posts.children[length];
        InfinityScroll(element,this.fetchPosts.bind(this),hasMore,loading);
     }
-    
-    // const listView = new ListView({
-    //     $target:$page,
-    //     maxSize:4,
-    // })
+
     let checkBox = null;
-    if(this.state.tab === ''){
+    if(this.state.tab === 'article'){
     checkBox = new CheckBox({
         $target:$page,
         initialState:{
-            items:category,
+            items:languages.slice(0,-1),
             checked:this.state.checked,
         },
         callback : (id,selected) => {
@@ -98,7 +88,6 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
             className:'button write-post'
         },
         onClick : () => {
-            // window.history.replaceState({detail:{ from :'/edit'}},null);
             changeRoute('/edit',{detail : {route : location.pathname}})
         }
     }).render();
@@ -112,43 +101,19 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
             checkToggle:false,
         },
         callback : (id) => {
-            const path = this.state.tab === '' ? '/post' : '/article' 
+            const path = this.state.tab === 'article' ? '/article' : '/post' 
             changeRoute(`${path}/${id}`);
         }
     })
+
     const loading = new Loading({
         $target:$page,
         initialState: this.state.isLoading,
     })
-    // const loadMoreBtn = new Button({ 
-    //     $target : $page,
-    //     initialState:{
-    //         name:"더 보기",
-    //         className:"loadMore-btn",
-    //         visible : this.state.postSize < this.state.limit ? false : true,
-    //         style:{
-    //             width:'10%',
-    //             textAlign:'center',
-    //             border:'none',
-    //             background:'whitesmoke',
-    //             borderRadius:'4px',
-    //             boxShadow:'0 0 2px #2c87f0',
-    //             outline:'transparent',
-    //             color:'#4a96ee',
-    //             margin:'auto'
-    //         }
-    //     },
-    // })
 
-    // if(!testCache.has('pre')){
-    //     this.fetchPosts();
-    // }
     this.fetchPosts();
     this.init();
-    // $page.addEventListener('click',e=>{
-    //     if(e.target.className !=='loadMore-btn') return;
-    //     this.fetchPosts();
-    // })
+   
 }
 
 LandingPage.prototype.fetchPosts = async function(checkToggle = false){
@@ -164,6 +129,7 @@ LandingPage.prototype.fetchPosts = async function(checkToggle = false){
         isLoading:true,
     })
     const {posts,postSize} = await request(this.state.tab,params);
+    console.log(posts);
     this.setState({
         ...this.state,
         posts : !this.state.skip ? posts : [...this.state.posts,...posts],

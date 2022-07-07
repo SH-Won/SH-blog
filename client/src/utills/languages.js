@@ -26,7 +26,12 @@ export const languages = [
     },
     {
         '_id':5,
-        'name':'node',
+        'name':'Node',
+    },
+    {
+        '_id':6,
+        'name':'이슈'
+
     }
 ]
 export const getImageURL = (id) =>{

@@ -4,7 +4,7 @@ import Loading from '../components/Loading';
 import styles from '../styles/Detail.module.css';
 import ClickButton from '../components/ClickButton';
 import { changeRoute } from '../utills/router';
-import { selector } from '../utills/selector';
+
 
 export default function ArticleDetailPage({$target,articleId,user}){
     const $page = document.createElement('div');

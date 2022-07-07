@@ -6,13 +6,12 @@ import Blockquote from 'quill/formats/blockquote';
 import Underline from 'quill/formats/underline';
 import { AlignClass, AlignStyle } from 'quill/formats/align';
 import { DirectionAttribute,DirectionClass,DirectionStyle} from 'quill/formats/direction';
-import Icons from 'quill/ui/icons';
+
 import Picker from 'quill/ui/picker';
 import IconPicker from 'quill/ui/icon-picker';
 import ColorPicker from 'quill/ui/color-picker';
 import Tooltip from 'quill/ui/tooltip';
 import Link from 'quill/formats/link';
-import { IndentClass as Indent } from 'quill/formats/indent';
 import SnowTheme from 'quill/themes/snow';
 import CodeBlock, {Code as InlineCode} from 'quill/formats/code'
 import Bold from 'quill/formats/bold';
@@ -23,9 +22,12 @@ import {FontClass,FontStyle} from 'quill/formats/font';
 import {SizeClass,SizeStyle} from 'quill/formats/size';
 import Header from 'quill/formats/header';
 
+// import html from 'highlight.js/lib/languages/vbscript-html'
 import javascript from 'highlight.js/lib/languages/javascript';
 import css from 'highlight.js/lib/languages/css';
-import 'highlight.js/styles/github-dark.css'
+
+// import 'highlight.js/styles/vs2015.css'
+// import 'highlight.js/styles/github.css'
 // import 'highlight.js/styles/tomorrow-night-bright.css'
 // import 'highlight.js/styles/xcode.css';
 // import 'highlight.js/styles/tomorrow-night-blue.css';
@@ -33,6 +35,9 @@ import 'highlight.js/styles/github-dark.css'
 // import 'highlight.js/styles/atom-one-dark.css';
 // import 'highlight.js/styles/github-dark-dimmed.css';
 // import 'highlight.js/styles/a11y-dark.css';
+
+// import 'highlight.js/styles/gradient-dark.css';
+// import 'highlight.js/styles/codepen-embed.css';
 
 import {getItem} from './storage';
 
@@ -157,6 +162,7 @@ function uploadMulter(editor){
     )
     input.click();
 }
+
 let BlockEmbed = Quill.import('blots/block/embed');
 class ImageBlot extends BlockEmbed{
     static create(value){
@@ -178,30 +184,57 @@ class ImageBlot extends BlockEmbed{
 
     }
 }
-class CustomCode extends BlockEmbed {
-    static create(value){
-        let {lang,content} = value;
-        let node = super.create(value);
-        // console.log(node);
-        const code = document.createElement('code');
-        // code.innerHTML = text => hljs.highlightAuto(text).value;
-        // code.innerText = ''
-        // code.setAttribute('class',lang);
-        // code.textContent = content;
-        node.appendChild(code);
-        return node;
-    }
-    static value(node){
-        return node.textContent
-    }
-}
-ImageBlot.blotName = 'image';
-ImageBlot.tagName = 'figure';
-CustomCode.blotName='code';
-CustomCode.tagName = 'pre';
-CustomCode.className = 'ql-syntax';
+// class CustomCode extends BlockEmbed {
+//     static create(value){
+//         let node = super.create(value);
+//         // console.log(node);
+//         const code = document.createElement('code');
+//         // code.innerHTML = text => hljs.highlightAuto(text).value;
+//         // code.innerText = ''
+//         // code.setAttribute('class',lang);
+//         // code.textContent = content;
+//         node.appendChild(code);
+//         return node;
+//     }
+//     static value(node){
+//         return node.textContent
+//     }
+// }
+// class CustomCode extends CodeBlock {
+//     static create(value){
+//         let node = super.create(value);
+//         const code = document.createElement('code');
+//         node.appendChild(code);
+//         return node;
+//     }
+//     static value(node){
+//         return node.textContent;
+//     }
+// }
+// ImageBlot.blotName = 'image';
+// ImageBlot.tagName = 'figure';
+// CustomCode.blotName='customCode';
+// CustomCode.tagName = 'pre';
+// CustomCode.className = 'ql-syntax';
+
+// const codeBlock = Quill.import('formats/code-block');
+
+// class CusCode extends codeBlock{
+//     static create(value){
+//         let node = super.create(value);
+//         const code = document.createElement('code');
+//         node.appendChild(code);
+//         return node;
+//     }
+//     static value(node){
+//         return node.textContent;
+//     }
+// }
+// CusCode.blotName = 'cusCode';
+// CusCode.tagName = 'pre';
 
 
+// const BlockEmbed = Quill.import("blots/block/embed");
 
 const options = {
     theme: 'snow',
@@ -212,7 +245,7 @@ const options = {
           [{header : [1,2,false]}],
           ['bold','italic','underline','blockquote'],
           
-          ['image','code-block',]
+          ['image','code-block']
       ]
     },
     
@@ -230,8 +263,9 @@ export const quillEditor = (element) =>{
      const lang = [['javascript',javascript],['css',css]];
      lang.forEach(([lang,module]) =>{
          hljs.registerLanguage(lang,module);
-         
      })
+    
+    //  Quill.register(CusCode);
      Quill.register(ImageBlot);
     //  Quill.register(CustomCode);
     //  Quill.register('formats/code',CustomCode,true);
@@ -240,11 +274,5 @@ export const quillEditor = (element) =>{
      editor.getModule('toolbar').addHandler('image',() =>{
         uploadMulter(editor);
     });
-    // editor.getModule('toolbar').addHandler('code-block',()=>{
-
-    // })
-    editor.getModule('toolbar').addHandler('code',() =>{
-        
-    })
     return editor;
 }

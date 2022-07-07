@@ -20,19 +20,11 @@ export default function Tab({$target,initialState={}}){
         this.$tab.innerHTML = template;
         const underline = this.$tab.lastElementChild;
         this.$tab.children[current].classList.add('nav__link--checked');
-        
-        // if(this.state?.style ){
-            
-        //     const {transition,left} = this.state.style;
-            underline.style.left = `${prev*50}%`;
-            setTimeout(()=>{
-                // underline.style.transform = transform;
-                // underline.style.transition = transition;
-                // underline.style.left = left;
-                underline.style.left = `${(current)*50}%`;
-            },0)
-        // }
-        // underline.classList.add(`nav__underline--${pos}`);
+
+        underline.style.left = `${prev*50}%`;
+        setTimeout(()=>{
+            underline.style.left = `${(current)*50}%`;
+        },0)
     }
     this.$tab.addEventListener('click',e =>{
         if(e.target.tagName !== 'A') return;
@@ -46,20 +38,6 @@ export default function Tab({$target,initialState={}}){
             this.$tab.children[current].classList.remove('nav__link--checked');
             this.$tab.children[+index].classList.add('nav__link--checked');
             const underline = this.$tab.lastElementChild ;
-            // underline.style.left = `${index*50}%`
-            // underline.style.transform = `translateX(${(index-current)*100}%)`;
-            // underline.style.transition = 'transform 1s cubic-bezier(0.6, 0.35, 0, 1.04)';
-
-            // const style = {
-            //     // transform : `translateX(${(+index-current)*100}%)`,
-            //     transition: 'left 1s cubic-bezier(0.6, 0.35, 0, 1.04)',
-            //     left : `${current*50}%`,
-            // }
-            // this.setState({
-            //     ...this.state,
-            //     style,
-            // })
-        
             changeRoute(route);
         }
     })

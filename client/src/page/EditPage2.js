@@ -1,118 +1,126 @@
-import { languages } from '../utills/languages';
-import styles from '../styles/EditPage.module.css';
-import SelectOptions from '../components/SelectOptions';
-import Input from '../components/Input';
-import ClickButton from '../components/ClickButton';
-import {changeRoute} from '../utills/router'
-import 'highlight.js/styles/dark.css';
-// import { options,uploadMulter } from '../utills/quilleditor';
-// import Quill from 'quill';
+// import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
+import ClassicEditor from "../utills/ckeditor";
+import CustomUploadAdapterPlugin from "../utills/UploadAdapter";
+import { languages } from "../utills/languages";
+import styles from "../styles/EditPage.module.css";
+import SelectOptions from "../components/SelectOptions";
+import Input from "../components/Input";
+import ClickButton from "../components/ClickButton";
+import { changeRoute } from "../utills/router";
 
-import '../styles/style_quill.css';
-import { quillEditor } from '../utills/quilleditor';
+export default function EditPage2({
+  $target,
+  isModify,
+  initialState = {},
+  user,
+}) {
+  this.$page = document.createElement("div");
+  const editor = document.createElement("div");
+  const $infoContainer = document.createElement("div");
+  const $btnContainer = document.createElement("div");
+  $infoContainer.className = `${styles.infoContainer}`;
+  this.$page.className = `${styles.EditPage}`;
+  $btnContainer.className = `${styles.btnContainer}`;
 
+  this.$page.appendChild($infoContainer);
+  this.$page.appendChild(editor);
+  this.$page.appendChild($btnContainer);
+  $target.appendChild(this.$page);
 
-export default function EditPage2({$target,isModify,initialState = {},user}){
-    this.$page = document.createElement('div');
-    const editor = document.createElement('div');
-    const $infoContainer = document.createElement('div');
-    const $btnContainer = document.createElement('div');
-    $infoContainer.className = `${styles.infoContainer}`
-    this.$page.className = `${styles.EditPage}`;
-    $btnContainer.className = `${styles.btnContainer}`;
+  this.state = {
+    title: "",
+    data: "",
+    selectedLanguage: isModify ? initialState["category"] : 0,
+    imageIds: [],
+    ...initialState,
+  };
+  this.editor = null;
 
-    this.$page.appendChild($infoContainer);
-    this.$page.appendChild(editor);
-    this.$page.appendChild($btnContainer);
-    $target.appendChild(this.$page);
+  this.setState = (nextState) => {
+    this.state = nextState;
+  };
 
-    this.state = {
-        title:'',
-        data:'',
-        selectedLanguage:isModify ? initialState['category'] : 0,
-        imageIds : [],
-        ...initialState
-    }
-    this.editor = null;
+  const titleInput = new Input({
+    $target: $infoContainer,
+    initialState: {
+      title: this.state.title,
+      className: `${styles.titleInput}`,
+      placeholder: "제목을 입력해주세요",
+    },
+    callback: (value) => {
+      this.setState({
+        ...this.state,
+        title: value,
+      });
+    },
+  });
+  const selectOption = new SelectOptions({
+    $target: $infoContainer,
+    className: `${styles.selectOption}`,
+    initialState: {
+      options: languages,
+      selected: isModify ? this.state.category : this.state.selectedLanguage,
+    },
+    callback: (id) => {
+      this.setState({
+        ...this.state,
+        selectedLanguage: id,
+      });
+    },
+  });
 
-    this.setState = (nextState) =>{
-        this.state = nextState;
-    }
+  const cancelBtn = new ClickButton({
+    $target: $btnContainer,
+    initialState: {
+      className: `${styles.cancelBtn}`,
+      name: "취소",
+    },
+    onClick: () => {
+      const goBack = confirm(
+        isModify
+          ? "정말 수정을 하지 않으시겠어요?"
+          : "정말 작성을 취소 하시겠어요 ?"
+      );
+      if (goBack) {
+        changeRoute(history.state.detail.route);
+      } else return;
+    },
+  });
+  const uploadBtn = new ClickButton({
+    $target: $btnContainer,
+    initialState: {
+      className: `${styles.uploadBtn}`,
+      name: isModify ? "수정" : "완료",
+    },
+    onClick: () => this.uploadItem(user, isModify),
+  });
 
-    const titleInput = new Input({
-        $target:$infoContainer,
-        initialState:{
-            title:this.state.title,
-            className:`${styles.titleInput}`,
-            placeholder:'제목을 입력해주세요'
-        },
-        callback : (value) =>{
-            this.setState({
-                ...this.state,
-                title:value,
-            })
-        }
+  this.render = () => {
+    ClassicEditor.create(editor, {
+      extraPlugins: [CustomUploadAdapterPlugin],
     })
-    const selectOption = new SelectOptions({
-        $target:$infoContainer,
-        className:`${styles.selectOption}`,
-        initialState:{
-            options:languages,
-            selected: isModify ? this.state.category : this.state.selectedLanguage,
-        },
-        callback : (id) => {
-            this.setState({
-                ...this.state,
-                selectedLanguage: id,
-            })
-        }
-    })
-
-    const cancelBtn = new ClickButton({
-        $target:$btnContainer,
-        initialState : {
-             className : `${styles.cancelBtn}`,
-             name: '취소',
-        },
-        onClick : () =>{
-            const goBack = confirm(isModify ? '정말 수정을 하지 않으시겠어요?' :'정말 작성을 취소 하시겠어요 ?');
-            if(goBack){
-                changeRoute(history.state.detail.route);
-            }
-            else return;
-        }
-    })
-    const uploadBtn = new ClickButton({
-        $target: $btnContainer,
-        initialState : {
-            className : `${styles.uploadBtn}`,
-            name: isModify ? '수정' : '완료',
-        },
-        onClick : () => this.uploadItem(user,isModify),
-        
-    })
-    // const testBtn = new ClickButton({
-    //     $target:$btnContainer,
-    //     initialState : {
-    //         className : '',
-    //         name:'테스트'
-    //     },
-    //     onClick : () =>{
-    //         const delta = this.editor.clipboard.convert(this.editor.root.innerHTML);
-    //         console.log(delta);
-    //     }
-    // })
-    
-    this.render = () =>{
-        this.editor = quillEditor(editor);
-        const delta = this.editor.clipboard.convert(this.state.data);
-        this.editor.setContents(delta);
-        // testBtn.render();
-        cancelBtn.render();
-        uploadBtn.render();
-    }
-    this.render();
+      .then((editor) => {
+        editor.editing.view.change((writer) => {
+          // writer.setStyle('margin','1rem',editor.editing.view.document.getRoot());
+          writer.setStyle(
+            "min-height",
+            "450px",
+            editor.editing.view.document.getRoot()
+          );
+        });
+        editor.ui.element.style.margin = ".4rem 2rem";
+        editor.ui.element.style.width = "100%";
+        const imageUploadEditing = editor.plugins.get("ImageUploadEditing");
+        imageUploadEditing.on(
+          "uploadComplete",
+          (evt, { data, imageElement }) => {}
+        );
+        editor.setData(this.state.data);
+        this.editor = editor;
+      })
+      .catch((err) => console.log(err));
+    cancelBtn.render();
+    uploadBtn.render();
+  };
+  this.render();
 }
-
-
-

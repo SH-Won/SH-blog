@@ -2,10 +2,10 @@ import { init } from './utills/router.js';
 import NavBar from './components/NavBar.js';
 import { selector } from './utills/selector.js';
 import { destoryImage } from './utills/api.js';
-import './utills/prototype';
 import './styles/page.css'
 import Tab from './components/Tab.js';
 import { getItem } from './utills/storage.js';
+import './styles/highlight.css';
 
 export default function App($target){
     const cache = {};
@@ -48,7 +48,7 @@ export default function App($target){
                 posts:[],
                 skip:0,
                 limit:8,
-                tab:''
+                tab:'article'
             };
             $target.appendChild(tab.$tab);
             tab.setState({
@@ -61,34 +61,24 @@ export default function App($target){
                 $target,
                 initialState,
                 cache,
-                testCache
+                testCache,
             }))
 
         }
         else if(pathname === '/issue'){
-            // if(params?.article){
-            //     const cacheState = issueCache.get('pre');
-            //     console.log('add',cacheState);
-            //     if(cacheState.posts.length < cacheState.skip){
-            //         console.log('add??');
-            //         cacheState.posts.push(params.article);
-            //         cacheState.postSize++;
-            //         issueCache.set('pre',cacheState);
-            //     }
-            // }
+            
             if(params?.deleteArticleId){
                 const cacheState = issueCache.get('pre');
-                console.log('delete',cacheState)
                 const deleteIdx = cacheState.posts.findIndex(post => post._id === params.deleteArticleId );
                 cacheState.posts.splice(deleteIdx,1);
                 cacheState.skip--;
-                issueCache.set('pre',cacheState);
             }
+
             const initialState = issueCache.has('pre') ? issueCache.get('pre') : {
                 posts:[],
                 skip:0,
                 limit:8,
-                tab:'article'
+                tab:''
             }
             $target.appendChild(tab.$tab);
             tab.setState({
@@ -142,7 +132,7 @@ export default function App($target){
             const prevRoute = params !== null && params.hasOwnProperty('route') ? params.route : pathname;
             
             import('./Auth.js').then(async ({default:Auth}) =>{
-                const editPage = await import('./page/EditPage2')
+                const editPage = await import('./page/EditPage')
                                     .then(({default: page}) => page);
                 Auth(editPage,true,prevRoute)({
                     $target,
@@ -151,19 +141,19 @@ export default function App($target){
                 })
             })
         }
-        else if(pathname === '/article'){
+        // else if(pathname === '/article'){
             
-            import('./Auth.js').then(async ({default:Auth}) =>{
-                const articlePage = await import('./page/ArticlePage.js')
-                                    .then(({default: page}) => page);
-                Auth(articlePage,false)({
-                    $target,
-                    initialState:{
-                        posts:[],
-                    }
-                })
-            })
-        }
+        //     import('./Auth.js').then(async ({default:Auth}) =>{
+        //         const articlePage = await import('./page/ArticlePage.js')
+        //                             .then(({default: page}) => page);
+        //         Auth(articlePage,false)({
+        //             $target,
+        //             initialState:{
+        //                 posts:[],
+        //             }
+        //         })
+        //     })
+        // }
         else if(pathname.split('/')[1] === 'article'){
             const [ , ,articleId] = pathname.split('/');
 

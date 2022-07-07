@@ -13,7 +13,7 @@ export default function CheckBox({$target,initialState,callback = null}){
         const {items,checked} = this.state;
         const template = `
         ${items.map(item => `
-        <input type="checkbox" value="${item.id}"/>
+        <input type="checkbox" value="${item._id}"/>
         <label>
         ${item.name}
         </label>
