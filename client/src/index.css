@@ -109,3 +109,25 @@ ul{
     /* transform:translateX(-100%); */
 }
 
+/* favorite */
+
+.favorite{
+    width:75px;
+    border-radius: 16px;
+    border: 0.2px solid gray;
+    text-align: center;
+    vertical-align: center;
+    align-self: flex-end;
+    margin:1rem 0;
+}
+.favorite--selected{
+    border:0.2px solid #3f976e;
+    background-color: #3f976e;
+}
+.favorite__content{
+    color:gray;
+}
+.favorite__content--selected{
+    color:white;
+}
+

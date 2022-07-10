@@ -1,9 +1,10 @@
-import { request,deleteArticle } from '../utills/api';
+import { request,deleteArticle,updateFavorite } from '../utills/api';
 import Loading from '../components/Loading';
 // import '../styles/style_ck.css';
 import styles from '../styles/Detail.module.css';
 import ClickButton from '../components/ClickButton';
 import { changeRoute } from '../utills/router';
+import Favorite from '../components/Favorite';
 
 
 export default function ArticleDetailPage({$target,articleId,user}){
@@ -22,6 +23,7 @@ export default function ArticleDetailPage({$target,articleId,user}){
         loading.setState(this.state.isLoading);
         this.render();
     }
+    
     this.render = () =>{
         if(this.state.isLoading) return;
         const {article} = this.state;
@@ -29,6 +31,7 @@ export default function ArticleDetailPage({$target,articleId,user}){
             const date = new Date(article.createdAt).toLocaleString('ko-KR').split('. ');
             this.state.createdAt = `${date[0]}년 ${date[1]}월 ${date[2]}일 ${date[3]}`
         }
+        console.log(article,user);
         const template = `
         <div class="${styles.container}">
         <div class="${styles.info}">
@@ -40,6 +43,7 @@ export default function ArticleDetailPage({$target,articleId,user}){
         </div>
         `;
         
+        
 
         $page.insertAdjacentHTML('beforeend',template);
         const content = document.querySelector('.ql-content');
@@ -48,6 +52,22 @@ export default function ArticleDetailPage({$target,articleId,user}){
         content.insertAdjacentHTML('beforeend',`${article.data}`);
         const buttonPosition = content.previousElementSibling;
         
+        new Favorite({
+            $target:buttonPosition,
+            initialState:{
+                isAuth : user.isAuth,
+                selected: user.isAuth ? user.favorite.includes(article._id) : false,
+                count : article.favoriteCount,
+            },
+            onClick: (count) =>{
+                    const data = {
+                      count,
+                      userId: user._id,
+                      articleId,
+                    };
+                    updateFavorite(data)
+            }
+        })
         if(user._id === article.writer._id){
         new ClickButton({
             $target : buttonPosition,

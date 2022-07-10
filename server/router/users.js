@@ -3,6 +3,7 @@ const router = express.Router();
 const { User } = require("../models/User");
 const {auth} = require('../middleware/auth');
 const { verify, sign, refresh } = require('../middleware/jwt');
+const { Article } = require('../models/Article');
 
 router.get('/auth',auth,(req,res) =>{
     // res.status(200).json({
@@ -21,6 +22,7 @@ router.get('/auth',auth,(req,res) =>{
         email:req.user.email,
         name: req.user.name,
         role: req.user.role,
+        favorite:req.user.favorite,
         },
         token:req.token,
         refreshToken:req.refreshToken,
@@ -106,6 +108,30 @@ router.get('/logout',auth ,(req,res) =>{
         return res.status(200).json({
             success:true,
         })
+    })
+})
+router.post('/favorite',(req,res) =>{
+    const count = parseInt(req.body.count);
+    const articleId = req.body.articleId;
+    console.log(req.body);
+    const filter = count === -1 ? {
+        $pull:{
+            favorite:articleId,
+        }
+    } : {
+        $addToSet:{
+             favorite:articleId,
+        }
+    }
+    User.findOneAndUpdate({_id:req.body.userId},filter,{new : true} ,(err,user) =>{
+       
+    });
+    Article.findOneAndUpdate({_id:articleId},{
+        $inc:{
+            favoriteCount:count,
+        }
+    },{new : true},(err,article) =>{
+        
     })
 })
 

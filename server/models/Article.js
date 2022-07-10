@@ -22,9 +22,11 @@ const articleSchema = mongoose.Schema({
     imageIds:{
         type:Array,
         default:[],
+    },
+    favoriteCount :{
+        type:Number,
+        default:0,
     }
-    
-
     
 },{timestamps:true})
 

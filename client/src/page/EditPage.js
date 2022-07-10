@@ -190,7 +190,7 @@ EditPage.prototype.uploadItem = async function(user,isModify){
     })
     .then(async response =>{   
         loading.setState(false);
-        changeRoute('/');
+        changeRoute('/',{detail:{upload:true}});
     })
 }
 

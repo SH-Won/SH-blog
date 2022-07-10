@@ -178,3 +178,19 @@ export const uploadCloudinary = async (data = {}) =>{
 
     }
 }
+export const updateFavorite = async (data = {}) =>{
+    try{
+        const fullUrl = `${ENDPOINT}/api/users/favorite`;
+        const res = await fetch(fullUrl,{
+            method:'POST',
+            headers:{
+                'Content-Type' : 'application/json',
+            },
+            credentials:'include',
+            body:JSON.stringify(data)
+        })
+        if(res.ok) return await res.json();
+    }catch(e){
+
+    }
+}

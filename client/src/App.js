@@ -51,6 +51,9 @@ export default function App($target){
                 cacheState.skip--;
                 testCache.set('pre',cacheState);
             }
+            if(params?.upload){
+                testCache.delete('pre');
+            }
             const initialState = testCache.has('pre') ? testCache.get('pre') : {
                 posts:[],
                 skip:0,

@@ -10,6 +10,7 @@ const fs = require('fs');
 const {Article} = require('../models/Article');
 const { auth } = require('../middleware/auth')
 const cors =require('cors');
+const { User } = require('../models/User');
 
 const origin = process.env.WHITE_URL || 'http://localhost:3000';
 
@@ -169,9 +170,10 @@ router.get('/', (req,res) =>{
     if(category){
         findArg['category'] = category.split(',').map(Number);
     }
-
+    
     Post.find(findArg)
-    .skip(skip)
+    .sort({$natural:-1})
+    .skip(skip) 
     .limit(limit)
     .exec((err,posts) =>{
         if(err) res.json({success:false,err});
@@ -200,6 +202,7 @@ router.get('/article',(req,res) =>{
     }
 
     Article.find(findArg)
+    .sort({$natural:-1})
     .skip(skip)
     .limit(limit)
     .exec((err,posts) =>{
@@ -272,6 +275,7 @@ router.post('/deleteArticle',async (req,res) =>{
         if(err) res.status(400).json({success:false,err});
         res.status(200).json({success:true});
     })
+    
     const remove = await Promise.all(imageIds.map(async id => {
         return new Promise((resolve,reject) =>{
             cloudinary.uploader.destroy(id, result =>{
