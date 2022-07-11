@@ -73,7 +73,7 @@ Quill.register({
     'formats/blockquote': Blockquote,
     'formats/code-block': CodeBlock,
     'formats/header': Header,
-    // 'formats/list': List,
+    'formats/list': List,
   
     'formats/bold': Bold,
     // 'formats/code': InlineCode,
@@ -244,7 +244,7 @@ const options = {
       container: [
           [{header : [1,2,false]}],
           ['bold','italic','underline','blockquote'],
-          
+          [{'list':'ordered'},{'list':'bullet'}],
           ['image','code-block']
       ]
     },
