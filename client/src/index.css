@@ -81,10 +81,10 @@ ul{
     cursor: pointer;
     color:darkgray;
     font-weight: 400;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     text-align: center;
     margin:0;
-    
+    padding:0 .5rem;
     /* transition: transform 0.5s; */
 }
 .tab__link--checked{

@@ -44,41 +44,41 @@ import {getItem} from './storage';
 
 
 Quill.register({
-    'attributors/attribute/direction': DirectionAttribute,
+    // 'attributors/attribute/direction': DirectionAttribute,
   
-    'attributors/class/align': AlignClass,
+    // 'attributors/class/align': AlignClass,
     // 'attributors/class/background': BackgroundClass,
     // 'attributors/class/color': ColorClass,
-    'attributors/class/direction': DirectionClass,
-    'attributors/class/font': FontClass,
-    'attributors/class/size': SizeClass,
+    // 'attributors/class/direction': DirectionClass,
+    // 'attributors/class/font': FontClass,
+    // 'attributors/class/size': SizeClass,
   
-    'attributors/style/align': AlignStyle,
+    // 'attributors/style/align': AlignStyle,
     // 'attributors/style/background': BackgroundStyle,
     // 'attributors/style/color': ColorStyle,
-    'attributors/style/direction': DirectionStyle,
-    'attributors/style/font': FontStyle,
-    'attributors/style/size': SizeStyle
+    // 'attributors/style/direction': DirectionStyle,
+    // 'attributors/style/font': FontStyle,
+    // 'attributors/style/size': SizeStyle
   });
   Quill.register({
-    'formats/align': AlignClass,
-    'formats/direction': DirectionClass,
+    // 'formats/align': AlignClass,
+    // 'formats/direction': DirectionClass,
     // 'formats/indent': Indent,
   
     // 'formats/background': BackgroundStyle,
     // 'formats/color': ColorStyle,
-    'formats/font': FontClass,
-    'formats/size': SizeClass,
+    // 'formats/font': FontClass,
+    // 'formats/size': SizeClass,
   
     'formats/blockquote': Blockquote,
     'formats/code-block': CodeBlock,
     'formats/header': Header,
-    'formats/list': List,
+    // 'formats/list': List,
   
     'formats/bold': Bold,
-    'formats/code': InlineCode,
+    // 'formats/code': InlineCode,
     'formats/italic': Italic,
-    'formats/link': Link,
+    // 'formats/link': Link,
     // 'formats/script': Script,
     // 'formats/strike': Strike,
     'formats/underline': Underline,
@@ -96,10 +96,10 @@ Quill.register({
     'themes/snow': SnowTheme,
   
     // 'ui/icons': Icons,
-    'ui/picker': Picker,
-    'ui/icon-picker': IconPicker,
-    'ui/color-picker': ColorPicker,
-    'ui/tooltip': Tooltip
+    // 'ui/picker': Picker,
+    // 'ui/icon-picker': IconPicker,
+    // 'ui/color-picker': ColorPicker,
+    // 'ui/tooltip': Tooltip
   });
 
 
