@@ -2,10 +2,10 @@ import style from "../styles/Posts.module.css";
 
 export default function Posts({ $target, initialState, callback = null }) {
   this.state = initialState;
-  const $postContainer = document.createElement("article");
-  $postContainer.className = `${style.postContainer}`;
+  this.$postContainer = document.createElement('div');
+  this.$postContainer.className = `${style.postContainer}`;
   // $postContainer.className = 'page--article';
-  $target.appendChild($postContainer);
+  $target.appendChild(this.$postContainer);
   
   this.setState = (nextState) => {
     this.state = nextState;
@@ -57,30 +57,30 @@ export default function Posts({ $target, initialState, callback = null }) {
     // console.time("posts render");
     // $postContainer.innerHTML = template;
     // console.timeEnd("posts render");
-    $postContainer.innerHTML = '';
+    this.$postContainer.innerHTML = '';
     posts.forEach((post,index) =>{
-        const postDiv = document.createElement('div');
+        const postDiv = document.createElement('article');
         postDiv.setAttribute('data-post-id',`${post._id}`);
         postDiv.className = `${style.post}`
-        const postImg = document.createElement('div');
+        const postImg = document.createElement('figure');
         postImg.className = `${style.imageContainer}`;
         const img = document.createElement('img');
         img.src = `${post.imageUrls ? post.imageUrls[0] : post.thumbnail}`;
         postImg.insertAdjacentElement('beforeend',img);
-        const ulist = document.createElement('ul');
-        ulist.className = `${style.info}`;
-        const li = document.createElement('li');
-        li.innerText = `${post.title}`;
-        ulist.insertAdjacentElement('beforeend',li);
+        const infoSection = document.createElement('section');
+        infoSection.className = `${style.info}`;
+        const title = document.createElement('h3');
+        title.innerText = `${post.title}`;
+        infoSection.insertAdjacentElement('beforeend',title);
         postDiv.insertAdjacentElement('beforeend',postImg);
-        postDiv.insertAdjacentElement('beforeend',ulist);
-        $postContainer.insertAdjacentElement('beforeend',postDiv);
+        postDiv.insertAdjacentElement('beforeend',infoSection);
+        this.$postContainer.insertAdjacentElement('beforeend',postDiv);
     })
   };
   this.render();
 
-  $postContainer.addEventListener("click", (e) => {
-    const $post = e.target.closest("article > div");
+  this.$postContainer.addEventListener("click", (e) => {
+    const $post = e.target.closest("article");
     if ($post) {
       const { postId } = $post.dataset;
       if (postId) {

@@ -33,6 +33,7 @@
     box-shadow: rgb(0 0 0 / 4%) 0px 4px 16px 0px;
 }
 .imageContainer{
+    margin:0;
     position:relative;
     width:100%;
     padding-top: 72.5%;
@@ -58,8 +59,8 @@
     box-sizing: border-box;
     /* background-color: #e4f0ea; */
 }
-.info > li{
- width:100px;
+.info > h2{
+ width:150px;
  text-align: center;
  overflow: hidden;
  white-space: nowrap; 

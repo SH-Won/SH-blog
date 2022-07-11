@@ -20,7 +20,6 @@ export default function (page,option,prevRoute = null ,admin = null){
         if(!result.user.isAuth){
             removeItem('loginSuccess');
             if(option){
-                
                 changeRoute('/login',{detail : { route : prevRoute} });
             }
             else{

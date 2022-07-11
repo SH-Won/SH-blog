@@ -33,14 +33,14 @@ export default function ArticleDetailPage({$target,articleId,user}){
         }
         console.log(article,user);
         const template = `
-        <div class="${styles.container}">
+        <article class="${styles.container}">
         <div class="${styles.info}">
         <h2 class="title"></h2>
-        <span class="${styles.writtenTime}">${this.state.createdAt}</span>
+        <time class="${styles.writtenTime}">${this.state.createdAt}</time>
         </div>
-        <div class="ck-content ql-content">
-        </div>
-        </div>
+        <section class="ck-content ql-content">
+        </section>
+        </article>
         `;
         
         

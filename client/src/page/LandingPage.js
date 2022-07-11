@@ -40,9 +40,10 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
     //    const hasMore = this.state.postSize >= this.state.limit;
        const hasMore = this.state.postSize > 0 ;
        const loading = this.state.isLoading;
-       const posts = document.querySelector('.page > article');
-       const length = posts.children.length - Math.floor(this.state.limit * 0.5);
-       const element = posts.children[length];
+       const postContainer = posts.$postContainer; 
+    //    console.log(posts);
+       const length = postContainer.children.length - Math.floor(this.state.limit * 0.5);
+       const element = postContainer.children[length];
        InfinityScroll(element,this.fetchPosts.bind(this),hasMore,loading);
     }
 

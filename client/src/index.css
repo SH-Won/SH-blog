@@ -68,28 +68,29 @@ ul{
     border-radius: 4px;
     font-size:1rem;
 }
-.nav{
+.tab{
+    display:flex;
     width:fit-content;
     position:relative;
     list-style: none;
     padding-bottom: .4rem;
     margin: 0.8rem 0 0 1.8rem;
 }
-.nav__link {
+.tab__link {
     text-decoration: none;
     cursor: pointer;
     color:darkgray;
     font-weight: 400;
     font-size: 1.5rem;
-    transform: rotateZ(-3deg);
     text-align: center;
+    margin:0;
     
     /* transition: transform 0.5s; */
 }
-.nav__link--checked{
+.tab__link--checked{
     color:black;
 }
-.nav__underline{
+.tab__underline{
     width:50%;
     position:absolute;
     bottom:0;
@@ -99,12 +100,12 @@ ul{
     /* transition: left 1s cubic-bezier(0.08, 0.9, 0, 1.04); */
     transition: left 1s cubic-bezier(0.08, 0.9, 0.48, 1.22);
 }
-.nav__underline--issue{
+.tab__underline--issue{
     left:50%;
     /* transform:translateX(100%); */
 
 }
-.nav__underline--recent{
+.tab__underline--recent{
     left:0;
     /* transform:translateX(-100%); */
 }

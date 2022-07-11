@@ -2,8 +2,8 @@ import { changeRoute } from '../utills/router';
 
 export default function Tab({$target,initialState={}}){
     
-    this.$tab = document.createElement('nav');
-    this.$tab.className = 'nav';
+    this.$tab = document.createElement('section');
+    this.$tab.className = 'tab';
     this.state = initialState;
     $target.appendChild(this.$tab);
     this.setState = (nextState) => {
@@ -12,14 +12,14 @@ export default function Tab({$target,initialState={}}){
     }
     this.render = () =>{
         const template = `
-        <a class="nav__link" href="/" data-index="0">최신</a>
-        <a class ="nav__link" href="/issue" data-index="1">이슈</a>
-        <div class="nav__underline"></div>
+        <li class="tab__link" data-index="0" data-route="/">최신</li>
+        <li class ="tab__link" data-index="1" data-route="/issue">이슈</li>
+        <div class="tab__underline"></div>
         `.trim();
         const {current,prev} = this.state;
         this.$tab.innerHTML = template;
         const underline = this.$tab.lastElementChild;
-        this.$tab.children[current].classList.add('nav__link--checked');
+        this.$tab.children[current].classList.add('tab__link--checked');
 
         underline.style.left = `${prev*50}%`;
         setTimeout(()=>{
@@ -27,16 +27,15 @@ export default function Tab({$target,initialState={}}){
         },0)
     }
     this.$tab.addEventListener('click',e =>{
-        if(e.target.tagName !== 'A') return;
+        if(e.target.tagName !== 'LI') return;
         e.preventDefault();
-        const route = e.target.pathname;
+        const {route,index} = e.target.dataset;
         if(route === location.pathname) return ;
         if(route){
             const {current} = this.state;
-            const {index} = e.target.dataset;
 
-            this.$tab.children[current].classList.remove('nav__link--checked');
-            this.$tab.children[+index].classList.add('nav__link--checked');
+            this.$tab.children[current].classList.remove('tab__link--checked');
+            this.$tab.children[+index].classList.add('tab__link--checked');
             const underline = this.$tab.lastElementChild ;
             changeRoute(route);
         }

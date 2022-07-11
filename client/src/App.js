@@ -4,7 +4,6 @@ import { selector } from './utills/selector.js';
 import { destoryImage } from './utills/api.js';
 import './styles/page.css'
 import Tab from './components/Tab.js';
-import { getItem } from './utills/storage.js';
 import './styles/highlight.css';
 
 export default function App($target){
@@ -33,7 +32,6 @@ export default function App($target){
     tab.render();
 
     this.route = (params = {}) =>{
-        console.log(params);
         const {pathname} = location;
         // const loginSuccess = getItem('loginSuccess');
         
