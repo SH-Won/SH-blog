@@ -94,6 +94,13 @@ export default function App($target){
                 testCache : issueCache,
             }))
         }
+        // else if(pathname === '/trend'){
+        //     $target.appendChild(tab.$tab);
+        //     tab.setState({
+        //         prev:tab.state.current,
+        //         current:2,
+        //     })
+        // }
         else if(pathname ==='/register'){
         
             import('./Auth.js').then(async ({default:Auth}) =>{

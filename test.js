@@ -30,5 +30,47 @@ const state = {
     
 }
 
+const getNumData = () => new Promise((res,rej) =>{
+    const data = [1,2,3,4];
+    setTimeout(()=>{
+           res(data);
+    },2000)
+})
+
+const getNameData = () => new Promise((res,rej) =>{
+    const data = ['james','daniella','santos'];
+    setTimeout(()=>{
+           res(data);
+    },3000)
+});
+const all = Promise.all([getNumData(),getNameData()]);
+all.then(result => console.log(result));
+
+console.log(1);
+all.then(result => console.log(result, '1'));
+
+
 
 // https://shlog-sh-won.vercel.app
+
+
+const res = this.getPosts();
+    res.then(result => {
+        console.log('fetching?',result);
+        if(result.ok) return result.json();
+    })
+    .then(result =>{
+        console.log('result',result);
+        console.log('fullfilled');
+    });
+    console.log('1');
+LandingPage.prototype.getPosts = function() {
+    try{
+        const ENDPOINT = `${window.origin}`;
+        return fetch(`${ENDPOINT}/api/posts/article`);
+        
+    }
+    catch(e){
+
+    }
+}

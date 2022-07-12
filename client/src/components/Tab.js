@@ -6,6 +6,7 @@ export default function Tab({$target,initialState={}}){
     this.$tab.className = 'tab';
     this.state = initialState;
     $target.appendChild(this.$tab);
+
     this.setState = (nextState) => {
          this.state = nextState;
          this.render();
@@ -20,10 +21,11 @@ export default function Tab({$target,initialState={}}){
         this.$tab.innerHTML = template;
         const underline = this.$tab.lastElementChild;
         this.$tab.children[current].classList.add('tab__link--checked');
-
-        underline.style.left = `${prev*50}%`;
+        const calcLeft = 100 / (this.$tab.children.length - 1);
+        underline.style.width = `${calcLeft}%`
+        underline.style.left = `${prev * calcLeft}%`;
         setTimeout(()=>{
-            underline.style.left = `${(current)*50}%`;
+            underline.style.left = `${current * calcLeft}%`;
         },0)
     }
     this.$tab.addEventListener('click',e =>{

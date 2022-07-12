@@ -113,8 +113,7 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
     })
 
     this.fetchPosts();
-    this.init();
-   
+    this.init();   
 }
 
 LandingPage.prototype.fetchPosts = async function(checkToggle = false){
@@ -130,7 +129,6 @@ LandingPage.prototype.fetchPosts = async function(checkToggle = false){
         isLoading:true,
     })
     const {posts,postSize} = await request(this.state.tab,params);
-    console.log(posts);
     this.setState({
         ...this.state,
         posts : !this.state.skip ? posts : [...this.state.posts,...posts],
