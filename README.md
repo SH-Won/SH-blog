@@ -86,13 +86,12 @@ ClassicEditor.create($target,{
 
 }
 ```
-<br/>
+---
 
 ### <span style="color:red"> **CK Editor5 --> Quill Editor**</span>
 > 간단한 글, 코드블럭 작성, 이미지 업로드를 하기 위해 **WYSIWYG 에디터** 를 사용하였지만, **webpack bundle** 사이즈에서 **CK Editor5** 가 차지하는 용량이 <span style="color:red">**약 3.5MB**</span> 로 프로젝트엔 적합 하지 않다고 판단하여 비교적 가벼운 **Quill Editor** 로 바꾸기로 결정
 
-<br/>
-
+---
 ### <span style="color:red">**Quill Editor Toolbar icons are not rendered**</span>
 
 Quill Editor 의 Custom Toolbar 의 기능 icon 들이 화면에 표시 되지 않음
@@ -119,7 +118,7 @@ toolbarUploadBtn.innerHTML = require('quill/asset/image.svg');
 // 위와 같은 형식으로 svg 를 가져오기 때문에
 // svg-inline-loader 를 통해 webpack 으로 build 해야한다.
 ```
-
+---
 ### <span style="color:red">**CORS**</span>
 <u>Client -> Vercel  
 Server -> Heroku</u> 로 배포   
@@ -142,13 +141,34 @@ const res = await fetch(fullUrl,{
 const express = require('express');
 const app = express();
 const cors = require('cors');
-
+const origin = 'your front domain';
 // origin 을 반드시 Client origin 주소를 명시 해야 한다.
 app.use(cors({origin,
   credentials:true,
 }));
 
 ```  
+---
+### <span style="color:red">**Cookie 설정**</span>
+vercel, heroku 배포 이후에 서버 주소로의 요청에 브라우저 쿠키가 안들어가는 문제 발생.  
+여러가지 검색 결과 크로스 사이트(Cross-site)로 전송하는 요청의 경우 쿠키의 전송은 제한을 둔다는 사실을 알게됐다.  
+
+```js
+router.post('/login',(req,res) => {
+         res.cookie('w_auth', user.token, {
+                httpOnly:true,
+                sameSite:'none',
+                secure:true,
+         }).json({ sueccess : true });
+}
+```
+서버에서 쿠키 설정을 해줘서 해결 할 수 있었으나, 브라우저의 설정 옵션에 따라 쿠키가 전송이 안되는 문제가 발생. 특히 아이폰의 경우 Safari 옵션으로 크로스 추적방지를 활성화 하면 쿠키가 전송되지않음.
+
+생각할 수 있는 해결책은 도메인을 일치시키는 것이다.
+그러나 현재는 차선책으로 LocalStroage 에 저장
+
+---
+
 ### <span style="color:red">**JWT 토큰**</span>
 <u>토큰을 어디에 저장 해야 좋은 것일까?</u> 라는 생각을 계속하게 되면서, 관련 글을 많이 읽게 되었다.  
 만약 **Cookie**를 사용한다고 하면, **CSRF** 공격을 당할 수도 있다.   
@@ -158,8 +178,6 @@ app.use(cors({origin,
 
 사용자의 정보가 탈취 당할 수 있으므로, 이부분에 대해서 더 깊은 생각과 공부가 필요하다.
 
-- **Cookie**
-- **Local Storage**
 
 <br/>
 

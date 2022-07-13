@@ -6,10 +6,16 @@ import './styles/page.css'
 import Tab from './components/Tab.js';
 import './styles/highlight.css';
 
-export default function App($target){
-    const cache = {};
-    const testCache = new Map();
+export default async function App($target){
+    const cache = new Map();
     const issueCache = new Map();
+    const Auth = await import('./Auth').then(({default:Auth}) => Auth);
+    const LoginPage = await import('./page/LoginPage').then(({default:page}) => page);
+    const RegisterPage = await import('./page/RegisterPage').then(({default:page}) => page);
+    const LandingPage = await import('./page/LandingPage').then(({default : page}) => page);
+    const PostDetailPage = await import('./page/PostDetailPage').then(({default : page}) => page);
+    const ArticleDetailPage = await import('./page/ArticleDetailPage').then(({default : page}) => page);
+    const EditPage = await import('./page/EditPage').then(({default : page}) => page);
     
     this.removeChild = (parent) =>{
         while(parent.children.length > 1){
@@ -33,7 +39,6 @@ export default function App($target){
 
     this.route = (params = {}) =>{
         const {pathname} = location;
-        // const loginSuccess = getItem('loginSuccess');
         
         this.removeChild($target);
 
@@ -43,16 +48,16 @@ export default function App($target){
         if(pathname === '/'){
             
             if(params?.deleteArticleId){
-                const cacheState = testCache.get('pre');
+                const cacheState = cache.get('pre');
                 const deleteIdx = cacheState.posts.findIndex(post => post._id === params.deleteArticleId );
                 cacheState.posts.splice(deleteIdx,1);
                 cacheState.skip--;
-                testCache.set('pre',cacheState);
+                cache.set('pre',cacheState);
             }
             if(params?.upload){
-                testCache.delete('pre');
+                cache.delete('pre');
             }
-            const initialState = testCache.has('pre') ? testCache.get('pre') : {
+            const initialState = cache.has('pre') ? cache.get('pre') : {
                 posts:[],
                 skip:0,
                 limit:8,
@@ -65,12 +70,16 @@ export default function App($target){
                 
             })
 
-            import('./page/LandingPage').then(({default:page}) => new page({
+            // import('./page/LandingPage').then(({default:page}) => new page({
+            //     $target,
+            //     initialState,
+            //     cache,
+            // }))
+            new LandingPage({
                 $target,
                 initialState,
                 cache,
-                testCache,
-            }))
+            })
 
         }
         else if(pathname === '/issue'){
@@ -87,95 +96,100 @@ export default function App($target){
                 prev:tab.state.current,
                 current:1,
             })
-            import('./page/LandingPage').then(({default:page}) => new page({
+            // import('./page/LandingPage').then(({default:page}) => new page({
+            //     $target,
+            //     initialState,
+            //     cache :issueCache,
+            // }))
+            new LandingPage({
                 $target,
                 initialState,
-                cache,
-                testCache : issueCache,
-            }))
+                cache:issueCache,
+            })
         }
-        // else if(pathname === '/trend'){
-        //     $target.appendChild(tab.$tab);
-        //     tab.setState({
-        //         prev:tab.state.current,
-        //         current:2,
-        //     })
-        // }
+        
         else if(pathname ==='/register'){
         
-            import('./Auth.js').then(async ({default:Auth}) =>{
-                const registerPage = await import('./page/RegisterPage')
-                                    .then(({default: page}) => page);
-                Auth(registerPage,false)({
-                    $target,
+            // import('./Auth.js').then(async ({default:Auth}) =>{
+            //     const registerPage = await import('./page/RegisterPage')
+            //                         .then(({default: page}) => page);
+            //     Auth(registerPage,false)({
+            //         $target,
                     
-                })
+            //     })
+            // })
+            Auth(RegisterPage,false)({
+                $target,
             })
         }
         else if(pathname ==='/login'){
             const connect = params !==null && params.hasOwnProperty('route') ?  params.route : '/'; 
             
-            import('./Auth.js').then(async ({default:Auth}) =>{
-                const loginPage = await import('./page/LoginPage')
-                                    .then(({default: page}) => page);
-                Auth(loginPage,false)({
-                    $target,
-                    connect
-                })
+            // import('./Auth.js').then(async ({default:Auth}) =>{
+            //     const loginPage = await import('./page/LoginPage')
+            //                         .then(({default: page}) => page);
+            //     Auth(loginPage,false)({
+            //         $target,
+            //         connect
+            //     })
+            // })
+            Auth(LoginPage,false)({
+                $target,
+                connect,
             })
         }
         else if(pathname.split('/')[1] === 'post'){
             const [ , ,postId] = pathname.split('/');
-            import('./Auth.js').then(async ({default:Auth}) =>{
-                const postDetailPage = await import('./page/PostDetailPage')
-                                    .then(({default: page}) => page);
-                Auth(postDetailPage,false)({
-                    $target,
-                    postId,
-                })
+            // import('./Auth.js').then(async ({default:Auth}) =>{
+            //     const postDetailPage = await import('./page/PostDetailPage')
+            //                         .then(({default: page}) => page);
+            //     Auth(postDetailPage,false)({
+            //         $target,
+            //         postId,
+            //     })
+            // })
+            Auth(PostDetailPage,false)({
+                $target,
+                postId,
             })
+
         }
         
         else if(pathname ==='/edit'){
             const isModify = params !== null && params.hasOwnProperty('article') ? true : false;
             const prevRoute = params !== null && params.hasOwnProperty('route') ? params.route : pathname;
             
-            import('./Auth.js').then(async ({default:Auth}) =>{
-                const editPage = await import('./page/EditPage')
-                                    .then(({default: page}) => page);
-                Auth(editPage,true,prevRoute)({
-                    $target,
-                    isModify,
-                    initialState : isModify ? params.article : null,
-                })
+            // import('./Auth.js').then(async ({default:Auth}) =>{
+            //     const editPage = await import('./page/EditPage')
+            //                         .then(({default: page}) => page);
+            //     Auth(editPage,true,prevRoute)({
+            //         $target,
+            //         isModify,
+            //         initialState : isModify ? params.article : null,
+            //     })
+            // })
+            Auth(EditPage,true,prevRoute)({
+                $target,
+                isModify,
+                initialState : isModify ? params.article : null,
             })
         }
-        // else if(pathname === '/article'){
-            
-        //     import('./Auth.js').then(async ({default:Auth}) =>{
-        //         const articlePage = await import('./page/ArticlePage.js')
-        //                             .then(({default: page}) => page);
-        //         Auth(articlePage,false)({
-        //             $target,
-        //             initialState:{
-        //                 posts:[],
-        //             }
-        //         })
-        //     })
-        // }
         else if(pathname.split('/')[1] === 'article'){
             const [ , ,articleId] = pathname.split('/');
 
-            import('./Auth.js').then(async ({default:Auth}) =>{
-                const articleDetailPage = await import('./page/ArticleDetailPage')
-                                    .then(({default: page}) => page);
-                Auth(articleDetailPage,false)({
-                    $target,
-                    articleId
-                })
+            // import('./Auth.js').then(async ({default:Auth}) =>{
+            //     const articleDetailPage = await import('./page/ArticleDetailPage')
+            //                         .then(({default: page}) => page);
+            //     Auth(articleDetailPage,false)({
+            //         $target,
+            //         articleId
+            //     })
+            // })
+            Auth(ArticleDetailPage,false)({
+                $target,
+                articleId,
             })
         }
-        
     }
     init(this.route);
     this.route();

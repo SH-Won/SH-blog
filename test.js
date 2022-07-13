@@ -34,43 +34,65 @@ const getNumData = () => new Promise((res,rej) =>{
     const data = [1,2,3,4];
     setTimeout(()=>{
            res(data);
-    },2000)
+    },1000)
 })
 
 const getNameData = () => new Promise((res,rej) =>{
     const data = ['james','daniella','santos'];
     setTimeout(()=>{
            res(data);
-    },3000)
+    },2000)
 });
-const all = Promise.all([getNumData(),getNameData()]);
-all.then(result => console.log(result));
 
-console.log(1);
-all.then(result => console.log(result, '1'));
+const sequential = async () =>{
+    const slow = await getNameData();
+    console.log(await slow)
+
+    const fast = await getNumData();
+    console.log(await fast);
+    
+}
+const parellel = () =>{
+    const slow = getNameData();
+    const fast = getNumData();
+    slow.then(data => console.log(data,'slow'));
+    fast.then(data => console.log(data,'fast'));
+}
+const conCurrent = async () =>{
+    const slow = getNameData();
+    const fast = getNumData();
+    console.log(await slow, 'con slow');
+    console.log(await fast,' con fast');
+}
+
+
+sequential();
+parellel();
+conCurrent();
+
+
+
+// setTimeout(()=> console.log('async') , 1000);
+
+
+// console.time('p');
+// parellel();
+// console.timeEnd('p');
+// const all = Promise.all([getNumData(),getNameData()]);
+// all.then(result => console.log(result));
+
+// console.log(1);
+// all.then(result => console.log(result, '1'));
 
 
 
 // https://shlog-sh-won.vercel.app
 
 
-const res = this.getPosts();
-    res.then(result => {
-        console.log('fetching?',result);
-        if(result.ok) return result.json();
-    })
-    .then(result =>{
-        console.log('result',result);
-        console.log('fullfilled');
-    });
-    console.log('1');
-LandingPage.prototype.getPosts = function() {
-    try{
-        const ENDPOINT = `${window.origin}`;
-        return fetch(`${ENDPOINT}/api/posts/article`);
-        
-    }
-    catch(e){
-
-    }
+let funcs = Array(5);
+for(var i=1; i<=5; i++){
+    setTimeout(() => {
+      console.log(i);
+    },i*1000)
 }
+

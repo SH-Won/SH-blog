@@ -8,13 +8,13 @@ import { changeRoute } from '../utills/router.js';
 import ClickButton from '../components/ClickButton.js';
 import '../styles/page.css';
 
-export default function LandingPage({$target,initialState,cache,testCache,user}){
+export default function LandingPage({$target,initialState,cache}){
 
     const $page = document.createElement('div');
     
     $page.className = 'page landing';
     $target.appendChild($page);
-    
+
     this.state = {
         isLoading:true,
         checked: [],
@@ -35,8 +35,8 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
     this.init = () =>{
       
        const stateKey = this.state.checked.sort().join(',');
-       testCache.set(stateKey,this.state);
-       testCache.set('pre',this.state);
+       cache.set(stateKey,this.state);
+       cache.set('pre',this.state);
     //    const hasMore = this.state.postSize >= this.state.limit;
        const hasMore = this.state.postSize > 0 ;
        const loading = this.state.isLoading;
@@ -65,9 +65,9 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
             }
             const stateKey = checked.sort().join(',');
             // stateKey = stateKey === '' ? 'root' : stateKey;
-            if(testCache.has(stateKey)){
+            if(cache.has(stateKey)){
                 this.setState({
-                    ...testCache.get(stateKey),
+                    ...cache.get(stateKey),
                     checkToggle:true,
                 });
                 return;
@@ -111,9 +111,9 @@ export default function LandingPage({$target,initialState,cache,testCache,user})
         $target:$page,
         initialState: this.state.isLoading,
     })
-
+    if(!cache.has('pre'))
     this.fetchPosts();
-    this.init();   
+    this.init();
 }
 
 LandingPage.prototype.fetchPosts = async function(checkToggle = false){
