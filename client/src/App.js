@@ -35,7 +35,7 @@ export default async function App($target){
         }
     });
     navBar.render();
-    tab.render();
+    // tab.render();
 
     this.route = (params = {}) =>{
         const {pathname} = location;
@@ -70,11 +70,6 @@ export default async function App($target){
                 
             })
 
-            // import('./page/LandingPage').then(({default:page}) => new page({
-            //     $target,
-            //     initialState,
-            //     cache,
-            // }))
             new LandingPage({
                 $target,
                 initialState,
@@ -96,11 +91,7 @@ export default async function App($target){
                 prev:tab.state.current,
                 current:1,
             })
-            // import('./page/LandingPage').then(({default:page}) => new page({
-            //     $target,
-            //     initialState,
-            //     cache :issueCache,
-            // }))
+
             new LandingPage({
                 $target,
                 initialState,
@@ -110,29 +101,13 @@ export default async function App($target){
         
         else if(pathname ==='/register'){
         
-            // import('./Auth.js').then(async ({default:Auth}) =>{
-            //     const registerPage = await import('./page/RegisterPage')
-            //                         .then(({default: page}) => page);
-            //     Auth(registerPage,false)({
-            //         $target,
-                    
-            //     })
-            // })
             Auth(RegisterPage,false)({
                 $target,
             })
         }
         else if(pathname ==='/login'){
             const connect = params !==null && params.hasOwnProperty('route') ?  params.route : '/'; 
-            
-            // import('./Auth.js').then(async ({default:Auth}) =>{
-            //     const loginPage = await import('./page/LoginPage')
-            //                         .then(({default: page}) => page);
-            //     Auth(loginPage,false)({
-            //         $target,
-            //         connect
-            //     })
-            // })
+
             Auth(LoginPage,false)({
                 $target,
                 connect,
@@ -140,14 +115,7 @@ export default async function App($target){
         }
         else if(pathname.split('/')[1] === 'post'){
             const [ , ,postId] = pathname.split('/');
-            // import('./Auth.js').then(async ({default:Auth}) =>{
-            //     const postDetailPage = await import('./page/PostDetailPage')
-            //                         .then(({default: page}) => page);
-            //     Auth(postDetailPage,false)({
-            //         $target,
-            //         postId,
-            //     })
-            // })
+
             Auth(PostDetailPage,false)({
                 $target,
                 postId,
@@ -158,16 +126,7 @@ export default async function App($target){
         else if(pathname ==='/edit'){
             const isModify = params !== null && params.hasOwnProperty('article') ? true : false;
             const prevRoute = params !== null && params.hasOwnProperty('route') ? params.route : pathname;
-            
-            // import('./Auth.js').then(async ({default:Auth}) =>{
-            //     const editPage = await import('./page/EditPage')
-            //                         .then(({default: page}) => page);
-            //     Auth(editPage,true,prevRoute)({
-            //         $target,
-            //         isModify,
-            //         initialState : isModify ? params.article : null,
-            //     })
-            // })
+
             Auth(EditPage,true,prevRoute)({
                 $target,
                 isModify,

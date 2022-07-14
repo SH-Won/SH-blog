@@ -1,6 +1,7 @@
 body{
     margin:0;
     background-color: #F8F9FA;
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", 나눔고딕, "Nanum Gothic", "Noto Sans KR", "Noto Sans CJK KR", arial, 돋움, Dotum, Tahoma, Geneva, sans-serif;
 }
 #root{
     width: 100%;
@@ -61,7 +62,8 @@ ul{
 .ql-syntax{
     background-color: #23241f;
     color: #f8f8f2;
-    white-space: pre-wrap;
+    overflow-x: auto;
+    /* white-space: pre-wrap; */
     margin-bottom: 5px;
     margin-top: 5px;
     padding: 5px 10px;
@@ -74,7 +76,7 @@ ul{
     position:relative;
     list-style: none;
     padding-bottom: .4rem;
-    margin: 0.8rem 0 0 1.8rem;
+    margin: 1.2rem 0 0 1.8rem;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 .tab__link {
