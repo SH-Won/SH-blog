@@ -3,7 +3,6 @@
     flex-direction: column;
 }
 
-
 .writeBtn{
     margin:1rem;
     padding:.5rem;
@@ -42,7 +41,7 @@
     border-left: 4px solid rgb(22, 212, 149);
     margin-bottom: 5px;
     margin-top: 5px;
-    padding-left: 16px;
+    padding:1rem;
     background-color: #F8F9FA;
     word-break: break-word;
 }

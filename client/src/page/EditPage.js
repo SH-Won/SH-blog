@@ -7,7 +7,7 @@ import {changeRoute} from '../utills/router'
 import { quillEditor } from '../utills/quilleditor';
 import Loading from '../components/Loading';
 import { updateArticle, uploadArticle, uploadCloudinary } from '../utills/api';
-import 'highlight.js/styles/dark.css';
+// import 'highlight.js/styles/dark.css';
 import '../styles/style_quill.css';
 
 
