@@ -1,4 +1,5 @@
 import Loading from './components/Loading';
+import PageLoading from './components/pageLoading';
 import {auth} from './utills/api';
 import {changeRoute} from './utills/router';
 
@@ -10,6 +11,10 @@ export default function (page,option,prevRoute = null ,admin = null){
             $target:arg.$target,
             initialState:true,
         })
+        // const pageLoading = new PageLoading({
+        //     $target:arg.$target,
+        //     initialState:true,
+        // })
         
         loading.render();
 

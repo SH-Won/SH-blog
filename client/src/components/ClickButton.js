@@ -1,3 +1,4 @@
+
 export default function ClickButton({$target,initialState,onClick = null}){
     const button = document.createElement('button');
     this.state = initialState;

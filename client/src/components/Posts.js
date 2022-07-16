@@ -4,6 +4,7 @@ export default function Posts({ $target, initialState, callback = null }) {
   this.state = initialState;
   this.$postContainer = document.createElement('div');
   this.$postContainer.className = `${style.postContainer}`;
+  // this.$postContainer.className = 'container'
   // $postContainer.className = 'page--article';
   $target.appendChild(this.$postContainer);
   
@@ -59,11 +60,13 @@ export default function Posts({ $target, initialState, callback = null }) {
     // console.timeEnd("posts render");
     this.$postContainer.innerHTML = '';
     posts.forEach((post,index) =>{
-        const postDiv = document.createElement('article');
-        postDiv.setAttribute('data-post-id',`${post._id}`);
-        postDiv.className = `${style.post}`
+        const article = document.createElement('article');
+        article.setAttribute('data-post-id',`${post._id}`);
+        article.className = `${style.post}`
+        // article.className = 'post'
         const postImg = document.createElement('figure');
         postImg.className = `${style.imageContainer}`;
+
         const img = document.createElement('img');
         img.src = `${post.imageUrls ? post.imageUrls[0] : post.thumbnail}`;
         postImg.insertAdjacentElement('beforeend',img);
@@ -72,9 +75,9 @@ export default function Posts({ $target, initialState, callback = null }) {
         const title = document.createElement('h3');
         title.innerText = `${post.title}`;
         infoSection.insertAdjacentElement('beforeend',title);
-        postDiv.insertAdjacentElement('beforeend',postImg);
-        postDiv.insertAdjacentElement('beforeend',infoSection);
-        this.$postContainer.insertAdjacentElement('beforeend',postDiv);
+        article.insertAdjacentElement('beforeend',postImg);
+        article.insertAdjacentElement('beforeend',infoSection);
+        this.$postContainer.insertAdjacentElement('beforeend',article);
     })
   };
   this.render();

@@ -1,5 +1,4 @@
 import { languages,getImageURL } from '../utills/languages';
-import styles from '../styles/EditPage.module.css';
 import SelectOptions from '../components/SelectOptions';
 import Input from '../components/Input';
 import ClickButton from '../components/ClickButton';
@@ -7,7 +6,6 @@ import {changeRoute} from '../utills/router'
 import { quillEditor } from '../utills/quilleditor';
 import Loading from '../components/Loading';
 import { updateArticle, uploadArticle, uploadCloudinary } from '../utills/api';
-// import 'highlight.js/styles/dark.css';
 import '../styles/style_quill.css';
 
 
@@ -18,10 +16,12 @@ export default function EditPage({$target,isModify,initialState = {},user}){
     const editor = document.createElement('div');
     const $infoContainer = document.createElement('div');
     const $btnContainer = document.createElement('div');
-    $infoContainer.className = `${styles.infoContainer}`
-    this.$page.className = `${styles.EditPage}`;
-    $btnContainer.className = `${styles.btnContainer}`;
-
+    // this.$page.className = `${styles.EditPage}`;
+    // $infoContainer.className = `${styles.infoContainer}`
+    // $btnContainer.className = `${styles.btnContainer}`;
+    this.$page.className = 'page edit';
+    $infoContainer.className = 'edit__information';
+    $btnContainer.className = 'edit__btn-container';
     this.$page.appendChild($infoContainer);
     this.$page.appendChild(editor);
     this.$page.appendChild($btnContainer);
@@ -44,7 +44,8 @@ export default function EditPage({$target,isModify,initialState = {},user}){
         $target:$infoContainer,
         initialState:{
             title:this.state.title,
-            className:`${styles.titleInput}`,
+            // className:`${styles.titleInput}`,
+            className:'edit__input',
             placeholder:'제목을 입력해주세요'
         },
         callback : (value) =>{
@@ -56,7 +57,8 @@ export default function EditPage({$target,isModify,initialState = {},user}){
     })
     const selectOption = new SelectOptions({
         $target:$infoContainer,
-        className:`${styles.selectOption}`,
+        // className:`${styles.selectOption}`,
+        className:'edit__select',
         initialState:{
             options:languages,
             selected: isModify ? this.state.category : this.state.selectedLanguage,
@@ -72,7 +74,8 @@ export default function EditPage({$target,isModify,initialState = {},user}){
     const cancelBtn = new ClickButton({
         $target:$btnContainer,
         initialState : {
-             className : `${styles.cancelBtn}`,
+            //  className : `${styles.cancelBtn}`,
+            className:'button button--cancel',
              name: '취소',
         },
         onClick : () =>{
@@ -86,29 +89,19 @@ export default function EditPage({$target,isModify,initialState = {},user}){
     const uploadBtn = new ClickButton({
         $target: $btnContainer,
         initialState : {
-            className : `${styles.uploadBtn}`,
+            // className : `${styles.uploadBtn}`,
+            className : 'button button--upload',
             name: isModify ? '수정' : '완료',
         },
         onClick : () => this.uploadItem(user,isModify),
         
     })
-    // const testBtn = new ClickButton({
-    //     $target:$btnContainer,
-    //     initialState : {
-    //         className : '',
-    //         name:'테스트'
-    //     },
-    //     onClick : () =>{
-    //         const delta = this.editor.clipboard.convert(this.editor.root.innerHTML);
-    //         console.log(delta);
-    //     }
-    // })
+    
     
     this.render = () =>{
         this.editor = quillEditor(editor);
         const delta = this.editor.clipboard.convert(this.state.data);
         this.editor.setContents(delta);
-        // testBtn.render();
         cancelBtn.render();
         uploadBtn.render();
     }

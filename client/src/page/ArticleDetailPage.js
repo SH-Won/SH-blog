@@ -9,7 +9,7 @@ import Favorite from '../components/Favorite';
 
 export default function ArticleDetailPage({$target,articleId,user}){
     const $page = document.createElement('div');
-    $page.className = `${styles.page}`;
+    $page.className = 'page detail-article';
     $target.appendChild($page);
     // const userId = selector(state => state?.userId);
     // console.log('user',userId);

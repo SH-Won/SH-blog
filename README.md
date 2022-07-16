@@ -178,6 +178,8 @@ router.post('/login',(req,res) => {
 
 사용자의 정보가 탈취 당할 수 있으므로, 이부분에 대해서 더 깊은 생각과 공부가 필요하다.
 
+---
+### <span style="color:red">**css 중복이 너무 많음**</span>
 
 <br/>
 

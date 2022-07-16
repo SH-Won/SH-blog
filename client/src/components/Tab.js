@@ -6,7 +6,6 @@ export default function Tab({$target,initialState={}}){
     this.$tab.className = 'tab';
     this.state = initialState;
     $target.appendChild(this.$tab);
-
     this.setState = (nextState) => {
          this.state = nextState;
          this.render();
@@ -24,10 +23,12 @@ export default function Tab({$target,initialState={}}){
         const calcLeft = 100 / (this.$tab.children.length - 1);
         underline.style.width = `${calcLeft}%`
         underline.style.left = `${prev * calcLeft}%`;
+        if(current === prev) return
         setTimeout(()=>{
             underline.style.left = `${current * calcLeft}%`;
         },0)
     }
+    this.render();
     this.$tab.addEventListener('click',e =>{
         if(e.target.tagName !== 'LI') return;
         e.preventDefault();
@@ -38,8 +39,7 @@ export default function Tab({$target,initialState={}}){
 
             this.$tab.children[current].classList.remove('tab__link--checked');
             this.$tab.children[+index].classList.add('tab__link--checked');
-            const underline = this.$tab.lastElementChild ;
-            changeRoute(route);
+            changeRoute(route,{detail:{ prev : current}});
         }
     })
     

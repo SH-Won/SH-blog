@@ -6,7 +6,7 @@ import CheckBox from '../components/CheckBox.js';
 import { languages } from '../utills/languages.js';
 import { changeRoute } from '../utills/router.js';
 import ClickButton from '../components/ClickButton.js';
-import '../styles/page.css';
+import Skeleton from '../components/Skeleton.js';
 
 export default function LandingPage({$target,initialState,cache}){
 
@@ -29,7 +29,11 @@ export default function LandingPage({$target,initialState,cache}){
             checkToggle:this.state.checkToggle,
             postSize : this.state.postSize,
         })
-        loading.setState(this.state.isLoading);
+        // loading.setState(this.state.isLoading);
+        skeletonLoading.setState({
+            ...skeletonLoading.state,
+            loading:this.state.isLoading,
+        })
         this.init();
     }
     this.init = () =>{
@@ -86,7 +90,7 @@ export default function LandingPage({$target,initialState,cache}){
         $target:$page,
         initialState:{
             name:'글 쓰기',
-            className:'button write-post'
+            className:'button button--end'
         },
         onClick : () => {
             changeRoute('/edit',{detail : {route : location.pathname}})
@@ -107,9 +111,16 @@ export default function LandingPage({$target,initialState,cache}){
         }
     })
 
-    const loading = new Loading({
+    // const loading = new Loading({
+    //     $target:$page,
+    //     initialState: this.state.isLoading,
+    // })
+    const skeletonLoading = new Skeleton({
         $target:$page,
-        initialState: this.state.isLoading,
+        initialState:{
+            loading:this.state.isLoading,
+            size: this.state.limit,
+        }
     })
     if(!cache.has('pre'))
     this.fetchPosts();

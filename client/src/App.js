@@ -2,7 +2,6 @@ import { init } from './utills/router.js';
 import NavBar from './components/NavBar.js';
 import { selector } from './utills/selector.js';
 import { destoryImage } from './utills/api.js';
-import './styles/page.css'
 import Tab from './components/Tab.js';
 import './styles/highlight.css';
 
@@ -27,13 +26,13 @@ export default async function App($target){
         $target,
     });
     
-    const tab = new Tab({
-        $target,
-        initialState:{
-            prev:0,
-            current:0,
-        }
-    });
+    // const tab = new Tab({
+    //     $target,
+    //     initialState:{
+    //         prev:0,
+    //         current:0,
+    //     }
+    // });
     navBar.render();
     // tab.render();
 
@@ -63,12 +62,19 @@ export default async function App($target){
                 limit:8,
                 tab:'article'
             };
-            $target.appendChild(tab.$tab);
-            tab.setState({
-                prev: tab.state.current,
-                current:0,
-                
+            new Tab({
+                $target,
+                initialState:{
+                    prev:history.state?.detail?.prev === 1 ? 1 : 0,
+                    current:0,
+                }
             })
+            // $target.appendChild(tab.$tab);
+            // tab.setState({
+            //     prev: tab.state.current,
+            //     current:0,
+                
+            // })
 
             new LandingPage({
                 $target,
@@ -86,10 +92,17 @@ export default async function App($target){
                 limit:8,
                 tab:''
             }
-            $target.appendChild(tab.$tab);
-            tab.setState({
-                prev:tab.state.current,
-                current:1,
+            // $target.appendChild(tab.$tab);
+            // tab.setState({
+            //     prev:tab.state.current,
+            //     current:1,
+            // })
+            new Tab({
+                $target,
+                initialState:{
+                    prev : history.state?.detail?.prev === 0 ? 0 : 1,
+                    current:1,
+                }
             })
 
             new LandingPage({

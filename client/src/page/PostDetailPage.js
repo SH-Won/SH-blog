@@ -10,7 +10,7 @@ export default function PostDetailPage({$target,postId}){
     }
     const $page = document.createElement('div');
     const $info = document.createElement('div');
-    $page.className = 'postDetailPage';
+    $page.className = 'page post-detail';
     $target.appendChild($page);
 
     this.setState = (nextState) =>{

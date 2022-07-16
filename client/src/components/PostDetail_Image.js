@@ -3,7 +3,7 @@ import Carousel from './Carousel.js';
 export default function PostDetail_Image({$target,initialState}){
     this.state = initialState;
     const $postDetail = document.createElement('div');
-    $postDetail.className = 'postDetail';
+    $postDetail.className = 'post-detail__img-carousel';
     $target.appendChild($postDetail);
 
     this.setState = (nextState) =>{
