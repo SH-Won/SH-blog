@@ -1,6 +1,6 @@
 import {request} from '../utills/api.js';
 import Posts from '../components/Posts.js';
-import Loading from '../components/Loading.js';
+// import Loading from '../components/Loading.js';
 import  {InfinityScroll}  from '../utills/InfinityScroll.js';
 import CheckBox from '../components/CheckBox.js';
 import { languages } from '../utills/languages.js';
