@@ -59,6 +59,7 @@ export default function Posts({ $target, initialState, callback = null }) {
     // $postContainer.innerHTML = template;
     // console.timeEnd("posts render");
     this.$postContainer.innerHTML = '';
+    const itemFragment = new DocumentFragment();
     posts.forEach((post,index) =>{
         const article = document.createElement('article');
         article.setAttribute('data-post-id',`${post._id}`);
@@ -77,8 +78,11 @@ export default function Posts({ $target, initialState, callback = null }) {
         infoSection.insertAdjacentElement('beforeend',title);
         article.insertAdjacentElement('beforeend',postImg);
         article.insertAdjacentElement('beforeend',infoSection);
-        this.$postContainer.insertAdjacentElement('beforeend',article);
+        // this.$postContainer.insertAdjacentElement('beforeend',article);
+        itemFragment.appendChild(article);
     })
+    // this.$postContainer.insertAdjacentElement('beforeend',itemFragment);
+    this.$postContainer.appendChild(itemFragment);
   };
   this.render();
 

@@ -47,11 +47,6 @@ const storage = multer.diskStorage({
         if(!fs.existsSync(`${path.join(__dirname,'..')}/uploads/${req.user.id}`))
         fs.mkdirSync(`${path.join(__dirname,'..')}/uploads/${req.user.id}`)
         cb(null,`${path.join(__dirname,'..')}/uploads/${req.user.id}`)
-        // cb(null,'/uploads' + '/'+ req.body.id);
-        // if(!fs.existsSync(`${path.join(__dirname,'..')}/uploads/${req.body.id}`)) fs.mkdirSync(`${path.join(__dirname,'..')}/uploads/${req.body.id}`);
-        // if(!fs.existsSync(`../uploads/${req.body.id}`)) fs.mkdirSync(`../uploads/${req.body.id}`);
-        
-        // cb(null,`../uploads/${req.body.id}`);
     },
     
     filename: function(req,file,cb) {
@@ -67,41 +62,13 @@ const storage = multer.diskStorage({
         cb(null,true);
     }
 })
-// const upload = multer({storage:Storage}).array('file');
-// const upload = multer({storage: multer.memoryStorage()});
+
 const upload = multer({storage}).array('file');
 
 // const upload = cloudinary.uploader.upload;
 router.post('/upload', async (req,res) =>{
     const {userId,paths} = req.body;
     const data = [];
-    // const result =  await paths.reduce( async (prev,cur) =>{
-    //     //   console.log(`${path.join(__dirname,'..')}/uploads/${userId}/${cur}`)
-    // //    const file = fs.readFileSync(`${path.join(__dirname,'..','uploads',`${userId}`,`${cur}`)}`,'base64');
-    // const filePath = `${path.join(__dirname,'..','uploads',`${userId}`,`${cur}`)}`
-    //     return prev.then(data => new Promise((resolve,reject) => {
-    //         cloudinary.uploader.upload(filePath,{folder:'uploads'},(err,result) => {
-    //             if(err) reject(err);
-    //             data.push({
-    //                 id:result.public_id,
-    //                 url:result.url,
-    //             })
-    //             resolve(data);
-    //         }).catch(err => res.status(400).json({success:false, err}) )
-    //     }))
-    //     // return prev.then(async () => {
-    //     //     await cloudinary.uploader.upload(filePath,{folder:'uploads'},(err,result) =>{
-    //     //         if(err) return res.status(400).json({success:false});
-    //     //         data.push({
-    //     //            id:result.public_id,
-    //     //            url:result.url,
-    //     //         })
-                
-    //     //     })
-    //     //     return Promise.resolve();
-    //     // })
-       
-    // },Promise.resolve([]));
     
     const result = await Promise.all(paths.map(async p => {
         const filePath = `${path.join(__dirname,'..','uploads',`${userId}`,`${p}`)}`;
@@ -116,12 +83,11 @@ router.post('/upload', async (req,res) =>{
         })
     }))
     res.status(200).json({success:true,data:result});
-    // res.status(200).json({success:true, data});
+
 })
 
 router.post('/uploadfiles',cors({origin,credentials:true}),auth,upload ,(req,res)=>{
 
-    // fs.mkdirSync(`../uploads/${req.body.id}`);
     let dataUrl = [];
     req.files.forEach(file => {
         dataUrl.push({
@@ -131,21 +97,6 @@ router.post('/uploadfiles',cors({origin,credentials:true}),auth,upload ,(req,res
     
     return res.json({success:true, data:dataUrl});
     
-    // upload(req,res, (err,result)=>{
-    //     // console.log(req.body);
-    //     if(err) return res.json({success:false,err});
-    //     let urlData = [];
-    //     req.files.forEach(file=>{
-    //         urlData.push({
-    //             url:file.path,
-    //             public_id:file.filename,
-    //         });
-
-    //     })
-    //     // console.log(req.files);
-    //     return res.json({success:true, data : urlData.length === 1 ? urlData[0] : urlData})
-    // })
-    
 })
 router.post('/uploadPost',(req,res)=>{
     
@@ -153,7 +104,6 @@ router.post('/uploadPost',(req,res)=>{
     post.save((err,result)=>{
         if(err) return res.json({success:false,err})
         res.json({success:true});
-        // console.log(result);
     })
 })
 router.get('/destory',auth,(req,res) =>{
@@ -222,10 +172,6 @@ router.get('/detailArticle',(req,res)=>{
 })
 
 router.post('/uploadArticle', (req,res)=>{
-    // console.log(req.body);
-    // console.log(typeof req.body);
-    // console.log(JSON.parse(req.body));
-    // const {data} = JSON.parse(req.body);
     
     new Article(req.body)
     .save((err,result)=>{

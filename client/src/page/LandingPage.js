@@ -1,6 +1,5 @@
 import {request} from '../utills/api.js';
 import Posts from '../components/Posts.js';
-// import Loading from '../components/Loading.js';
 import  {InfinityScroll}  from '../utills/InfinityScroll.js';
 import CheckBox from '../components/CheckBox.js';
 import { languages } from '../utills/languages.js';
@@ -28,12 +27,11 @@ export default function LandingPage({$target,initialState,cache}){
             end: (-1) * this.state.limit,
             checkToggle:this.state.checkToggle,
             postSize : this.state.postSize,
-        })
-        // loading.setState(this.state.isLoading);
+        });
         skeletonLoading.setState({
             ...skeletonLoading.state,
             loading:this.state.isLoading,
-        })
+        });
         this.init();
     }
     this.init = () =>{
@@ -41,11 +39,9 @@ export default function LandingPage({$target,initialState,cache}){
        const stateKey = this.state.checked.sort().join(',');
        cache.set(stateKey,this.state);
        cache.set('pre',this.state);
-    //    const hasMore = this.state.postSize >= this.state.limit;
        const hasMore = this.state.postSize > 0 ;
        const loading = this.state.isLoading;
        const postContainer = posts.$postContainer; 
-    //    console.log(posts);
        const length = postContainer.children.length - Math.floor(this.state.limit * 0.5);
        const element = postContainer.children[length];
        InfinityScroll(element,this.fetchPosts.bind(this),hasMore,loading);
@@ -67,8 +63,9 @@ export default function LandingPage({$target,initialState,cache}){
                 const idx = checked.indexOf(id);
                 checked.splice(idx,1);
             }
+
             const stateKey = checked.sort().join(',');
-            // stateKey = stateKey === '' ? 'root' : stateKey;
+
             if(cache.has(stateKey)){
                 this.setState({
                     ...cache.get(stateKey),
@@ -111,10 +108,6 @@ export default function LandingPage({$target,initialState,cache}){
         }
     })
 
-    // const loading = new Loading({
-    //     $target:$page,
-    //     initialState: this.state.isLoading,
-    // })
     const skeletonLoading = new Skeleton({
         $target:$page,
         initialState:{
@@ -143,7 +136,6 @@ LandingPage.prototype.fetchPosts = async function(checkToggle = false){
     this.setState({
         ...this.state,
         posts : !this.state.skip ? posts : [...this.state.posts,...posts],
-        // skip : postSize === 0 ? this.state.skip : this.state.skip + this.state.limit,
         skip:this.state.skip + postSize,
         postSize,
         isLoading:false,

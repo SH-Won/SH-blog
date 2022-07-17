@@ -26,24 +26,14 @@ export default async function App($target){
         $target,
     });
     
-    // const tab = new Tab({
-    //     $target,
-    //     initialState:{
-    //         prev:0,
-    //         current:0,
-    //     }
-    // });
     navBar.render();
-    // tab.render();
 
     this.route = (params = {}) =>{
         const {pathname} = location;
-        
-        this.removeChild($target);
 
+        this.removeChild($target);
         navBar.checkLoginState();
-        
-        
+
         if(pathname === '/'){
             
             if(params?.deleteArticleId){
@@ -69,12 +59,6 @@ export default async function App($target){
                     current:0,
                 }
             })
-            // $target.appendChild(tab.$tab);
-            // tab.setState({
-            //     prev: tab.state.current,
-            //     current:0,
-                
-            // })
 
             new LandingPage({
                 $target,
@@ -92,11 +76,7 @@ export default async function App($target){
                 limit:8,
                 tab:''
             }
-            // $target.appendChild(tab.$tab);
-            // tab.setState({
-            //     prev:tab.state.current,
-            //     current:1,
-            // })
+
             new Tab({
                 $target,
                 initialState:{
@@ -149,14 +129,6 @@ export default async function App($target){
         else if(pathname.split('/')[1] === 'article'){
             const [ , ,articleId] = pathname.split('/');
 
-            // import('./Auth.js').then(async ({default:Auth}) =>{
-            //     const articleDetailPage = await import('./page/ArticleDetailPage')
-            //                         .then(({default: page}) => page);
-            //     Auth(articleDetailPage,false)({
-            //         $target,
-            //         articleId
-            //     })
-            // })
             Auth(ArticleDetailPage,false)({
                 $target,
                 articleId,
@@ -173,5 +145,13 @@ export default async function App($target){
         }
         this.route();
     });
-
 }
+
+            // import('./Auth.js').then(async ({default:Auth}) =>{
+            //     const articleDetailPage = await import('./page/ArticleDetailPage')
+            //                         .then(({default: page}) => page);
+            //     Auth(articleDetailPage,false)({
+            //         $target,
+            //         articleId
+            //     })
+            // })

@@ -1,8 +1,6 @@
 import {request} from '../utills/api'
 import Posts from '../components/Posts';
 import Loading from '../components/Loading';
-
-import ListView from '../components/ListView';
 import { changeRoute } from '../utills/router';
 import ClickButton from '../components/ClickButton';
 import '../styles/page.css';
@@ -29,10 +27,7 @@ export default function ArticlePage({$target,initialState}){
         $target:$page,
         initialState:this.state.isLoading,
     })
-    // const listView = new ListView({
-    //     $target:$page,
-    //     maxSize:4,
-    // })
+
     const writeBtn = new ClickButton({
         $target:$page,
         initialState:{
@@ -40,7 +35,6 @@ export default function ArticlePage({$target,initialState}){
             name : '글 쓰기',
         },
         onClick : () => {
-            // window.history.replaceState({detail:{from :'/edit'}},null);
             changeRoute('/edit',{detail: {route : location.pathname}});
         }
     }).render();

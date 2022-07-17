@@ -16,9 +16,7 @@ export default function EditPage({$target,isModify,initialState = {},user}){
     const editor = document.createElement('div');
     const $infoContainer = document.createElement('div');
     const $btnContainer = document.createElement('div');
-    // this.$page.className = `${styles.EditPage}`;
-    // $infoContainer.className = `${styles.infoContainer}`
-    // $btnContainer.className = `${styles.btnContainer}`;
+    
     this.$page.className = 'page edit';
     $infoContainer.className = 'edit__information';
     $btnContainer.className = 'edit__btn-container';
@@ -44,7 +42,6 @@ export default function EditPage({$target,isModify,initialState = {},user}){
         $target:$infoContainer,
         initialState:{
             title:this.state.title,
-            // className:`${styles.titleInput}`,
             className:'edit__input',
             placeholder:'제목을 입력해주세요'
         },
@@ -57,7 +54,6 @@ export default function EditPage({$target,isModify,initialState = {},user}){
     })
     const selectOption = new SelectOptions({
         $target:$infoContainer,
-        // className:`${styles.selectOption}`,
         className:'edit__select',
         initialState:{
             options:languages,

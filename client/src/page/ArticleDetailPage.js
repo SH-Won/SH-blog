@@ -1,6 +1,6 @@
 import { request,deleteArticle,updateFavorite } from '../utills/api';
 import Loading from '../components/Loading';
-// import '../styles/style_ck.css';
+
 import styles from '../styles/Detail.module.css';
 import ClickButton from '../components/ClickButton';
 import { changeRoute } from '../utills/router';
@@ -11,8 +11,7 @@ export default function ArticleDetailPage({$target,articleId,user}){
     const $page = document.createElement('div');
     $page.className = 'page detail-article';
     $target.appendChild($page);
-    // const userId = selector(state => state?.userId);
-    // console.log('user',userId);
+
     this.state = {
         article:null,
         createdAt:null,
@@ -23,6 +22,11 @@ export default function ArticleDetailPage({$target,articleId,user}){
         loading.setState(this.state.isLoading);
         this.render();
     }
+    
+    const loading = new Loading({
+        $target:$page,
+        initialState:this.state.isLoading,
+    })
     
     this.render = () =>{
         if(this.state.isLoading) return;
@@ -41,7 +45,7 @@ export default function ArticleDetailPage({$target,articleId,user}){
         <section class="ck-content ql-content">
         </section>
         </article>
-        `;
+        `.trim();
         
         
 
@@ -111,10 +115,7 @@ export default function ArticleDetailPage({$target,articleId,user}){
         }).render();
         }
     }
-    const loading = new Loading({
-        $target:$page,
-        initialState:this.state.isLoading,
-    })
+
     const fetchArticle = async () =>{
         try{
             this.setState({

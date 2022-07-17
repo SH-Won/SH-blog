@@ -4,15 +4,7 @@ const path = require("path");
 const cors = require('cors');
 const fs = require('fs');
 
-const bodyParser = require("body-parser");
-
 const config = require("./config/key");
-
-// const mongoose = require("mongoose");
-// mongoose
-//   .connect(config.mongoURI, { useNewUrlParser: true })
-//   .then(() => console.log("DB connected"))
-//   .catch(err => console.error(err));
 
 const mongoose = require("mongoose");
 const cookieParser = require('cookie-parser');
@@ -25,38 +17,16 @@ const connect = mongoose.connect(mongoURI,
   .then(() => console.log('MongoDB Connected...'))
   .catch(err => console.log(err));
 
-// const whitelist = ['https://js-gallery-project.vercel.app','http://localhost:3000'];
-// const corsOptions = {
-//   origin : function (origin,callback) {
-//     console.log(origin);
-//     if(whitelist.indexOf(origin)  !== -1){
-//       callback(null,true);
-//     }else{
-//       callback(new Error('허용 되지 않았습니다'))
-//     }
-//   }
-// }
-// app.use(cors(corsOptions))
 const origin = process.env.WHITE_URL || 'http://localhost:3000';
 app.use(cors({origin,
   credentials:true,
 }));
-// app.use(express.json());
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(express.urlencoded({extended:true}));
+
 if(fs.existsSync(`${path.join(__dirname,'..')}/uploads`)) fs.mkdirSync(`${path.join(__dirname,'..')}/uploads`)
 app.use('/uploads',express.static(path.join(__dirname,'uploads')))
-// app.use('/uploads',express.static('uploads'));
 app.use(express.json());
-
 app.use(express.urlencoded({extended:false}))
-
 app.use(cookieParser());
-//to get json data
-// app.use(express.bodyParser());
-// app.use(bodyParser.json());
-// app.use(express.static('uploads'));
 app.use('/api/users',require('./router/users'));
 app.use('/api/posts',require('./router/posts'));
 

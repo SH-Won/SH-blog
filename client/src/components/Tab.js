@@ -10,14 +10,8 @@ export default function Tab({$target,initialState={}}){
          this.state = nextState;
          this.render();
     }
-    this.render = () =>{
-        const template = `
-        <li class="tab__link" data-index="0" data-route="/">최신</li>
-        <li class ="tab__link" data-index="1" data-route="/issue">이슈</li>
-        <div class="tab__underline"></div>
-        `.trim();
+    const setStyle = () =>{
         const {current,prev} = this.state;
-        this.$tab.innerHTML = template;
         const underline = this.$tab.lastElementChild;
         this.$tab.children[current].classList.add('tab__link--checked');
         const calcLeft = 100 / (this.$tab.children.length - 1);
@@ -27,6 +21,16 @@ export default function Tab({$target,initialState={}}){
         setTimeout(()=>{
             underline.style.left = `${current * calcLeft}%`;
         },0)
+    }
+    this.render = () =>{
+        const template = `
+        <li class="tab__link" data-index="0" data-route="/">최신</li>
+        <li class ="tab__link" data-index="1" data-route="/issue">이슈</li>
+        <div class="tab__underline"></div>
+        `.trim();
+        
+        this.$tab.innerHTML = template;
+        setStyle();
     }
     this.render();
     this.$tab.addEventListener('click',e =>{

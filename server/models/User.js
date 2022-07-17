@@ -109,7 +109,7 @@ userSchema.statics.findByToken = function (token,refreshToken,cb){
     }else{
         const userInfo = jwt.decode(token);
         const refreshResult = refreshVerify(refreshToken);
-        // if(result.success === false && result.message === 'jwt expired'){
+
             if(!refreshResult) cb();
             else{
                 user.findOne({_id:userInfo.id},(err,user) =>{
@@ -123,7 +123,6 @@ userSchema.statics.findByToken = function (token,refreshToken,cb){
                     return cb();
                 })
             }
-        // }
     }
 }
 userSchema.statics.refresh = function(){

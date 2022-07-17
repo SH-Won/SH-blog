@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { User } = require("../models/User");
 const {auth} = require('../middleware/auth');
-const { verify, sign, refresh } = require('../middleware/jwt');
+const { sign, refresh } = require('../middleware/jwt');
 const { Article } = require('../models/Article');
 
 router.get('/auth',auth,(req,res) =>{
@@ -43,8 +43,7 @@ router.post('/login',(req,res) =>{
 
             const token = sign(user);
             const refreshToken = refresh();
-            // console.log('token',token);
-            // console.log('refreshToken',refreshToken);
+
             user.refreshToken = refreshToken;
             user.save(function (err,user){
                 if(err) return res.status(400).send(err);
@@ -57,6 +56,41 @@ router.post('/login',(req,res) =>{
         })
     })
 })
+
+router.get('/logout',auth ,(req,res) =>{
+    User.findOneAndUpdate({_id: req.user._id},{token:'', refreshToken:'' ,tokenExp:''},(err,doc) =>{
+
+        if(err) return res.json({success: false, err});
+        return res.status(200).json({
+            success:true,
+        })
+    })
+})
+router.post('/favorite',(req,res) =>{
+    const count = parseInt(req.body.count);
+    const articleId = req.body.articleId;
+    console.log(req.body);
+    const filter = count === -1 ? {
+        $pull:{
+            favorite:articleId,
+        }
+    } : {
+        $addToSet:{
+             favorite:articleId,
+        }
+    }
+    User.findOneAndUpdate({_id:req.body.userId},filter,{new : true} ,(err,user) =>{
+       
+    });
+    Article.findOneAndUpdate({_id:articleId},{
+        $inc:{
+            favoriteCount:count,
+        }
+    },{new : true},(err,article) =>{
+        
+    })
+})
+
 
 // router.post('/login',(req,res) =>{
 //     User.findOne({ email:req.body.email}, (err,user) =>{
@@ -101,38 +135,5 @@ router.post('/login',(req,res) =>{
 //         })
 //     })
 // })
-router.get('/logout',auth ,(req,res) =>{
-    User.findOneAndUpdate({_id: req.user._id},{token:'', refreshToken:'' ,tokenExp:''},(err,doc) =>{
-
-        if(err) return res.json({success: false, err});
-        return res.status(200).json({
-            success:true,
-        })
-    })
-})
-router.post('/favorite',(req,res) =>{
-    const count = parseInt(req.body.count);
-    const articleId = req.body.articleId;
-    console.log(req.body);
-    const filter = count === -1 ? {
-        $pull:{
-            favorite:articleId,
-        }
-    } : {
-        $addToSet:{
-             favorite:articleId,
-        }
-    }
-    User.findOneAndUpdate({_id:req.body.userId},filter,{new : true} ,(err,user) =>{
-       
-    });
-    Article.findOneAndUpdate({_id:articleId},{
-        $inc:{
-            favoriteCount:count,
-        }
-    },{new : true},(err,article) =>{
-        
-    })
-})
 
 module.exports = router;
