@@ -30,12 +30,12 @@ export default function ArticleDetailPage({$target,articleId,user}){
     
     this.render = () =>{
         if(this.state.isLoading) return;
+        document.documentElement.scrollTop =0;
         const {article} = this.state;
         if(!this.state.createdAt){
             const date = new Date(article.createdAt).toLocaleString('ko-KR').split('. ');
             this.state.createdAt = `${date[0]}년 ${date[1]}월 ${date[2]}일 ${date[3]}`
         }
-        console.log(article,user);
         const template = `
         <article class="${styles.container}">
         <div class="${styles.info}">
