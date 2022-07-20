@@ -48,7 +48,7 @@ export default function LandingPage({$target,initialState,cache}){
     }
 
     let checkBox = null;
-    if(this.state.tab === 'article'){
+    if(this.state.tab === 'recent'){
     checkBox = new CheckBox({
         $target:$page,
         initialState:{
@@ -103,8 +103,9 @@ export default function LandingPage({$target,initialState,cache}){
             checkToggle:false,
         },
         callback : (id) => {
-            const path = this.state.tab === 'article' ? '/article' : '/post' 
-            changeRoute(`${path}/${id}`);
+            // const path = this.state.tab === 'article' ? '/article' : '/post' 
+            // changeRoute(`${path}/${id}`);
+            changeRoute(`/article/${id}`);
         }
     })
 
@@ -125,14 +126,14 @@ LandingPage.prototype.fetchPosts = async function(checkToggle = false){
     const params = {
         skip:this.state.skip,
         limit:this.state.limit,
-        category:this.state.checked,
+        category:this.state.tab === 'recent' ? this.state.checked : this.state.tab,
     }
     
     this.setState({
         ...this.state,
         isLoading:true,
     })
-    const {posts,postSize} = await request(this.state.tab,params);
+    const {posts,postSize} = await request('article',params);
     this.setState({
         ...this.state,
         posts : !this.state.skip ? posts : [...this.state.posts,...posts],

@@ -7,7 +7,7 @@ import './styles/highlight.css';
 
 export default async function App($target){
     const cache = new Map();
-    const issueCache = new Map();
+    const recentCache = new Map();
     const Auth = await import('./Auth').then(({default:Auth}) => Auth);
     const LoginPage = await import('./page/LoginPage').then(({default:page}) => page);
     const RegisterPage = await import('./page/RegisterPage').then(({default:page}) => page);
@@ -36,21 +36,11 @@ export default async function App($target){
 
         if(pathname === '/'){
             
-            if(params?.deleteArticleId){
-                const cacheState = cache.get('pre');
-                const deleteIdx = cacheState.posts.findIndex(post => post._id === params.deleteArticleId );
-                cacheState.posts.splice(deleteIdx,1);
-                cacheState.skip--;
-                cache.set('pre',cacheState);
-            }
-            if(params?.upload){
-                cache.delete('pre');
-            }
             const initialState = cache.has('pre') ? cache.get('pre') : {
                 posts:[],
                 skip:0,
                 limit:8,
-                tab:'article'
+                tab:'popular',
             };
             new Tab({
                 $target,
@@ -67,14 +57,24 @@ export default async function App($target){
             })
 
         }
-        else if(pathname === '/issue'){
+        else if(pathname === '/recent'){
             
+            if(params?.deleteArticleId){
+                const cacheState = recentCache.get('pre');
+                const deleteIdx = cacheState.posts.findIndex(post => post._id === params.deleteArticleId );
+                cacheState.posts.splice(deleteIdx,1);
+                cacheState.skip--;
+                recentCache.set('pre',cacheState);
+            }
+            if(params?.upload){
+                recentCache.delete('pre');
+            }
 
-            const initialState = issueCache.has('pre') ? issueCache.get('pre') : {
+            const initialState = recentCache.has('pre') ? recentCache.get('pre') : {
                 posts:[],
                 skip:0,
                 limit:8,
-                tab:''
+                tab:'recent',
             }
 
             new Tab({
@@ -88,7 +88,7 @@ export default async function App($target){
             new LandingPage({
                 $target,
                 initialState,
-                cache:issueCache,
+                cache:recentCache,
             })
         }
         

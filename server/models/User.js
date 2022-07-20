@@ -101,7 +101,6 @@ userSchema.statics.findByToken = function (token,refreshToken,cb){
     if(!token && !refreshToken) return cb();
 
     if(result.success){
-        console.log('token exist');
         user.findOne({_id:result.id},(err,user) =>{
             if(err) return cb(err);
             return cb(null,user,token);
@@ -116,7 +115,7 @@ userSchema.statics.findByToken = function (token,refreshToken,cb){
                     if(err) return cb();
                     
                     if(user.refreshToken === refreshToken){
-                        console.log('new Token');
+                       
                         const newToken = sign(user);
                         return cb(null,user,newToken);
                     }

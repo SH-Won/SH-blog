@@ -69,7 +69,6 @@ router.get('/logout',auth ,(req,res) =>{
 router.post('/favorite',(req,res) =>{
     const count = parseInt(req.body.count);
     const articleId = req.body.articleId;
-    console.log(req.body);
     const filter = count === -1 ? {
         $pull:{
             favorite:articleId,

@@ -24,8 +24,8 @@ export default function Tab({$target,initialState={}}){
     }
     this.render = () =>{
         const template = `
-        <li class="tab__link" data-index="0" data-route="/">최신</li>
-        <li class ="tab__link" data-index="1" data-route="/issue">이슈</li>
+        <li class="tab__link" data-index="0" data-route="/">인기</li>
+        <li class ="tab__link" data-index="1" data-route="/recent">최신</li>
         <div class="tab__underline"></div>
         `.trim();
         

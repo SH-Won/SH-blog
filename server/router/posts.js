@@ -146,8 +146,12 @@ router.get('/article',(req,res) =>{
     let skip = req.query.skip ? parseInt(req.query.skip) : Number(0);
     let limit = req.query.limit ? parseInt(req.query.limit) : 100;
     let category = req.query.category ? req.query.category : null;
+
     let findArg = {};
-    if(category){
+    if(category === 'popular'){
+        findArg['favoriteCount'] = {$gt : 0} ;
+    }
+    else if(category) {
         findArg['category'] = category.split(',').map(Number);
     }
 
@@ -157,6 +161,7 @@ router.get('/article',(req,res) =>{
     .limit(limit)
     .exec((err,posts) =>{
         if(err) res.json({success:false,err});
+        if(category === 'popular') posts.sort((a,b) => b.favoriteCount - a.favoriteCount);
         res.json({posts,postSize:posts.length});
     })
 })
