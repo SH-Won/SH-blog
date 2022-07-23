@@ -42,7 +42,8 @@ export default function LandingPage({$target,initialState,cache}){
        const hasMore = this.state.postSize > 0 ;
        const loading = this.state.isLoading;
        const postContainer = posts.$postContainer; 
-       const length = postContainer.children.length - Math.floor(this.state.limit * 0.5);
+    //    const length = postContainer.children.length - Math.floor(this.state.limit * 0.5);
+       const length = postContainer.children.length - 1;
        const element = postContainer.children[length];
        InfinityScroll(element,this.fetchPosts.bind(this),hasMore,loading);
     }
@@ -103,8 +104,6 @@ export default function LandingPage({$target,initialState,cache}){
             checkToggle:false,
         },
         callback : (id) => {
-            // const path = this.state.tab === 'article' ? '/article' : '/post' 
-            // changeRoute(`${path}/${id}`);
             changeRoute(`/article/${id}`);
         }
     })
