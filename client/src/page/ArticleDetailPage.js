@@ -32,6 +32,7 @@ export default function ArticleDetailPage({$target,articleId,user}){
         if(this.state.isLoading) return;
         document.documentElement.scrollTop =0;
         const {article} = this.state;
+
         if(!this.state.createdAt){
             const date = new Date(article.createdAt).toLocaleString('ko-KR').split('. ');
             this.state.createdAt = `${date[0]}년 ${date[1]}월 ${date[2]}일 ${date[3]}`
@@ -50,8 +51,8 @@ export default function ArticleDetailPage({$target,articleId,user}){
         
 
         $page.insertAdjacentHTML('beforeend',template);
-        const content = document.querySelector('.ql-content');
-        const title = document.querySelector('.title');
+        const content = $page.querySelector('.ql-content');
+        const title = $page.querySelector('.title');
         title.textContent = article.title;
         content.insertAdjacentHTML('beforeend',`${article.data}`);
         const buttonPosition = content.previousElementSibling;
@@ -73,46 +74,47 @@ export default function ArticleDetailPage({$target,articleId,user}){
             }
         })
         if(user._id === article.writer._id){
-        new ClickButton({
-            $target : buttonPosition,
-            initialState:{
-                className : `${styles.editBtn}`,
-                name : '수정',
+          new ClickButton({
+            $target: buttonPosition,
+            initialState: {
+              className: `${styles.editBtn}`,
+              name: "수정",
             },
-            onClick : () =>{
-                const params = {
-                    detail : {
-                        article:this.state.article,
-                    }
-                }
-                changeRoute('/edit',params);
-            }
-        }).render();
-        new ClickButton({
-            $target : buttonPosition,
-            initialState : {
-                className:`${styles.deleteBtn}`,
-                name: '삭제',
+            onClick: () => {
+              const params = {
+                detail: {
+                  article: this.state.article,
+                },
+              };
+              changeRoute("/edit", params);
             },
-            onClick : () =>{
-                const isDelete = confirm("정말 삭제 하시겠어요 ?");
-                if(!isDelete) return;
-                const data = {
-                    _id : this.state.article._id,
-                    imageIds:this.state.article.imageIds,
-                }
-                deleteArticle(data)
-                .then(response => {
-                    alert('삭제 하였습니다');
-                    if(response) changeRoute('/',{
-                        detail:{
-                            deleteArticleId : data._id,
-                            prevRoute:history.state,
-                        }
-                    });
-                })
-            }
-        }).render();
+          }).render();
+
+          new ClickButton({
+            $target: buttonPosition,
+            initialState: {
+              className: `${styles.deleteBtn}`,
+              name: "삭제",
+            },
+            onClick: () => {
+              const isDelete = confirm("정말 삭제 하시겠어요 ?");
+              if (!isDelete) return;
+              const data = {
+                _id: this.state.article._id,
+                imageIds: this.state.article.imageIds,
+              };
+              deleteArticle(data).then((response) => {
+                alert("삭제 하였습니다");
+                if (response)
+                  changeRoute("/", {
+                    detail: {
+                      deleteArticleId: data._id,
+                      prevRoute: history.state,
+                    },
+                  });
+              });
+            },
+          }).render();
         }
     }
 
@@ -134,6 +136,5 @@ export default function ArticleDetailPage({$target,articleId,user}){
 
         }
     }
-    
     fetchArticle();
 }

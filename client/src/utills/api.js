@@ -15,6 +15,7 @@ export const request  = async (url ="",params = {}) =>{
          throw new Error("무언가 이상해~~");
     }
 }
+
 export const uploadArticle = async (data = {} , category ='article') =>{
     try{    
         const fullUrl = `${ENDPOINT}/api/posts/${category === 'article' ? 'uploadArticle' : 'uploadPost'}`;
@@ -23,7 +24,6 @@ export const uploadArticle = async (data = {} , category ='article') =>{
             method:'POST',
             headers:{
                 'Content-Type' : 'application/json',
-                // 'Content-Type': 'application/x-www-form-urlencoded',
             },
             credentials : 'include',
             body:JSON.stringify(data)
