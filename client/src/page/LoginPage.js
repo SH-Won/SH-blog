@@ -3,6 +3,7 @@ import {setItem} from '../utills/storage';
 import { auth, loginUser } from '../utills/api';
 import { changeRoute } from '../utills/router';
 import { selector } from '../utills/selector';
+import Loading from '../components/Loading';
 export default function LoginPage({$target,connect}){
     const $page = document.createElement('div');
     const $form = document.createElement('form');
@@ -22,6 +23,11 @@ export default function LoginPage({$target,connect}){
         this.state = nextState;
         // this.render();
     } 
+    const loading = new Loading({
+        $target:$page,
+        initialState:false,
+        covered:true,
+    })
     this.render = () =>{
         const template = `
         <label for="email">이메일</label>
@@ -80,9 +86,11 @@ export default function LoginPage({$target,connect}){
             email:this.state.email,
             password:this.state.password,
         }
+        loading.setState(true);
         loginUser(data)
         .then(async response =>{
             if(response.loginSuccess){
+                loading.setState(false);
                 selector(null,'loginSuccess',true);
                 setItem('authorization',response.token);
                 setItem('refreshToken',response.refreshToken);
@@ -90,6 +98,10 @@ export default function LoginPage({$target,connect}){
                 changeRoute(connect,{detail : {loginSuccess:true}});
 
             }else alert('이메일이나 비밀번호를 확인해주세요')
+        })
+        .catch(err => {
+            alert("로그인에 실패했습니다. 다시 시도해 주세요");
+            loading.setState(false);
         })
     })
 }

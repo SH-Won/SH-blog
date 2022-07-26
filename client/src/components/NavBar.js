@@ -56,6 +56,7 @@ export default function NavBar({$target,initialState={}}){
                     if(!response.success){
                         alert("로그아웃에 실패했습니다");
                     }else{
+                        alert("안전하게 로그아웃 했습니다");
                         selector(null,'loginSuccess',false);
                         removeItem('loginSuccess');
                         removeItem('authorization');
