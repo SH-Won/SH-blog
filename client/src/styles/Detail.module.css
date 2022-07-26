@@ -18,6 +18,7 @@
 .editBtn{
     align-self: flex-end;
     width:20%;
+    max-width:100px;
     font-size:1rem;
     border-radius: .5rem;
     color:#015834;
@@ -28,6 +29,7 @@
 .deleteBtn{
     align-self: flex-end;
     width:20%;
+    max-width:100px;
     font-size:1rem;
     border-radius: .5rem;
     color:#015834;

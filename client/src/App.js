@@ -9,12 +9,12 @@ export default async function App($target){
     const cache = new Map();
     const recentCache = new Map();
     const Auth = await import('./Auth').then(({default:Auth}) => Auth);
-    const LoginPage = await import('./page/LoginPage').then(({default:page}) => page);
-    const RegisterPage = await import('./page/RegisterPage').then(({default:page}) => page);
-    const LandingPage = await import('./page/LandingPage').then(({default : page}) => page);
-    const PostDetailPage = await import('./page/PostDetailPage').then(({default : page}) => page);
-    const ArticleDetailPage = await import('./page/ArticleDetailPage').then(({default : page}) => page);
-    const EditPage = await import('./page/EditPage').then(({default : page}) => page);
+    // const LoginPage = await import('./page/LoginPage').then(({default:page}) => page);
+    // const RegisterPage = await import('./page/RegisterPage').then(({default:page}) => page);
+    // const LandingPage = await import('./page/LandingPage').then(({default : page}) => page);
+    //const PostDetailPage = await import('./page/PostDetailPage').then(({default : page}) => page);
+    // const ArticleDetailPage = await import('./page/ArticleDetailPage').then(({default : page}) => page);
+    // const EditPage = await import('./page/EditPage').then(({default : page}) => page);
     
     this.removeChild = (parent) =>{
         while(parent.children.length > 1){
@@ -28,14 +28,14 @@ export default async function App($target){
     
     navBar.render();
 
-    this.route = (params = {}) =>{
+    this.route = async (params = {}) =>{
         const {pathname} = location;
 
         this.removeChild($target);
         navBar.checkLoginState();
 
         if(pathname === '/'){
-            
+            const LandingPage = await import('./page/LandingPage').then(({default : page}) => page);
             const initialState = cache.has('pre') ? cache.get('pre') : {
                 posts:[],
                 skip:0,
@@ -49,7 +49,7 @@ export default async function App($target){
                     current:0,
                 }
             })
-
+            
             new LandingPage({
                 $target,
                 initialState,
@@ -58,7 +58,7 @@ export default async function App($target){
 
         }
         else if(pathname === '/recent'){
-            
+            const LandingPage = await import('./page/LandingPage').then(({default : page}) => page);
             if(params?.deleteArticleId){
                 const cacheState = recentCache.get('pre');
                 const deleteIdx = cacheState.posts.findIndex(post => post._id === params.deleteArticleId );
@@ -93,12 +93,13 @@ export default async function App($target){
         }
         
         else if(pathname ==='/register'){
-        
+            const RegisterPage = await import('./page/RegisterPage').then(({default:page}) => page);
             Auth(RegisterPage,false)({
                 $target,
             })
         }
         else if(pathname ==='/login'){
+            const LoginPage = await import('./page/LoginPage').then(({default:page}) => page);
             const connect = params !==null && params.hasOwnProperty('route') ?  params.route : '/'; 
 
             Auth(LoginPage,false)({
@@ -108,7 +109,7 @@ export default async function App($target){
         }
         else if(pathname.split('/')[1] === 'post'){
             const [ , ,postId] = pathname.split('/');
-
+            const PostDetailPage = await import('./page/PostDetailPage').then(({default : page}) => page);
             Auth(PostDetailPage,false)({
                 $target,
                 postId,
@@ -117,6 +118,7 @@ export default async function App($target){
         }
         
         else if(pathname ==='/edit'){
+            const EditPage = await import('./page/EditPage').then(({default : page}) => page);
             const isModify = params !== null && params.hasOwnProperty('article') ? true : false;
             const prevRoute = params !== null && params.hasOwnProperty('route') ? params.route : pathname;
 
@@ -127,8 +129,8 @@ export default async function App($target){
             })
         }
         else if(pathname.split('/')[1] === 'article'){
+            const ArticleDetailPage = await import('./page/ArticleDetailPage').then(({default : page}) => page);
             const [ , ,articleId] = pathname.split('/');
-
             Auth(ArticleDetailPage,false)({
                 $target,
                 articleId,
