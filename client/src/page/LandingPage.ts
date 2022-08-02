@@ -7,18 +7,18 @@ import { changeRoute } from '../utills/router.js';
 import ClickButton from '../components/ClickButton.js';
 import Skeleton from '../components/Skeleton.js';
 
-export default function LandingPage({ $target, initialState, cache }) {
-  const $page = document.createElement("div");
 
+export default function LandingPage({ $target, initialState , cache }) {
+  const $page = document.createElement("div");
   $page.className = "page landing";
   $target.appendChild($page);
 
   this.state = {
-    isLoading: true,
+    isLoading : true,
     checked: [],
     ...initialState,
   };
-  this.setState = (nextState) => {
+  this.setState = (nextState : object) => {
     this.state = nextState;
     posts.setState({
       isLoading: this.state.isLoading,
@@ -76,7 +76,7 @@ export default function LandingPage({ $target, initialState, cache }) {
       end: 0,
       checkToggle: false,
     },
-    callback: (id) => {
+    callback: (id : number) => {
       changeRoute(`/article/${id}`);
     },
   });
@@ -95,7 +95,7 @@ export default function LandingPage({ $target, initialState, cache }) {
 }
 
 
-function selectCheckBox(id,selected,cache){
+function selectCheckBox(id : number,selected : boolean, cache){
     const {checked} = this.state;
         if(selected){
             checked.push(id);

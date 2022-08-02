@@ -12,11 +12,13 @@ export default function Posts({ $target, initialState, callback = null }) {
   };
 
   this.render = () => {
-    const { posts, isLoading } = this.state;
-    
-    this.$postContainer.innerHTML = '';
+    const { posts, isLoading, postSize } = this.state;
+    if(isLoading) return;
+    const willRender = this.$postContainer.children.length !== posts.length;
+    if(!willRender) return;
+    console.time('post render');
     const itemFragment = new DocumentFragment();
-    posts.forEach((post,index) =>{
+    posts.slice((-1)*postSize).forEach((post,index) =>{
         const article = document.createElement('article');
         article.setAttribute('data-post-id',`${post._id}`);
         article.className = `${style.post}`
@@ -35,7 +37,10 @@ export default function Posts({ $target, initialState, callback = null }) {
         // this.$postContainer.insertAdjacentElement('beforeend',article);
         itemFragment.appendChild(article);
     })
+    
     this.$postContainer.appendChild(itemFragment);
+    console.log(itemFragment);
+    console.timeEnd('post render');
   };
   this.render();
 
