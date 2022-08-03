@@ -4,8 +4,13 @@ import { selector } from './utills/selector.js';
 import { destoryImage } from './utills/api.js';
 import Tab from './components/Tab.js';
 import './styles/highlight.css';
-
-export default async function App($target){
+interface Params{
+    deleteArticleId? : string,
+    upload? : boolean,
+    route? : string,
+    article? : object,
+}
+export default async function App($target : HTMLElement){
     const cache = new Map();
     const recentCache = new Map();
     const Auth = await import('./Auth').then(({default:Auth}) => Auth);
@@ -28,7 +33,7 @@ export default async function App($target){
     
     navBar.render();
 
-    this.route = async (params = {}) =>{
+    this.route = async (params : Params) =>{
         const {pathname} = location;
 
         this.removeChild($target);
