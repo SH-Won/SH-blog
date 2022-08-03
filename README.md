@@ -50,6 +50,102 @@ npm install
 루트 폴더에서
 npm run dev // 개발 모드로 실행
 ```
+## 🚀 개발 흐름 ##
+***페이지, 컴포넌트***  
+1. 생성자 함수를 이용하여 페이지,컴포넌트를 작성  
+
+2. this.setState 메서드를 만들어서 state 가 변경될 때, 상태에 따른 화면을 렌더링
+3. 필요한 컴포넌트를 import 하여 호출하여 사용
+
+```js
+import Component from '../components/Component';
+
+export default function Page({$target,initialState}){
+   this.state = initialState;
+  
+   this.setState = (nextState) => {
+      this.state = nextState;
+      this.render();
+   }
+   this.render = () =>{
+      // do someting
+   }
+   const component = new Component({
+   
+   })
+}
+```  
+
+***SPA 구현***  
+1. pathname 에 따라 알맞는 페이지를 렌더링  
+
+2. 주소 이동 시 알맞는 페이지를 렌더링 하기 위해 History API 와 CustomEvent 사용
+
+
+```js
+// router.js
+const ROUTE_EVENT = 'ROUTE_EVENT';
+
+export const init = (onRouteChange) =>{
+    window.addEventListener(ROUTE_EVENT,(e) =>{
+        onRouteChange();
+    });
+}
+
+export const changeRoute = (url,params=null) => {
+    window.history.pushState(params,null,url);
+    window.dispatchEvent(new CustomEvent(ROUTE_EVENT,params));
+}
+```
+init 함수는 ROUTE_EVENT 를 감지하면 onRouteChange 를 실행하고 changeRoute 함수는 주소 이동시 history 를 추가한뒤 CustomEvent 를 발생시킨다. 즉 ROUTE_EVENT 가 발생 했으므로, onRouteChange 가 실행된다.
+
+```js
+// App.js
+import { init } from './utills/router';
+export default fuction App(root){
+  // 주소 변경, 새로고침시 this.route 실행
+  this.route = () =>{
+       const { pathname } = location.pathname;
+       if(pathname === '/'){
+          new Page({})
+       }
+  }
+  this.route();
+  init(this.route); // ROUTE_EVENT 등록
+  window.addEventListener('popstate', e => {
+    this.route();
+  })
+}
+```
+뒤로가기, 앞으로가기 를 처리하기위해 popstate 이벤트 발생시 this.route 가 실행 되도록 설정
+
+***사용자 로그인 상태에 따른 페이지 처리***  
+1. 사용자의 로그인 상태마다 접근 가능한 페이지가 다름
+2. 클로저를 이용한 Higher Order Function 사용
+
+```js
+// option (false = 로그인 필요없음 , true = 로그인 필요함 )
+export default function Auth(Page,option){
+      async function Authentication(arg){
+          const user = await auth(); // 서버에서 유저정보 요청
+          
+          if(!user.isAuth){ // 로그인 상태가 아님
+              if(option){  // 로그인이 필요하다면
+                   changeRoute('로그인 페이지로 이동')
+               }
+               else new Page({...arg,user})
+            }
+           else{ // 로그인 상태이기 때문에 페이지 반환
+               return new Page({...arg,user})
+          }
+      }
+
+     return Authentication
+}
+
+```
+HOF 를 사용 하지 않으면 로그인된 사용자만 접근 할 수 있는 페이지 마다 사용자의 정보를 요청하고 이에따라 다음을 실행하는 코드를 작성해야 한다. HOF 를 사용함으로서 코드의 중복을 방지 할 수 있다.
+
 ## ⚠️이슈 ##
 ### <span style="color:red"> ***CK Editor5 duplicated modules error*** </span>
 중복된 모듈을 build 시 webpack 에러가 발생

@@ -75,7 +75,7 @@ module.exports={
       },
     
     resolve:{
-        extensions:['.js','.jsx','.css','.ts','.svg','*.svg'],
+        extensions:['.js','.jsx','.css','.ts','tsx','.svg','*.svg'],
         // modules:['node_modules'],
         alias:{
             // 'parchment': path.resolve(__dirname, 'node_modules/parchment/src/parchment.ts'),
@@ -90,7 +90,7 @@ module.exports={
         rules:[
 
             {
-                test:/\.(js|jsx)$/,
+                test:/\.(ts|js)x?$/,
                 exclude:[path.join(__dirname,'node_modules'),'/src/page/EditPage.js','/src/utills/ckeditor.js','/src/utills/Editor.js'],
                 
                use:[{
@@ -98,8 +98,8 @@ module.exports={
                     options:{
                         presets:[
                             '@babel/preset-env',
-                            
-                            '@babel/preset-react'
+                            '@babel/preset-react',
+                            '@babel/preset-typescript'
                         ],
                         plugins: [
                             [

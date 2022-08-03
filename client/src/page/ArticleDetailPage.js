@@ -121,7 +121,7 @@ function removeArticle(){
   deleteArticle(data).then((response) => {
     alert("삭제 하였습니다");
     if (response)
-      changeRoute("/", {
+      changeRoute("/recent", {
         detail: {
           deleteArticleId: data._id,
           prevRoute: history.state,
