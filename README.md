@@ -147,7 +147,7 @@ export default function Auth(Page,option){
 HOF 를 사용 하지 않으면 로그인된 사용자만 접근 할 수 있는 페이지 마다 사용자의 정보를 요청하고 이에따라 다음을 실행하는 코드를 작성해야 한다. HOF 를 사용함으로서 코드의 중복을 방지 할 수 있다.
 
 ## ⚠️이슈 ##
-### <span style="color:red"> ***CK Editor5 duplicated modules error*** </span>
+### <span style="color:red"> ***⚡ CK Editor5 duplicated modules error*** </span>
 중복된 모듈을 build 시 webpack 에러가 발생
 ```js
   // ckeditor.js
@@ -184,11 +184,11 @@ ClassicEditor.create($target,{
 ```
 ---
 
-### <span style="color:red"> **CK Editor5 --> Quill Editor**</span>
+### <span style="color:red"> **⚡ CK Editor5 --> Quill Editor**</span>
 > 간단한 글, 코드블럭 작성, 이미지 업로드를 하기 위해 **WYSIWYG 에디터** 를 사용하였지만, **webpack bundle** 사이즈에서 **CK Editor5** 가 차지하는 용량이 <span style="color:red">**약 3.5MB**</span> 로 프로젝트엔 적합 하지 않다고 판단하여 비교적 가벼운 **Quill Editor** 로 바꾸기로 결정
 
 ---
-### <span style="color:red">**Quill Editor Toolbar icons are not rendered**</span>
+### <span style="color:red">**⚡ Quill Editor Toolbar icons are not rendered**</span>
 
 Quill Editor 의 Custom Toolbar 의 기능 icon 들이 화면에 표시 되지 않음
 
@@ -215,7 +215,7 @@ toolbarUploadBtn.innerHTML = require('quill/asset/image.svg');
 // svg-inline-loader 를 통해 webpack 으로 build 해야한다.
 ```
 ---
-### <span style="color:red">**CORS**</span>
+### <span style="color:red">**⚡ CORS**</span>
 <u>Client -> Vercel  
 Server -> Heroku</u> 로 배포   
 Origin 이 다르기 때문에 당연히 교차 출처 리소스 공유 문제가 발생 할것이라고 이전 프로젝트 에서 경험.  
@@ -245,7 +245,7 @@ app.use(cors({origin,
 
 ```  
 ---
-### <span style="color:red">**Cookie 설정**</span>
+### <span style="color:red">**⚡ Cookie 설정**</span>
 vercel, heroku 배포 이후에 서버 주소로의 요청에 브라우저 쿠키가 안들어가는 문제 발생.  
 여러가지 검색 결과 크로스 사이트(Cross-site)로 전송하는 요청의 경우 쿠키의 전송은 제한을 둔다는 사실을 알게됐다.  
 
@@ -265,7 +265,7 @@ router.post('/login',(req,res) => {
 
 ---
 
-### <span style="color:red">**JWT 토큰**</span>
+### <span style="color:red">**⚡ JWT 토큰**</span>
 <u>토큰을 어디에 저장 해야 좋은 것일까?</u> 라는 생각을 계속하게 되면서, 관련 글을 많이 읽게 되었다.  
 만약 **Cookie**를 사용한다고 하면, **CSRF** 공격을 당할 수도 있다.   
 **Cookie**는 자동으로 요청헤더에 담겨서 전송되므로, 사용자가 의도하지 않았지만, 공격자의 의도대로 행동하게 될 수 있다.  
@@ -275,7 +275,7 @@ router.post('/login',(req,res) => {
 사용자의 정보가 탈취 당할 수 있으므로, 이부분에 대해서 더 깊은 생각과 공부가 필요하다.
 
 ---
-### <span style="color:red">**css 중복이 너무 많음**</span>
+### <span style="color:red">**⚡ css 중복이 너무 많음**</span>
 
 <br/>
 
