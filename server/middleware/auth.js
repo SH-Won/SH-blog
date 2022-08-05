@@ -1,24 +1,23 @@
-const {User}  = require('../models/User');
+const { User } = require('../models/User');
 
-const auth = (req,res,next) =>{
+const auth = (req, res, next) => {
     const token = req.headers.authorization;
     const refreshToken = req.headers.refreshtoken;
-    User.findByToken(token,refreshToken,(err,user,newToken) =>{
-        if(err) throw err;
-        if(!user){
-
+    User.findByToken(token, refreshToken, (err, user, newToken) => {
+        if (err) throw err;
+        if (!user) {
             return res.json({
-                user:{
-                    isAuth:false,
-                    error:true,
-                }
-            })
+                user: {
+                    isAuth: false,
+                    error: true,
+                },
+            });
         }
         req.user = user;
         req.token = newToken;
         req.refreshToken = refreshToken;
         next();
-    })
+    });
 };
 
 // const auth = (req,res,next) =>{
@@ -38,4 +37,4 @@ const auth = (req,res,next) =>{
 //         next();
 //     })
 // }
-module.exports = {auth};
+module.exports = { auth };

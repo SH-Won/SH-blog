@@ -1,56 +1,67 @@
 import style from '../styles/ListView.module.css';
-export default function ListView({$target,maxSize}){
-
+export default function ListView({ $target, maxSize }) {
     const $ListView = document.createElement('div');
-    $ListView.className = `${style.listView}`
+    $ListView.className = `${style.listView}`;
     $target.appendChild($ListView);
     this.state = {
         maxSize,
-        currentIndex:null,
-    }
-    this.setState = (nextState) =>{
+        currentIndex: null,
+    };
+    this.setState = nextState => {
         this.state = nextState;
-    }
-    this.render = () =>{
+    };
+    this.render = () => {
         const template = `
         <ul class="${style.list}">
-        ${Array(maxSize).fill().map((_,i) =>
-           `
-           <li data-index="${i}"><button class="${style.listBtn}">${i+1}EA</button></li>
-           `).join('')}
+        ${Array(maxSize).fill()
+            .map((_, i) =>`
+           <li data-index="${i}">
+           <button class="${style.listBtn}">${i + 1}EA</button>
+           </li>
+           `)
+           .join('')}
         </ul>
         `;
-         $ListView.insertAdjacentHTML('beforeend',template);
+        $ListView.insertAdjacentHTML('beforeend', template);
         // $ListView.innerHTML = template;
-    }
+    };
     this.render();
-    $ListView.addEventListener('click', e=>{
-        if(e.target.tagName !== 'BUTTON') return;
+    $ListView.addEventListener('click', e => {
+        if (e.target.tagName !== 'BUTTON') return;
         const posts = document.querySelector('.page > article');
         const selectedIndex = +e.target.parentNode.dataset.index;
-        const {currentIndex}  = this.state;
-         if(selectedIndex === currentIndex){
+        const { currentIndex } = this.state;
+        if (selectedIndex === currentIndex) {
             posts.style.display = 'flex';
-            $ListView.children[0].children[currentIndex].children[0].style.border = `0.5px gray solid`; 
-            $ListView.children[0].children[currentIndex].children[0].style.backgroundColor = 'white';
+            $ListView.children[0].children[
+                currentIndex
+            ].children[0].style.border = `0.5px gray solid`;
+            $ListView.children[0].children[
+                currentIndex
+            ].children[0].style.backgroundColor = 'white';
             this.setState({
                 ...this.state,
-                currentIndex:null,
-            })
+                currentIndex: null,
+            });
+        } else {
+            posts.style.display = 'grid';
+            posts.style.gridTemplateColumns = `repeat(${
+                selectedIndex + 1
+            },1fr)`;
+            if (currentIndex !== null) {
+                $ListView.children[0].children[
+                    currentIndex
+                ].children[0].style.border = `0.5px gray solid`;
+                $ListView.children[0].children[
+                    currentIndex
+                ].children[0].style.backgroundColor = 'white';
+            }
+            e.target.style.border = 'transparent';
+            e.target.style.backgroundColor = '#d5f7e7';
+            this.setState({
+                ...this.state,
+                currentIndex: selectedIndex,
+            });
         }
-        else{
-         posts.style.display = 'grid';
-         posts.style.gridTemplateColumns = `repeat(${selectedIndex+1},1fr)`;
-         if(currentIndex !== null){
-         $ListView.children[0].children[currentIndex].children[0].style.border = `0.5px gray solid`;
-         $ListView.children[0].children[currentIndex].children[0].style.backgroundColor = 'white';
-         }
-         e.target.style.border = "transparent";
-         e.target.style.backgroundColor = '#d5f7e7';
-         this.setState({
-             ...this.state,
-             currentIndex:selectedIndex,
-         })
-       }
-    })
+    });
 }

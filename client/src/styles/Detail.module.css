@@ -1,39 +1,38 @@
-
-.container{
-    padding:1.5rem;
+.container {
+    padding: 1.5rem;
     /* margin:0 .5rem; */
-    display:flex;
+    display: flex;
     flex-direction: column;
     box-sizing: border-box;
 }
-.info{
-    display:flex;
+.info {
+    display: flex;
     flex-direction: column;
 }
-.writtenTime{
-     align-self: flex-end;
-     font-size: .6rem;
+.writtenTime {
+    align-self: flex-end;
+    font-size: 0.6rem;
 }
 
-.editBtn{
+.editBtn {
     align-self: flex-end;
-    width:20%;
-    max-width:100px;
-    font-size:1rem;
-    border-radius: .5rem;
-    color:#015834;
+    width: 20%;
+    max-width: 100px;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    color: #015834;
     background-color: #d5f7e7;
-    border:transparent;
-    margin:.3rem;
+    border: transparent;
+    margin: 0.3rem;
 }
-.deleteBtn{
+.deleteBtn {
     align-self: flex-end;
-    width:20%;
-    max-width:100px;
-    font-size:1rem;
-    border-radius: .5rem;
-    color:#015834;
+    width: 20%;
+    max-width: 100px;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    color: #015834;
     background-color: #d5f7e7;
-    border:transparent;
-    margin:.3rem;
+    border: transparent;
+    margin: 0.3rem;
 }

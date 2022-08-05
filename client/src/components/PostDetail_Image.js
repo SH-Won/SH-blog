@@ -1,29 +1,27 @@
 import Carousel from './Carousel.js';
 
-export default function PostDetail_Image({$target,initialState}){
+export default function PostDetail_Image({ $target, initialState }) {
     this.state = initialState;
     const $postDetail = document.createElement('div');
     $postDetail.className = 'post-detail__img-carousel';
     $target.appendChild($postDetail);
 
-    this.setState = (nextState) =>{
+    this.setState = nextState => {
         this.state = nextState;
         this.render();
-    }
-    this.render = () =>{
-        const {post} = this.state;
+    };
+    this.render = () => {
+        const { post } = this.state;
         // $postDetail.innerHTML = `
         // <div class="postDetail_image">
         // <img src="${post.imageUrl}" />
         // </div>
         // `
+    };
 
-    }
-    
     const carousel = new Carousel({
-        $target:$postDetail,
+        $target: $postDetail,
         initialState: this.state.post.imageUrls,
-    })
+    });
     this.render();
-
 }

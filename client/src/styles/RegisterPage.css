@@ -1,37 +1,34 @@
-.register-page{
-    height:90vh;
-    display:flex;
+.register-page {
+    height: 90vh;
+    display: flex;
     align-items: center;
 }
-#register-form{
-    width:400px;
-    margin:2rem auto;
+#register-form {
+    width: 400px;
+    margin: 2rem auto;
 }
-#register-field{
-    display:flex;
+#register-field {
+    display: flex;
     flex-direction: column;
     align-items: center;
 }
 #register-field > input {
-    margin:.5rem;
-    width:60%;
-    height:30px;
+    margin: 0.5rem;
+    width: 60%;
+    height: 30px;
     border: 1px solid #e4e2e2;
-    border-radius: .5rem;
+    border-radius: 0.5rem;
 }
-#register-field > .valid{
-
+#register-field > .valid {
 }
-#register-field > .invalid{
-    
+#register-field > .invalid {
 }
-#register-field > input:focus{
+#register-field > input:focus {
     outline: none;
 }
-#submit{
-    width:20%;
-    border:transparent;
-    background-color:blue;
-    color:white;
-
+#submit {
+    width: 20%;
+    border: transparent;
+    background-color: blue;
+    color: white;
 }

@@ -1,16 +1,16 @@
 import style from '../styles/CheckBox.module.css';
-export default function CheckBox({$target,initialState,callback = null}){
+export default function CheckBox({ $target, initialState, callback = null }) {
     this.state = initialState;
     const checkBox = document.createElement('div');
     checkBox.className = `${style.checkBox}`;
     $target.appendChild(checkBox);
-    this.setState = (nextState) =>{
+    this.setState = nextState => {
         this.state = nextState;
         // this.render();
-    }
-    
+    };
+
     this.render = () => {
-        const {items,checked} = this.state;
+        const { items, checked } = this.state;
         const template = `
         ${items.map(item => `
         <input type="checkbox" value="${item._id}"/>
@@ -18,15 +18,19 @@ export default function CheckBox({$target,initialState,callback = null}){
         ${item.name}
         </label>
         &nbsp;
-        `).join('')}
+        `
+        )
+        .join('')}
         `;
-        checkBox.insertAdjacentHTML("beforeend", template);
-        checked.forEach(id => checkBox.children[(+id-1)*2].checked = true);
-    }
+        checkBox.insertAdjacentHTML('beforeend', template);
+        checked.forEach(
+            id => (checkBox.children[(+id - 1) * 2].checked = true),
+        );
+    };
     this.render();
-    checkBox.addEventListener('change',e =>{
-        if(e.target.tagName !== 'INPUT') return;
+    checkBox.addEventListener('change', e => {
+        if (e.target.tagName !== 'INPUT') return;
         const id = e.target.value;
-        callback(id,e.target.checked);
-    })
+        callback(id, e.target.checked);
+    });
 }

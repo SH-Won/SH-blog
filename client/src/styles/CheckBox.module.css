@@ -1,6 +1,6 @@
-.checkBox{
+.checkBox {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top:1.5rem;
+    margin-top: 1.5rem;
 }

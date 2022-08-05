@@ -1,27 +1,27 @@
 import '../styles/RegisterPage.css';
-import {registerUser} from '../utills/api';
-import {changeRoute} from '../utills/router'
-export default function RegisterPage({$target}){
+import { registerUser } from '../utills/api';
+import { changeRoute } from '../utills/router';
+export default function RegisterPage({ $target }) {
     const $page = document.createElement('div');
     const $form = document.createElement('form');
     $page.className = 'register-page';
     $form.id = 'register-form';
-    $page.appendChild($form)
+    $page.appendChild($form);
     $target.appendChild($page);
 
     this.state = {
-        name:'',
-        email:'',
-        password:'',
-        confirmPassword:'',
-        isValidName:false,
-        isValidEmail:false,
-        isValidPassword:false,
-    }
-    this.setState = (nextState) =>{
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        isValidName: false,
+        isValidEmail: false,
+        isValidPassword: false,
+    };
+    this.setState = nextState => {
         this.state = nextState;
-    }
-    this.render = () =>{
+    };
+    this.render = () => {
         const template = `
         <fieldset id="register-field">
         <legend>회원 가입</legend>
@@ -36,40 +36,38 @@ export default function RegisterPage({$target}){
         <input id="submit" type="submit" value="회원가입"/>
         </fieldset>
         `;
-        $form.insertAdjacentHTML('beforeend',template);
-    }
+        $form.insertAdjacentHTML('beforeend', template);
+    };
     this.render();
-    $form.addEventListener('change', e=>{
-        if(!e.target.tagName ==='INPUT') return;
-        let {value,name} = e.target;
-        setTimeout(() =>{
-            if(value === e.target.value){
-                const copy = {...this.state};
+    $form.addEventListener('change', e => {
+        if (!e.target.tagName === 'INPUT') return;
+        let { value, name } = e.target;
+        setTimeout(() => {
+            if (value === e.target.value) {
+                const copy = { ...this.state };
                 copy[name] = e.target.value;
                 this.setState(copy);
             }
-        },200)
-    })
-    $form.addEventListener('submit', e =>{
+        }, 200);
+    });
+    $form.addEventListener('submit', e => {
         e.preventDefault();
-        const {name,email,password,confirmPassword}  = this.state;
-        if(password.trim() !== confirmPassword){
-            alert("비밀번호와 비밀번호 확인이 일치하지 않습니다");
+        const { name, email, password, confirmPassword } = this.state;
+        if (password.trim() !== confirmPassword) {
+            alert('비밀번호와 비밀번호 확인이 일치하지 않습니다');
             return;
         }
         const data = {
             name,
             email,
-            password : password.trim(),
-        }
-        registerUser(data)
-        .then(response => {
-            if(!response.success){
-                return alert("회원가입을 실패했습니다");
-            }
-            else{
+            password: password.trim(),
+        };
+        registerUser(data).then(response => {
+            if (!response.success) {
+                return alert('회원가입을 실패했습니다');
+            } else {
                 changeRoute('/login');
             }
-        })
-    })
+        });
+    });
 }

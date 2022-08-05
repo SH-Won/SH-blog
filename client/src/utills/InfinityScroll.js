@@ -1,11 +1,11 @@
 // export default function InfinityScroll({initialState,loadMore}){
 //     this.state = initialState;
-    
+
 //     this.setState = (nextState) =>{
 //         this.state = nextState;
 //         this.init();
 //     }
-    
+
 //     this.handleScroll = (([entry],ob) =>{
 //         if(entry.isIntersecting && this.state.hasMore){
 //             loadMore();
@@ -22,15 +22,15 @@
 //     this.init();
 
 // }
-export const InfinityScroll = (element,callback,hasMore,loading) =>{
+export const InfinityScroll = (element, callback, hasMore, loading) => {
     let observer = null;
-    const handleScroll = (([entry],ob) =>{
-        if(entry.isIntersecting && hasMore){
+    const handleScroll = ([entry], ob) => {
+        if (entry.isIntersecting && hasMore) {
             callback();
             ob.unobserve(entry.target);
         }
-    })
-    if(loading) return;
-    observer = new IntersectionObserver(handleScroll,{threshold:0.8});
-    if(element) observer.observe(element);
-}
+    };
+    if (loading) return;
+    observer = new IntersectionObserver(handleScroll, { threshold: 0.8 });
+    if (element) observer.observe(element);
+};

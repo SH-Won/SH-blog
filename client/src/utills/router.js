@@ -3,24 +3,24 @@ import { selector } from './selector';
 
 const ROUTE_EVENT = 'ROUTE_EVENT';
 
-export const init = (onRouteChange) =>{
-    window.addEventListener(ROUTE_EVENT,(e) =>{
+export const init = onRouteChange => {
+    window.addEventListener(ROUTE_EVENT, e => {
         const isExist = e.detail !== null && e.detail.hasOwnProperty('haveToDelete');
-        if(isExist && e.detail.haveToDelete){
+        if (isExist && e.detail.haveToDelete) {
             destoryImage();
-            return onRouteChange();   
+            return onRouteChange();
         }
         onRouteChange(e.detail);
     });
-}
-export const changeRoute = (url,params=null) =>{
-    window.history.replaceState({from:url},null);
-    if(location.pathname === '/edit'){
+};
+export const changeRoute = (url, params = null) => {
+    window.history.replaceState({ from: url }, null);
+    if (location.pathname === '/edit') {
         const loginSuccess = selector(state => state?.loginSuccess);
-        if(loginSuccess){
-        destoryImage();
+        if (loginSuccess) {
+            destoryImage();
         }
     }
-    window.history.pushState(params,null,url);
-    window.dispatchEvent(new CustomEvent(ROUTE_EVENT,params));
-}
+    window.history.pushState(params, null, url);
+    window.dispatchEvent(new CustomEvent(ROUTE_EVENT, params));
+};

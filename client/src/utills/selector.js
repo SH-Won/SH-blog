@@ -1,17 +1,11 @@
+function Selector() {
+    const state = {};
 
-function Selector(){
-    const state = {
-    };
-    
-    return function(callback,key = null,data = null){
-        if(callback === null){
+    return function (callback, key = null, data = null) {
+        if (callback === null) {
             state[key] = data;
-        }
-        else return callback(state);
-    }
-    
+        } else return callback(state);
+    };
 }
 
-
 export const selector = Selector();
-

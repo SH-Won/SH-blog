@@ -1,45 +1,42 @@
 const jwt = require('jsonwebtoken');
 
-
 module.exports = {
-    sign : user =>{
+    sign: user => {
         const payload = {
-            id:user._id,
-        }
-        return jwt.sign(payload,'secret',{
-            algorithm:'HS256',
-            expiresIn:'1h',
+            id: user._id,
+        };
+        return jwt.sign(payload, 'secret', {
+            algorithm: 'HS256',
+            expiresIn: '1h',
         });
     },
-    verify : token =>{
+    verify: token => {
         let decode = null;
-        try{
-            decode = jwt.verify(token,'secret');
-            return{
-                success:true,
-                id:decode.id,
-            }
-
-        }catch(err){
+        try {
+            decode = jwt.verify(token, 'secret');
             return {
-                success:false,
-                message: err.message
-            }
+                success: true,
+                id: decode.id,
+            };
+        } catch (err) {
+            return {
+                success: false,
+                message: err.message,
+            };
         }
     },
-    refresh : () =>{
-        return jwt.sign({},'secret',{
-            algorithm:'HS256',
-            expiresIn:'3d',
-        })
+    refresh: () => {
+        return jwt.sign({}, 'secret', {
+            algorithm: 'HS256',
+            expiresIn: '3d',
+        });
     },
-    refreshVerify : (token,userId) => {
-        try{
-            jwt.verify(token,'secret');
+    refreshVerify: (token, userId) => {
+        try {
+            jwt.verify(token, 'secret');
             return true;
-
-        }catch(err){
+        } catch (err) {
             return false;
         }
-    }
-}
+    },
+};

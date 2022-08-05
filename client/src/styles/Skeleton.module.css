@@ -1,39 +1,43 @@
-
-.skeleton{
+.skeleton {
     position: relative;
-    width:100%;
-    height:100%;
+    width: 100%;
+    height: 100%;
     display: flex;
     flex-wrap: wrap;
     box-sizing: border-box;
     justify-content: center;
 }
 
-.skeletonItem{
+.skeletonItem {
     /* background-color: #F8F9FA; */
-    margin:.8rem;
-    flex:0 0 calc( ( 100% - (.8rem * 8) ) / 4);
-    display:flex;
+    margin: 0.8rem;
+    flex: 0 0 calc((100% - (0.8rem * 8)) / 4);
+    display: flex;
     flex-direction: column;
     border-radius: 4px;
     cursor: pointer;
     align-items: center;
-    z-index:5;
+    z-index: 5;
     /* box-shadow: .2rem .2rem .3rem #aaebcb; */
     box-shadow: rgb(0 0 0 / 7%) 0px 4px 16px 0px;
     box-sizing: border-box;
     overflow: hidden;
-    /* transition: box-shadow 0.25s ease-in 0s, transform 0.25s ease-in 0s; */ 
+    /* transition: box-shadow 0.25s ease-in 0s, transform 0.25s ease-in 0s; */
 }
-.skeletonImg::before{
-    content: "";
+.skeletonImg::before {
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
-    width:100%;
+    width: 100%;
     height: 100%;
     /* background: linear-gradient(to right, #f0eaea, #ddd, #fdf9f9); */
-    background: linear-gradient( 90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.6) 40%, rgba(255, 255, 255, 0) 70% );
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 0.6) 40%,
+        rgba(255, 255, 255, 0) 70%
+    );
     animation: loading 1s infinite linear;
 }
 
@@ -41,10 +45,10 @@
     cursor: pointer;
     box-shadow: rgb(0 0 0 / 20%) 0px 4px 16px 0px;
 } */
-.skeletonImg{
-    margin:0;
-    position:relative;
-    width:100%;
+.skeletonImg {
+    margin: 0;
+    position: relative;
+    width: 100%;
     background-color: #ccc;
     padding-top: 65.5%;
     opacity: 0.6;
@@ -57,10 +61,10 @@
     top:0;
     left:0;
 } */
-.skeletonInfo{
+.skeletonInfo {
     list-style: none;
-    width:100%;
-    height:81.63px;
+    width: 100%;
+    height: 81.63px;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -68,7 +72,7 @@
     box-sizing: border-box;
     /* background-color: #e4f0ea; */
 }
-.skeletonInfo > li{
+.skeletonInfo > li {
     background-color: #ccc;
 }
 
@@ -84,31 +88,26 @@
 
 @keyframes loading {
     0% {
-      transform: translateX(0);
+        transform: translateX(0);
     }
     50%,
     100% {
-      transform: translateX(100%);
+        transform: translateX(100%);
     }
-  }
-@media screen and (max-width:500px) {
-    .skeletonItem{
-        margin:1rem;
-        flex:0 0 calc( ( 100% - (1rem * 2) ) );
-    }
-    
 }
-@media screen and (max-width:680px) and (min-width:501px) {
-    .skeletonItem{
-        
-        flex:0 0 calc( ( 100% - (.8rem * 4) ) / 2);
+@media screen and (max-width: 500px) {
+    .skeletonItem {
+        margin: 1rem;
+        flex: 0 0 calc((100% - (1rem * 2)));
     }
-    
 }
-@media screen and (max-width:850px) and (min-width:681px)  {
-    .skeletonItem{
-        flex:0 0 calc( ( 100% - (.8rem * 6) ) /3 );
-
+@media screen and (max-width: 680px) and (min-width: 501px) {
+    .skeletonItem {
+        flex: 0 0 calc((100% - (0.8rem * 4)) / 2);
     }
-    
+}
+@media screen and (max-width: 850px) and (min-width: 681px) {
+    .skeletonItem {
+        flex: 0 0 calc((100% - (0.8rem * 6)) / 3);
+    }
 }

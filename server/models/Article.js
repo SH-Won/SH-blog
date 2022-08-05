@@ -1,34 +1,36 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const articleSchema = mongoose.Schema({
-    writer:{
-        type:Schema.Types.ObjectId,
-        ref:'User'
+const articleSchema = mongoose.Schema(
+    {
+        writer: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+        },
+        title: {
+            type: String,
+            maxlength: 50,
+        },
+        data: {
+            type: String,
+        },
+        thumbnail: {
+            type: String,
+        },
+        category: {
+            type: Number,
+        },
+        imageIds: {
+            type: Array,
+            default: [],
+        },
+        favoriteCount: {
+            type: Number,
+            default: 0,
+        },
     },
-    title:{
-        type:String,
-        maxlength:50
-    },
-    data:{
-        type:String,
-    },
-    thumbnail :{
-        type:String,
-    },
-    category:{
-        type:Number,
-    },
-    imageIds:{
-        type:Array,
-        default:[],
-    },
-    favoriteCount :{
-        type:Number,
-        default:0,
-    }
-    
-},{timestamps:true})
+    { timestamps: true },
+);
 
 // postSchema.index({
 //     title:'text',
@@ -41,7 +43,6 @@ const articleSchema = mongoose.Schema({
 
 // })
 
-
 const Article = mongoose.model('Article', articleSchema);
 
-module.exports = { Article }
+module.exports = { Article };

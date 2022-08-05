@@ -15,7 +15,7 @@ import ImageUpload from '@ckeditor/ckeditor5-image/src/imageupload';
 import Link from '@ckeditor/ckeditor5-link/src/link';
 import List from '@ckeditor/ckeditor5-list/src/list';
 import Paragraph from '@ckeditor/ckeditor5-paragraph/src/paragraph';
-import CodeBlock  from '@ckeditor/ckeditor5-code-block/src/codeblock';
+import CodeBlock from '@ckeditor/ckeditor5-code-block/src/codeblock';
 import CloudServices from '@ckeditor/ckeditor5-cloud-services/src/cloudservices';
 // import CloudServicesUpload from '@ckeditor/ckeditor5-cloud-services/'
 export default class ClassicEditor extends ClassicEditorBase {}
@@ -38,8 +38,8 @@ ClassicEditor.builtinPlugins = [
     Link,
     List,
     Paragraph,
-    CodeBlock,  
-    CloudServices ,                                                         // <--- ADDED
+    CodeBlock,
+    CloudServices, // <--- ADDED
 ];
 
 // Editor configuration.
@@ -48,7 +48,7 @@ ClassicEditor.defaultConfig = {
         items: [
             'heading',
             '|',
-            'alignment',                                                 // <--- ADDED
+            'alignment', // <--- ADDED
             'bold',
             'italic',
             'link',
@@ -58,8 +58,8 @@ ClassicEditor.defaultConfig = {
             'uploadImage',
             'blockQuote',
             'undo',
-            'redo'
-        ]
+            'redo',
+        ],
     },
     image: {
         toolbar: [
@@ -68,9 +68,9 @@ ClassicEditor.defaultConfig = {
             'imageStyle:side',
             '|',
             'toggleImageCaption',
-            'imageTextAlternative'
-        ]
+            'imageTextAlternative',
+        ],
     },
     // This value must be kept in sync with the language defined in webpack.config.js.
-    language: 'en'
+    language: 'en',
 };
